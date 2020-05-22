@@ -1,0 +1,23 @@
+{
+  "id": "1834259",
+  "name": "egda",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10279482",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "856965",
+      "name": "向下",
+      "font_class": "down",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    }
+  ]
+}

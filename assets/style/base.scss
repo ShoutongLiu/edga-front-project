@@ -1,0 +1,74 @@
+html,
+body,
+div,
+input,
+span,
+h1,
+h2,
+h3,
+a,
+section,
+header,
+footer,
+form,
+p,
+ul,
+li,
+i {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+  .container {
+    width: 710px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    width: 960px;
+    margin: 0 auto;
+  }
+}
+
+
+@media only screen and (min-width: 1400px) {
+  .container {
+    width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+
+html,
+body,
+#__layout,
+#__nuxt {
+  height: 100%;
+}
+
+html {
+  font-size: 10px;
+}

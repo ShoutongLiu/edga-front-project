@@ -1,0 +1,13 @@
+// @import url('./small-x.scss') only screen and (max-width: 768px);
+// @import url('./small.scss') only screen and (min-width: 768px);
+// @import url('./medium.scss') only screen and (min-width: 960px);
+
+@media only screen and (min-width: 992px) {
+  @import './medium.scss';
+}
+
+@media only screen and (min-width: 1400px) {
+  @import './big.scss';
+}
+
+@import './base.scss';
