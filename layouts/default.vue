@@ -2,13 +2,15 @@
     <div class="app-main">
         <edga-header></edga-header>
         <nuxt />
+        <edga-footer></edga-footer>
     </div>
 </template>
 
 <script>
-import edgaHeader from '../components/header'
+import edgaHeader from '../components/Header'
+import edgaFooter from '../components/Footer'
 export default {
-    components: { edgaHeader }
+    components: { edgaHeader, edgaFooter }
 }
 </script>
 
@@ -17,6 +19,7 @@ export default {
     width: 100%;
     min-height: 100%;
     background-color: #f4f4f4;
+    position: relative;
 }
 </style>
 

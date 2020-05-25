@@ -5,7 +5,7 @@ module.exports = {
     ** Headers of the page
     */
     head: {
-        title: process.env.npm_package_name || '',
+        title: 'EGDA行家',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -24,12 +24,14 @@ module.exports = {
     */
     css: [
         '@/assets/style/iconfont/iconfont.css',
-        '@/assets/style/index.scss'
+        '@/assets/style/index.scss',
+        'swiper/css/swiper.css'
     ],
     /*
     ** Plugins to load before mounting the App
     */
     plugins: [
+        { src: '@/plugins/vue-awesome-swiper', mode: 'client' }
     ],
     /*
     ** Nuxt.js dev-modules
@@ -50,5 +52,8 @@ module.exports = {
         */
         extend (config, ctx) {
         }
+    },
+    server: {
+        port: 8000, // default: 3000
     }
 }

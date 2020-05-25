@@ -2,7 +2,13 @@
     <header class="header">
         <div class="container header-container">
             <div class="title">
-                <h1>EDGA行家</h1>
+                <h1>
+                    <img
+                        class="logo"
+                        src="../static/edga-pc.png"
+                        alt="edga"
+                    >
+                </h1>
             </div>
             <div class="navbar">
                 <ul class="navlist">
@@ -30,7 +36,7 @@
                     type="text"
                     class="search-input"
                     v-model="searchVal"
-                    placeholder="搜素"
+                    placeholder="搜索"
                 >
                 <i class="iconfont icon-search"></i>
             </div>
