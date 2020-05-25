@@ -5,6 +5,8 @@ export default function ({ $axios, redirect }) {
 
     $axios.onResponse(response => {
         console.log(response)
+        // 请求成功返回data
+        return response.data
     })
 
     $axios.onError(error => {

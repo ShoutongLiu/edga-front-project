@@ -85,14 +85,13 @@ export default {
         NavItem
     },
     async asyncData ({ $axios }) {
-        const bannerData = await $axios.$get('/banner/get')
-        const graphData = await $axios.$get('/graph/get')
-        const banners = bannerData.data.banners
-        const graphs = graphData.data.graphs
+        const { banners } = await $axios.$get('/banner/get')
+        const { graphs } = await $axios.$get('/graph/get')
         return { banners, graphs }
     },
-    mounted () {
-        console.log(this.graphs);
+    async mounted () {
+        const bannerData = await this.$axios.$get('/banner/get')
+        console.log(bannerData);
     },
     methods: {
         handleShow (info) {
