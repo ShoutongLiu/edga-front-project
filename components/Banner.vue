@@ -9,15 +9,15 @@
         <div class="swiper-wrapper">
             <div
                 class="swiper-slide"
-                v-for="index in 2"
-                :key="index"
+                v-for="b in banners"
+                :key="b._id"
             >
                 <a
-                    href="https://www.baidu.com"
+                    :href="b.url"
                     class="banner-url"
                 >
                     <img
-                        src="~/assets/11.png"
+                        :src="b.path"
                         alt="banner"
                         class="banner"
                     >
@@ -30,6 +30,9 @@
 
 <script>
 export default {
+    props: {
+        banners: Array
+    },
     data () {
         return {
             swiperOptions: {
@@ -54,9 +57,6 @@ export default {
                 lazy: true
             }
         }
-    },
-    mounted () {
-        console.log(this.myDirectiveSwiper);
     },
 
     methods: {

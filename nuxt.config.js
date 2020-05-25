@@ -31,7 +31,8 @@ module.exports = {
     ** Plugins to load before mounting the App
     */
     plugins: [
-        { src: '@/plugins/vue-awesome-swiper', mode: 'client' }
+        { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
+        '~/plugins/axios'
     ],
     /*
     ** Nuxt.js dev-modules
@@ -42,6 +43,7 @@ module.exports = {
     ** Nuxt.js modules
     */
     modules: [
+        '@nuxtjs/axios',
     ],
     /*
     ** Build configuration

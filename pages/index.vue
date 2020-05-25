@@ -2,8 +2,8 @@
     <div class="container">
         <div class="main">
             <div class="banner-container">
-                <banner></banner>
-                <small-img></small-img>
+                <banner :banners="banners"></banner>
+                <small-img :graphs="graphs"></small-img>
             </div>
             <div class="top-container">
                 <top-list></top-list>
@@ -72,7 +72,9 @@ export default {
         return {
             isShow: false,
             currentTag: '商业',
-            tagData: ['商业', '住宅', '办公', '酒店', '医疗', '文旅', '场馆']
+            tagData: ['商业', '住宅', '办公', '酒店', '医疗', '文旅', '场馆'],
+            banners: [],
+            graphs: []
         }
     },
     components: {
@@ -82,9 +84,18 @@ export default {
         DialogShow,
         NavItem
     },
+    async asyncData ({ $axios }) {
+        const bannerData = await $axios.$get('/banner/get')
+        const graphData = await $axios.$get('/graph/get')
+        const banners = bannerData.data.banners
+        const graphs = graphData.data.graphs
+        return { banners, graphs }
+    },
+    mounted () {
+        console.log(this.graphs);
+    },
     methods: {
         handleShow (info) {
-            console.log(info)
             this.isShow = true
             document.body.style.overflow = 'hidden'
         },

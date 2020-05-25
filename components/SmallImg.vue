@@ -1,22 +1,12 @@
 <template>
     <div class="small-img">
-        <a href="">
+        <a
+            :href="v.url"
+            v-for="v in graphs"
+            :key="v._id"
+        >
             <img
-                src="~/assets/s-1.png"
-                alt="small"
-                class="small"
-            >
-        </a>
-        <a href="">
-            <img
-                src="~/assets/s-2.png"
-                alt="small"
-                class="small"
-            >
-        </a>
-        <a href="">
-            <img
-                src="~/assets/s-3.png"
+                :src="v.path"
                 alt="small"
                 class="small"
             >
@@ -26,7 +16,9 @@
 
 <script>
 export default {
-
+    props: {
+        graphs: Array
+    }
 }
 </script>
 
