@@ -6,7 +6,7 @@
                 <small-img :graphs="graphs"></small-img>
             </div>
             <div class="top-container">
-                <top-list></top-list>
+                <top-list :newTop="newTopData"></top-list>
             </div>
         </div>
         <div class="list">
@@ -15,20 +15,24 @@
                 <div class="tag-list">
                     <ul class="tag-box">
                         <li
-                            v-for="v in tagData"
-                            :key="v"
-                            @mouseenter="handleEnter(v)"
-                            :class="{active: v === currentTag}"
+                            v-for="v in tag"
+                            :key="v._id"
+                            @mouseenter="handleEnter(v.name)"
+                            :class="{active: v.name === currentTag}"
                         >
-                            {{v}}
+                            {{v.name}}
                         </li>
                     </ul>
                     <div class="tag-item">
                         <div
-                            v-for="v in 10"
-                            :key="v"
+                            v-for="v in screenTag"
+                            :key="v._id"
+                            class="item-box"
                         >
-                            <nav-item @show="handleShow"></nav-item>
+                            <nav-item
+                                @show="handleShow"
+                                :item="v"
+                            ></nav-item>
                         </div>
                     </div>
                 </div>
@@ -36,25 +40,32 @@
             <div class="nav-list">
                 <div
                     class="list-box"
-                    v-for="v in 5"
-                    :key="v"
+                    v-for="v in cateData"
+                    :key="v.title"
                 >
                     <div class="title">
-                        <span>设计公司推荐</span>
+                        <span>{{v.title}}推荐</span>
                         <span>更多</span>
                     </div>
                     <div class="nav-content">
-                        <nav-item
-                            v-for="v in 15"
-                            :key="v"
-                            @show="handleShow"
-                        ></nav-item>
+                        <div
+                            v-for="i in v.data"
+                            :key="i._id"
+                            class="item-box"
+                        >
+                            <nav-item
+                                @show="handleShow"
+                                :item="i"
+                            ></nav-item>
+                        </div>
+
                     </div>
                 </div>
 
             </div>
         </div>
         <dialog-show
+            :info="companyInfo"
             :show="isShow"
             @hide="handleHide"
         ></dialog-show>
@@ -64,7 +75,7 @@
 <script>
 import Banner from '../components/Banner'
 import SmallImg from '../components/SmallImg'
-import TopList from '../components/Top'
+import TopList from '../components/TopList'
 import DialogShow from '../components/Dialog'
 import NavItem from '../components/NavItem'
 export default {
@@ -72,9 +83,11 @@ export default {
         return {
             isShow: false,
             currentTag: '商业',
-            tagData: ['商业', '住宅', '办公', '酒店', '医疗', '文旅', '场馆'],
             banners: [],
-            graphs: []
+            graphs: [],
+            tag: [],
+            contents: [],
+            companyInfo: {}
         }
     },
     components: {
@@ -87,18 +100,59 @@ export default {
     async asyncData ({ $axios }) {
         const { banners } = await $axios.$get('/banner/get')
         const { graphs } = await $axios.$get('/graph/get')
-        return { banners, graphs }
+        const { tag } = await $axios.$post('/tag/get', { page: 0 })
+        const { contents } = await $axios.$post('/content/get', { page: 0 })
+        return { banners, graphs, tag, contents }
     },
     async mounted () {
-        const bannerData = await this.$axios.$get('/banner/get')
-        console.log(bannerData);
+
+    },
+    computed: {
+        // 标签分类
+        screenTag: function () {
+            let arr = []
+            this.contents.forEach(v => {
+                if (v.tagVal.includes(this.currentTag)) {
+                    arr.push(v)
+                }
+            })
+            return arr
+        },
+        // 最新排行
+        newTopData: function () {
+            return this.contents.slice(0, 9)
+        },
+        // 分类数据
+        cateData: function () {
+            let cateArr = []
+            let CateData = []
+            this.contents.forEach(c => {
+                cateArr.unshift(c.categroyVal)
+            })
+            // 去重
+            let newCate = new Set(cateArr)
+            newCate.forEach(n => {
+                let data = []
+                this.contents.forEach(c => {
+                    if (n === c.categroyVal) {
+                        data.push(c)
+                    }
+                })
+                CateData.push({ title: n, data })
+            })
+            return CateData
+        }
     },
     methods: {
+        // 显示详情
         handleShow (info) {
+            console.log(info);
+            this.companyInfo = info
             this.isShow = true
             document.body.style.overflow = 'hidden'
         },
         handleEnter (tag) {
+            console.log(tag);
             this.currentTag = tag
         },
         handleHide () {

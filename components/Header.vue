@@ -12,10 +12,18 @@
             </div>
             <div class="navbar">
                 <ul class="navlist">
+                    <li>
+                        <span>首页</span>
+                    </li>
+                    <li>
+                        <span>领域</span>
+                    </li>
                     <li
-                        v-for="v in navArr"
-                        :key="v.key"
-                    ><span>{{v.name}}</span></li>
+                        v-for="v in categroy"
+                        :key="v._id"
+                    >
+                        <span>{{v.name}}</span>
+                    </li>
                     <li
                         class="cate"
                         v-for="v in cateArr"
@@ -68,36 +76,7 @@ export default {
         return {
             isShow: false,
             searchVal: '',
-            navArr: [
-                {
-                    name: '首页',
-                    value: 'sy'
-                },
-                {
-                    name: '领域',
-                    value: 'ly'
-                },
-                {
-                    name: '设计公司',
-                    value: 'skgs'
-                },
-                {
-                    name: '设计师',
-                    value: 'sjs'
-                },
-                {
-                    name: '制造企业',
-                    value: 'zzqy'
-                },
-                {
-                    name: '平台机构',
-                    value: 'ptjg'
-                },
-                {
-                    name: '产品耗材',
-                    value: 'cphc'
-                }
-            ],
+            categroy: [],
             cateArr: [
                 {
                     name: '分类',
@@ -117,6 +96,10 @@ export default {
                 }
             ]
         }
+    },
+    async mounted () {
+        const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
+        this.categroy = categroy
     },
     methods: {
         handleDownShow () {

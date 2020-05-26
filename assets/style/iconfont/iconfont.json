@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "525798",
+      "name": "tolove",
+      "font_class": "custom-tolove",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "721978",
+      "name": "eye-open",
+      "font_class": "eyeopen",
+      "unicode": "e71b",
+      "unicode_decimal": 59163
+    },
+    {
       "icon_id": "924844",
       "name": "close",
       "font_class": "close",

@@ -5,27 +5,29 @@
     >
         <div>
             <img
-                src="~/assets/nucleo.png"
+                :src="item.avatarUrl"
                 alt=""
                 class="logo"
             >
         </div>
         <div class="item-info">
-            <div class="item-name">蓝美艺术设计</div>
-            <div class="desc">汇集了国内首批酒店领域的优秀资深设计师</div>
+            <div class="item-name">{{item.companyName}}</div>
+            <div class="desc">{{item.describe}}</div>
             <div class="location">
-                <span>设计公司</span>
-                <span>深圳<i class="iconfont icon-location"></i></span>
+                <span>{{item.categroyVal}}</span>
+                <span>{{item.locationVal.join('、')}}<i class="iconfont icon-location"></i></span>
             </div>
         </div>
         <div class="true">
             <img
                 src="~/assets/tui-pc.png"
                 alt="tui"
+                v-if="item.showType.includes('推荐')"
             >
             <img
                 src="~/assets/zheng-pc.png"
                 alt="zheng"
+                v-if="item.showType.includes('认证')"
             >
         </div>
     </div>
@@ -33,9 +35,12 @@
 
 <script>
 export default {
+    props: {
+        item: Object
+    },
     methods: {
         showDetail () {
-            this.$emit('show', { info: 'info' })
+            this.$emit('show', this.item)
         }
     }
 }

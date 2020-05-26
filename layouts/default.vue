@@ -10,7 +10,7 @@
 import edgaHeader from '../components/Header'
 import edgaFooter from '../components/Footer'
 export default {
-    components: { edgaHeader, edgaFooter }
+    components: { edgaHeader, edgaFooter },
 }
 </script>
 

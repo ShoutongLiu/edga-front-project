@@ -51,7 +51,7 @@ export default {
                     disableOnInteraction: false,
                 },
                 autoplayDisableOnInteraction: false,
-                // effect:'cube',
+                mousewheelControl: false,
                 mousewheel: true,
                 preloadImages: false,
                 lazy: true

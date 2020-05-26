@@ -69,46 +69,48 @@
         >
             <ul class="top-list">
                 <li
-                    v-for="v in 10"
-                    :key="v"
+                    v-for="v in newTop"
+                    :key="v._id"
                     @mouseenter="handleEnter(v)"
                     @mouseleave="handleLeave"
                 >
                     <img
-                        src="~/assets/bwg.png"
+                        :src="v.avatarUrl"
                         alt="logo"
                         class="logo"
-                        :class="{big: v === itemId}"
+                        :class="{big: v._id === newFirstId}"
                     >
                     <div
                         class="info"
-                        :class="{big: v === itemId}"
+                        :class="{big: v._id === newFirstId}"
                     >
-                        <div class="company-name">环图设计</div>
+                        <div class="company-name">{{v.companyName}}</div>
                         <div
-                            v-show="v === itemId"
+                            v-show="v._id === newFirstId"
                             class="location"
                         >
                             <span class="type">
-                                设计公司
+                                {{v.categroyVal}}
                             </span>
                             <span
                                 class="city"
-                                v-show="v === itemId"
+                                v-show="v._id === newFirstId"
                             >深圳<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div
                         class="true"
-                        v-show="v === itemId"
+                        v-show="v._id === newFirstId"
                     >
                         <img
                             src="~/assets/tui-pc.png"
                             alt="tui"
+                            v-if="v.showType.includes('推荐')"
                         >
                         <img
                             src="~/assets/zheng-pc.png"
                             alt="zheng"
+                            v-if="v.showType.includes('认证')"
                         >
                     </div>
                 </li>
@@ -119,18 +121,22 @@
 
 <script>
 export default {
+    props: {
+        newTop: Array
+    },
     data () {
         return {
             isActive: true,
-            itemId: 1
+            itemId: 1,
+            newFirstId: this.newTop[0]._id
         }
     },
     methods: {
-        handleEnter (id) {
-            this.itemId = id
+        handleEnter (v) {
+            this.newFirstId = v._id
         },
         handleLeave () {
-            this.itemId = 1
+            this.newFirstId = this.newTop[0]._id
         }
     }
 }
