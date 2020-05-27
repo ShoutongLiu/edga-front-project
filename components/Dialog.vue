@@ -75,6 +75,7 @@
                         <img
                             src="~/assets/yirenzheng.png"
                             alt="renzheng"
+                            class="renzheng"
                         >
                         <p>已认证</p>
                     </div>
