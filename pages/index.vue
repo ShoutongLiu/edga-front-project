@@ -45,7 +45,7 @@
                 >
                     <div class="title">
                         <span>{{v.title}}推荐</span>
-                        <span>更多</span>
+                        <span @click="toMore(v.title)">更多</span>
                     </div>
                     <div class="nav-content">
                         <div
@@ -67,6 +67,7 @@
         <dialog-show
             :info="companyInfo"
             :show="isShow"
+            :contents="contents"
             @hide="handleHide"
         ></dialog-show>
     </div>
@@ -78,6 +79,7 @@ import SmallImg from '../components/SmallImg'
 import TopList from '../components/TopList'
 import DialogShow from '../components/Dialog'
 import NavItem from '../components/NavItem'
+import { EventBus } from '../utils/bus'
 export default {
     data () {
         return {
@@ -87,6 +89,7 @@ export default {
             graphs: [],
             tag: [],
             contents: [],
+            categroy: [],
             companyInfo: {}
         }
     },
@@ -102,10 +105,14 @@ export default {
         const { graphs } = await $axios.$get('/graph/get')
         const { tag } = await $axios.$post('/tag/get', { page: 0 })
         const { contents } = await $axios.$post('/content/get', { page: 0 })
-        return { banners, graphs, tag, contents }
+        const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
+        return { banners, graphs, tag, contents, categroy }
     },
     async mounted () {
-
+        // 获取Bus传值
+        EventBus.$on('showDetail', (item) => {
+            this.companyInfo = item
+        })
     },
     computed: {
         // 标签分类
@@ -158,6 +165,15 @@ export default {
         handleHide () {
             this.isShow = false
             document.body.style.overflow = 'auto'
+        },
+        toMore (title) {
+            let url = ''
+            this.categroy.forEach(v => {
+                if (v.name === title) {
+                    url = v.url
+                }
+            })
+            this.$router.push(`/${url}`)
         }
     }
 }

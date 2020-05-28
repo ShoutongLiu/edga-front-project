@@ -1,7 +1,9 @@
 <template>
     <div class="app-main">
         <edga-header></edga-header>
-        <nuxt />
+        <div class="main-container">
+            <nuxt />
+        </div>
         <edga-footer></edga-footer>
     </div>
 </template>
@@ -20,6 +22,11 @@ export default {
     min-height: 100%;
     background-color: #f4f4f4;
     position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.main-container {
+    flex: 1;
 }
 </style>
 

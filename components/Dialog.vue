@@ -65,13 +65,13 @@
                             </span>
                             <span>
                                 <i class="iconfont icon-custom-tolove"></i>
-                                {{info.love}}
+                                {{isLoveCount}}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="right">
-                    <div>
+                    <div v-if="info.showType.includes('认证')">
                         <img
                             src="~/assets/yirenzheng.png"
                             alt="renzheng"
@@ -79,7 +79,7 @@
                         >
                         <p>已认证</p>
                     </div>
-                    <div>
+                    <div v-if="info.showType.includes('推荐')">
                         <img
                             src="~/assets/yituijian.png"
                             alt="tuijian"
@@ -88,14 +88,8 @@
                     </div>
                     <div @click="handleLove">
                         <img
-                            src="~/assets/love.png"
-                            alt="love"
-                            v-show="!isLove"
-                        >
-                        <img
                             src="~/assets/love-red.png"
                             alt="love"
-                            v-show="isLove"
                         >
                         <p>喜欢</p>
                     </div>
@@ -108,7 +102,111 @@
                     <div class="guanwang">访问官网</div>
                 </div>
                 <div class="contcant">
+                    <div
+                        class="renzheng"
+                        v-if="info.showType.includes('认证')"
+                    >
+                        认证：<span>{{info.companyName}}</span>
+                    </div>
+                    <div class="skill">
+                        <div class="type">
+                            类型：<span>{{info.categroyVal}}</span>
+                        </div>
+                        <div class="location">
+                            <div>
+                                位置：
+                                <span>{{info.locationVal.join('、')}}</span>
+                            </div>
+                        </div>
+                        <div class="shanc">
+                            <span>擅长：</span>
+                            <span>{{info.skiile.join('、')}}</span>
+                        </div>
 
+                    </div>
+                    <div class="tag">
+                        <div>标签：</div>
+                        <span>{{info.tagVal.join('、')}}</span>
+                    </div>
+                    <div class="concat">
+                        <div class="phone">
+                            电话：<span>{{info.Landline}}</span>
+                        </div>
+                        <div class="cellphfone">
+                            手机：<span>{{info.phone}}</span>
+                        </div>
+                        <div class="email">
+                            邮箱：<span>{{info.email}}</span>
+                        </div>
+                    </div>
+                    <div class="foces">
+                        <div>关注：
+                            <span
+                                class="url"
+                                @mouseenter="qqShow = true"
+                                @mouseleave="qqShow = false"
+                            >
+                                <p
+                                    class="qq"
+                                    v-show="qqShow"
+                                >{{info.qq}}</p>
+                                <i class="iconfont icon-qq"></i>
+                            </span>
+                            <span
+                                class="url"
+                                @mouseenter="wechatShow = true"
+                                @mouseleave="wechatShow = false"
+                            >
+                                <div
+                                    v-if="info.wxchat.length !== 0"
+                                    class="wechat"
+                                >
+                                    <img
+                                        :src="info.wxchat[0].url"
+                                        alt="wechat"
+                                        v-show="wechatShow"
+                                    >
+                                </div>
+                                <i class="iconfont icon-wechat"></i>
+                            </span>
+                            <!-- 使用a标签跳转外部链接需要加上http或https -->
+                            <a
+                                :href="info.weibo"
+                                class="url"
+                                target="_blank"
+                            >
+                                <i class="iconfont icon-weibo"></i>
+                            </a>
+                            <a
+                                :href="info.pinterest"
+                                class="url"
+                                target="_blank"
+                            >
+                                <i class="iconfont icon-pinterest"></i>
+                            </a>
+                            <a
+                                :href="info.twitter"
+                                class="url"
+                                target="_blank"
+                            >
+                                <i class="iconfont icon-twitter"></i>
+                            </a>
+                            <a
+                                :href="info.behance"
+                                class="url"
+                                target="_blank"
+                            >
+                                <i class="iconfont icon-behance"></i>
+                            </a>
+                            <a
+                                :href="info.facebook"
+                                class="url"
+                                target="_blank"
+                            >
+                                <i class="iconfont icon-facebook"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,15 +214,19 @@
             class="iconfont icon-close"
             @click="dialogHide"
         ></i>
+        <recommend :content="contents"></recommend>
     </div>
 </template>
 
 <script>
+import recommend from './Recommend'
 export default {
     props: {
         show: Boolean,
-        info: Object
+        info: Object,
+        contents: Array
     },
+    components: { recommend },
     data () {
         return {
             swiperOptions: {
@@ -150,7 +252,10 @@ export default {
                 mousewheel: true,
                 preloadImages: false
             },
-            isLove: false
+            isLoveCount: 0,
+            qqShow: false,
+            wechatShow: false,
+            recomDetail: {}
         }
     },
     methods: {
@@ -165,7 +270,7 @@ export default {
         },
         handleStop () { },
         handleLove () {
-            this.isLove = !this.isLove
+            this.isLoveCount = this.isLoveCount += 1
         }
     }
 }

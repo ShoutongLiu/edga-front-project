@@ -12,7 +12,10 @@
             </div>
             <div class="navbar">
                 <ul class="navlist">
-                    <li>
+                    <li
+                        @click="$router.push('/')"
+                        style="color: #a0a0a0"
+                    >
                         <span>首页</span>
                     </li>
                     <li>
@@ -28,7 +31,7 @@
                         class="cate"
                         v-for="v in cateArr"
                         :key="v.key"
-                        @mouseenter="handleDownShow"
+                        @mouseenter="handleDownShow(v.value)"
                         @mouseleave="handleDownHide"
                     >
                         <span> {{v.name}}</span>
@@ -56,13 +59,11 @@
                     v-show="isShow"
                 >
                     <ul class="hover-list">
-                        <li>设计公司</li>
-                        <li>设计公司</li>
-                        <li>设计公司</li>
-                        <li>设计公司</li>
-                        <li>设计公司</li>
-                        <li>设计公司</li>
-                        <li>设计公司</li>
+                        <li
+                            v-for="v in navList"
+                            :key="v._id"
+                            @click="toMore(v.url)"
+                        >{{v.name}}</li>
                     </ul>
                 </div>
             </transition>
@@ -77,6 +78,8 @@ export default {
             isShow: false,
             searchVal: '',
             categroy: [],
+            tag: [],
+            navList: [],
             cateArr: [
                 {
                     name: '分类',
@@ -99,14 +102,26 @@ export default {
     },
     async mounted () {
         const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
+        const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
         this.categroy = categroy
+        this.tag = tag
     },
     methods: {
-        handleDownShow () {
+        handleDownShow (val) {
+            if (val === 'rz') {
+                return
+            } else if (val === 'fl') {
+                this.navList = this.categroy
+            } else if (val === 'bq') {
+                this.navList = this.tag
+            }
             this.isShow = true
         },
         handleDownHide () {
             this.isShow = false
+        },
+        toMore (url) {
+            this.$router.push(`/${url}`)
         }
     }
 }

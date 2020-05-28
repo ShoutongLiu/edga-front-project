@@ -4,13 +4,13 @@ $fontColor: #a0a0a0;
 .main {
 	display: flex;
 	justify-content: space-between;
+	margin-top: 60px;
 }
 
 .header {
 	width: 100%;
 	height: 65px;
 	background-color: #fff;
-	margin-bottom: 60px;
 }
 
 .header-container {
@@ -248,6 +248,7 @@ $fontColor: #a0a0a0;
 // TagList标签样式
 .list {
 	margin-top: 60px;
+	margin-bottom: 120px;
 }
 .tag-list {
 	.tag-box {
@@ -328,7 +329,6 @@ $fontColor: #a0a0a0;
 // NavList分类
 .nav-list {
 	margin-top: 50px;
-	margin-bottom: 120px;
 	.list-box {
 		margin-bottom: 60px;
 		&:last-child {
@@ -433,6 +433,9 @@ $fontColor: #a0a0a0;
 				align-items: center;
 				span {
 					padding-right: 18px;
+					&:last-child {
+						margin-top: 5px;
+					}
 				}
 				.icon-eyeopen {
 					font-size: 1.8rem;
@@ -465,14 +468,16 @@ $fontColor: #a0a0a0;
 	}
 	.company-detail {
 		padding: 100px 40px;
+		display: flex;
+		justify-content: space-between;
 		.desc {
 			width: 614px;
 			color: #515151;
 			font-size: 1.4rem;
+			position: relative;
 			p {
 				letter-spacing: 1px;
 				line-height: 24px;
-				padding-bottom: 130px;
 			}
 			.guanwang {
 				width: 160px;
@@ -483,7 +488,105 @@ $fontColor: #a0a0a0;
 				background-color: #515151;
 				border-radius: 4px;
 				cursor: pointer;
+				position: absolute;
+				bottom: 0;
+				left: 0;
 			}
 		}
+		.contcant {
+			width: 282px;
+			color: #000;
+			font-size: 1.4rem;
+			span {
+				color: #515151;
+			}
+			.skill {
+				padding: 30px 0 40px 0;
+				border-bottom: 1px solid #a0a0a0;
+				div {
+					margin-bottom: 18px;
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+				.shanc {
+					display: flex;
+				}
+			}
+			.tag {
+				padding: 40px 40px 40px 0;
+				border-bottom: 1px solid #a0a0a0;
+				display: flex;
+				align-items: top;
+				div {
+					width: 60px;
+				}
+				span {
+					line-height: 20px;
+				}
+			}
+			.concat {
+				padding: 40px 0;
+				div {
+					margin-bottom: 18px;
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+			}
+			.foces {
+				.url {
+					font-size: 1.6rem;
+					color: $fontColor;
+					padding: 4px 7px;
+					cursor: pointer;
+					position: relative;
+					&:last-child {
+						margin-right: 0;
+					}
+					.qq {
+						font-size: 1.2rem;
+						color: #000;
+						position: absolute;
+						top: -20px;
+						left: -20px;
+						z-index: 999;
+					}
+					.wechat {
+						position: absolute;
+						top: -156px;
+						left: 0;
+						z-index: 999;
+						img {
+							width: 100px;
+							height: 150px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// 随机推荐组件样式
+
+.recommend {
+	padding: 40px 20px 120px 20px;
+	.company {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.title {
+		font-size: 1.4rem;
+		color: $fontColor;
+	}
+	.logo {
+		display: block;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		padding: 0 8px;
+		cursor: pointer;
 	}
 }
