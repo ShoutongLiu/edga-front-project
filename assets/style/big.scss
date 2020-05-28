@@ -590,3 +590,19 @@ $fontColor: #a0a0a0;
 		cursor: pointer;
 	}
 }
+
+.more-container {
+	.search {
+		display: flex;
+	}
+	.search-input {
+		flex: 1;
+		height: 36px;
+	}
+	.search-icon {
+		width: 56px;
+		height: 38px;
+		background-color: #515151;
+		border: 1px solid #515151;
+	}
+}
