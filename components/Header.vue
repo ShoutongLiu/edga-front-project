@@ -3,11 +3,13 @@
         <div class="container header-container">
             <div class="title">
                 <h1>
-                    <img
-                        class="logo"
-                        src="../static/edga-pc.png"
-                        alt="edga"
-                    >
+                    <nuxt-link to="/">
+                        <img
+                            class="logo"
+                            src="../static/edga-pc.png"
+                            alt="edga"
+                        >
+                    </nuxt-link>
                 </h1>
             </div>
             <div class="navbar">
@@ -24,6 +26,7 @@
                     <li
                         v-for="v in categroy"
                         :key="v._id"
+                        @click="goCate(v.url)"
                     >
                         <span>{{v.name}}</span>
                     </li>
@@ -45,11 +48,20 @@
             <div class="search">
                 <input
                     type="text"
-                    class="search-input"
+                    :class="`search-input ${searchShow ? 'show' :'hide'}`"
                     v-model="searchVal"
                     placeholder="搜索"
+                    @mouseenter="handleEnter"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @mouseleave="handleLeave"
                 >
-                <i class="iconfont icon-search"></i>
+                <i
+                    class="iconfont icon-search"
+                    @mouseenter="handleEnter"
+                    @mouseleave="searchShow = false"
+                    @click="goSearch"
+                ></i>
             </div>
             <transition name="fade">
                 <div
@@ -62,7 +74,7 @@
                         <li
                             v-for="v in navList"
                             :key="v._id"
-                            @click="toMore(v.url)"
+                            @click="toMore(v)"
                         >{{v.name}}</li>
                     </ul>
                 </div>
@@ -73,12 +85,16 @@
 
 <script>
 export default {
+    props: {
+        categroy: Array,
+        tag: Array
+    },
     data () {
         return {
+            isFocus: false,
+            searchShow: false,
             isShow: false,
             searchVal: '',
-            categroy: [],
-            tag: [],
             navList: [],
             cateArr: [
                 {
@@ -100,15 +116,9 @@ export default {
             ]
         }
     },
-    async mounted () {
-        const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
-        const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
-        this.categroy = categroy
-        this.tag = tag
-    },
     methods: {
         handleDownShow (val) {
-            if (val === 'rz') {
+            if (val === 'rz' || val === 'zz') {
                 return
             } else if (val === 'fl') {
                 this.navList = this.categroy
@@ -120,8 +130,41 @@ export default {
         handleDownHide () {
             this.isShow = false
         },
-        toMore (url) {
-            this.$router.push(`/${url}`)
+        toMore (v) {
+            this.$router.push({ path: `/${v.url}`, query: { key: v.name } })
+        },
+        goCate (url) {
+            this.$emit('anchor', url)
+        },
+        goSearch () {
+            if (!this.searchVal) {
+                return
+            }
+            this.$router.push({ path: '/search', query: { name: this.searchVal } })
+        },
+        // 获取焦点事件
+        handleFocus () {
+            this.isFocus = true
+            this.searchShow = true
+        },
+        handleLeave () {
+            if (this.isFocus) {
+                return
+            }
+            this.searchShow = false
+        },
+        // 鼠标划入
+        handleEnter () {
+            if (this.isFocus) {
+                return
+            }
+            this.isFocus = false
+            this.searchShow = true
+        },
+        // 失去焦点事件
+        handleBlur () {
+            this.isFocus = false
+            this.searchShow = false
         }
     }
 }

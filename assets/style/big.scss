@@ -68,19 +68,38 @@ $fontColor: #a0a0a0;
 			}
 		}
 	}
-
 	.search {
+		width: -1px;
 		display: flex;
 		align-items: center;
 		position: relative;
-
+		&::before {
+			content: '';
+			width: 244px;
+			height: 30px;
+		}
 		.search-input {
-			width: 240px;
+			width: 0px;
 			height: 30px;
 			border-radius: 16px;
 			border: 1px solid #ccc;
 			padding-left: 15px;
 			font-size: 1.2rem;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 999;
+			&.show {
+				transition: all .5s;
+				width: 244px;
+				opacity: 1;
+			}
+			&.hide {
+				transition: all .5s;
+				width: 0;
+				opacity: 0;
+			}
 		}
 
 		.icon-search {
@@ -92,6 +111,7 @@ $fontColor: #a0a0a0;
 			color: #000;
 			padding: 4px;
 			cursor: pointer;
+			z-index: 9999;
 		}
 	}
 
@@ -123,7 +143,7 @@ $fontColor: #a0a0a0;
 		}
 	}
 }
-
+// 下拉菜单
 .fade-enter-active {
 	transition: all .5s ease;
 }
@@ -137,6 +157,24 @@ $fontColor: #a0a0a0;
 	transform: translateY(-10px);
 	opacity: 0;
 }
+
+// 搜索框动画
+
+// .trans-enter-active {
+// 	transition: width .5s ease;
+// }
+
+// .trans-leave-active {
+// 	transition: width .5s ease;
+// }
+
+// .trans-enter {
+// 	width: 0;
+// }
+
+// .trans-leave-to {
+// 	width: 240px;
+// }
 
 // Banner
 
@@ -272,16 +310,14 @@ $fontColor: #a0a0a0;
 	.tag-item {
 		display: flex;
 		flex-wrap: wrap;
-		.item-box {
-			margin-right: 20px;
-			&:last-child {
-				margin-right: 0;
-			}
-		}
+		margin-right: -20px;
 	}
 }
 
 // ITEM
+.item-container {
+	margin-right: 20px;
+}
 .item {
 	width: 224px;
 	height: 56px;
@@ -353,12 +389,7 @@ $fontColor: #a0a0a0;
 	.nav-content {
 		display: flex;
 		flex-wrap: wrap;
-		.item-box {
-			margin-right: 20px;
-			&:last-child {
-				margin-right: 0;
-			}
-		}
+		margin-right: -20px;
 	}
 }
 
@@ -571,11 +602,12 @@ $fontColor: #a0a0a0;
 // 随机推荐组件样式
 
 .recommend {
-	padding: 40px 20px 120px 20px;
+	padding: 40px 0px 120px 0px;
+	width: 1024px;
+	margin: 0 auto;
 	.company {
 		display: flex;
 		align-items: center;
-		justify-content: center;
 	}
 	.title {
 		font-size: 1.4rem;
@@ -592,17 +624,50 @@ $fontColor: #a0a0a0;
 }
 
 .more-container {
-	.search {
-		display: flex;
+	// .search {
+	// 	display: flex;
+	// 	margin-top: 60px;
+	// }
+	// .search-input {
+	// 	flex: 1;
+	// 	height: 40px;
+	// 	border: none;
+	// 	padding-left: 15px;
+	// 	font-size: 1.4rem;
+	// }
+	// .search-icon {
+	// 	width: 56px;
+	// 	height: 38px;
+	// 	background-color: #515151;
+	// 	border: 1px solid #515151;
+	// 	position: relative;
+	// 	cursor: pointer;
+	// 	.iconfont {
+	// 		position: absolute;
+	// 		top: 50%;
+	// 		left: 50%;
+	// 		transform: translate(-50%, -50%);
+	// 		color: #fff;
+	// 	}
+	// }
+	// 分类数据
+	.content {
+		.title {
+			margin-top: 30px;
+			font-size: 1.6rem;
+			color: $fontColor;
+		}
+		.count {
+			color: #000;
+		}
+		.cate-data {
+			display: flex;
+			flex-wrap: wrap;
+			padding-top: 20px;
+			margin-right: -20px;
+		}
 	}
-	.search-input {
-		flex: 1;
-		height: 36px;
-	}
-	.search-icon {
-		width: 56px;
-		height: 38px;
-		background-color: #515151;
-		border: 1px solid #515151;
+	.recommend {
+		width: 1400px;
 	}
 }

@@ -1,10 +1,8 @@
 export default function ({ $axios, redirect }) {
     $axios.onRequest(config => {
-        console.log('Making request to ' + config.url)
     })
 
     $axios.onResponse(response => {
-        console.log(response)
         // 请求成功返回data
         return response.data
     })

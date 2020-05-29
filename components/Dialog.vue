@@ -214,7 +214,7 @@
             class="iconfont icon-close"
             @click="dialogHide"
         ></i>
-        <recommend :content="contents"></recommend>
+        <recommend></recommend>
     </div>
 </template>
 
@@ -223,8 +223,7 @@ import recommend from './Recommend'
 export default {
     props: {
         show: Boolean,
-        info: Object,
-        contents: Array
+        info: Object
     },
     components: { recommend },
     data () {

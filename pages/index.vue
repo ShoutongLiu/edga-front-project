@@ -1,79 +1,80 @@
 <template>
-    <div class="container">
-        <div class="main">
-            <div class="banner-container">
-                <banner :banners="banners"></banner>
-                <small-img :graphs="graphs"></small-img>
+    <div>
+        <edga-header
+            :categroy="categroy"
+            :tag="tag"
+            @anchor="goAnchor"
+        ></edga-header>
+        <div class="container">
+            <div class="main">
+                <div class="banner-container">
+                    <banner :banners="banners"></banner>
+                    <small-img :graphs="graphs"></small-img>
+                </div>
+                <div class="top-container">
+                    <top-list :newTop="newTopData"></top-list>
+                </div>
             </div>
-            <div class="top-container">
-                <top-list :newTop="newTopData"></top-list>
-            </div>
-        </div>
-        <div class="list">
-            <div class="list-container">
-                <!-- 标签分类 -->
-                <div class="tag-list">
-                    <ul class="tag-box">
-                        <li
-                            v-for="v in tag"
-                            :key="v._id"
-                            @mouseenter="handleEnter(v.name)"
-                            :class="{active: v.name === currentTag}"
-                        >
-                            {{v.name}}
-                        </li>
-                    </ul>
-                    <div class="tag-item">
-                        <div
-                            v-for="v in screenTag"
-                            :key="v._id"
-                            class="item-box"
-                        >
+            <div class="list">
+                <div class="list-container">
+                    <!-- 标签分类 -->
+                    <div class="tag-list">
+                        <ul class="tag-box">
+                            <li
+                                v-for="v in tag"
+                                :key="v._id"
+                                @mouseenter="handleEnter(v.name)"
+                                :class="{active: v.name === currentTag}"
+                            >
+                                <span v-if="v.showIndex">{{v.name}}</span>
+                            </li>
+                        </ul>
+                        <div class="tag-item">
                             <nav-item
+                                v-for="v in screenTag"
+                                :key="v._id"
                                 @show="handleShow"
                                 :item="v"
                             ></nav-item>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="nav-list">
-                <div
-                    class="list-box"
-                    v-for="v in cateData"
-                    :key="v.title"
-                >
-                    <div class="title">
-                        <span>{{v.title}}推荐</span>
-                        <span @click="toMore(v.title)">更多</span>
-                    </div>
-                    <div class="nav-content">
+                <div class="nav-list">
+                    <div
+                        class="list-box"
+                        v-for="v in newContents"
+                        :key="v.title"
+                    >
                         <div
-                            v-for="i in v.data"
-                            :key="i._id"
-                            class="item-box"
+                            class="title"
+                            :id="v.id"
                         >
+                            <span>{{v.title}}推荐</span>
+                            <span @click="toMore(v.title, v.id)">更多</span>
+                        </div>
+                        <div class="nav-content">
                             <nav-item
+                                v-for="i in v.data"
+                                :key="i._id"
                                 @show="handleShow"
                                 :item="i"
                             ></nav-item>
                         </div>
-
                     </div>
                 </div>
-
             </div>
+            <dialog-show
+                :info="companyInfo"
+                :show="isShow"
+                :contents="contents"
+                @hide="handleHide"
+            ></dialog-show>
         </div>
-        <dialog-show
-            :info="companyInfo"
-            :show="isShow"
-            :contents="contents"
-            @hide="handleHide"
-        ></dialog-show>
     </div>
 </template>
 
 <script>
+import edgaHeader from '../components/Header'
 import Banner from '../components/Banner'
 import SmallImg from '../components/SmallImg'
 import TopList from '../components/TopList'
@@ -89,11 +90,14 @@ export default {
             graphs: [],
             tag: [],
             contents: [],
+            newContents: [],
             categroy: [],
-            companyInfo: {}
+            companyInfo: {},
+            timer: null
         }
     },
     components: {
+        edgaHeader,
         Banner,
         SmallImg,
         TopList,
@@ -108,11 +112,22 @@ export default {
         const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
         return { banners, graphs, tag, contents, categroy }
     },
-    async mounted () {
+    mounted () {
+        let { url } = this.$route.params
+        if (url) {
+            // 定时器等待dom渲染完成
+            this.timer = setTimeout(() => {
+                this.goAnchor(url)
+            }, 500);
+        }
         // 获取Bus传值
         EventBus.$on('showDetail', (item) => {
             this.companyInfo = item
         })
+        this.cateData()
+
+        // 将数据存入本地存储
+        localStorage.setItem('contents', JSON.stringify(this.contents));
     },
     computed: {
         // 标签分类
@@ -128,9 +143,28 @@ export default {
         // 最新排行
         newTopData: function () {
             return this.contents.slice(0, 9)
+        }
+    },
+    methods: {
+        // 显示详情
+        handleShow (info) {
+            this.companyInfo = info
+            this.isShow = true
+            document.body.style.overflow = 'hidden'
         },
-        // 分类数据
-        cateData: function () {
+        handleEnter (tag) {
+            this.currentTag = tag
+        },
+        handleHide () {
+            this.isShow = false
+            document.body.style.overflow = 'auto'
+        },
+        // 更多跳转
+        toMore (name, url) {
+            this.$router.push({ path: `/${url}`, query: { key: name } })
+        },
+        // // 分类数据
+        cateData () {
             let cateArr = []
             let CateData = []
             this.contents.forEach(c => {
@@ -147,34 +181,25 @@ export default {
                 })
                 CateData.push({ title: n, data })
             })
-            return CateData
+            this.categroy.forEach(v => {
+                CateData.forEach(c => {
+                    if (c.title === v.name) {
+                        c.id = v.url
+                    }
+                })
+            })
+            this.newContents = CateData
+        },
+        // 锚点跳转
+        goAnchor (url) {
+            const returnEle = document.querySelector(`#${url}`);
+            if (!!returnEle) {
+                returnEle.scrollIntoView(true);
+            }
         }
     },
-    methods: {
-        // 显示详情
-        handleShow (info) {
-            console.log(info);
-            this.companyInfo = info
-            this.isShow = true
-            document.body.style.overflow = 'hidden'
-        },
-        handleEnter (tag) {
-            console.log(tag);
-            this.currentTag = tag
-        },
-        handleHide () {
-            this.isShow = false
-            document.body.style.overflow = 'auto'
-        },
-        toMore (title) {
-            let url = ''
-            this.categroy.forEach(v => {
-                if (v.name === title) {
-                    url = v.url
-                }
-            })
-            this.$router.push(`/${url}`)
-        }
+    destroyed () {
+        clearTimeout(this.timer)
     }
 }
 </script>

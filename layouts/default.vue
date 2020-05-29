@@ -1,6 +1,6 @@
 <template>
     <div class="app-main">
-        <edga-header></edga-header>
+        <!-- <edga-header></edga-header> -->
         <div class="main-container">
             <nuxt />
         </div>
@@ -9,10 +9,9 @@
 </template>
 
 <script>
-import edgaHeader from '../components/Header'
 import edgaFooter from '../components/Footer'
 export default {
-    components: { edgaHeader, edgaFooter },
+    components: { edgaFooter }
 }
 </script>
 
