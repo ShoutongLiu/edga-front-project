@@ -1,10 +1,7 @@
 <template>
     <div>
-        <edga-header
-            :categroy="categroy"
-            :tag="tag"
-            @anchor="goAnchor"
-        ></edga-header>
+        <edga-header @data="handleGetData"
+                     @anchor="goAnchor"></edga-header>
         <div class="container">
             <div class="main">
                 <div class="banner-container">
@@ -20,55 +17,43 @@
                     <!-- 标签分类 -->
                     <div class="tag-list">
                         <ul class="tag-box">
-                            <li
-                                v-for="v in tag"
+                            <li v-for="v in tag"
                                 :key="v._id"
                                 @mouseenter="handleEnter(v.name)"
-                                :class="{active: v.name === currentTag}"
-                            >
+                                :class="{active: v.name === currentTag}">
                                 <span v-if="v.showIndex">{{v.name}}</span>
                             </li>
                         </ul>
                         <div class="tag-item">
-                            <nav-item
-                                v-for="v in screenTag"
-                                :key="v._id"
-                                @show="handleShow"
-                                :item="v"
-                            ></nav-item>
+                            <nav-item v-for="v in screenTag"
+                                      :key="v._id"
+                                      @show="handleShow"
+                                      :item="v"></nav-item>
                         </div>
                     </div>
                 </div>
                 <div class="nav-list">
-                    <div
-                        class="list-box"
-                        v-for="v in newContents"
-                        :key="v.title"
-                    >
-                        <div
-                            class="title"
-                            :id="v.id"
-                        >
+                    <div class="list-box"
+                         v-for="v in newContents"
+                         :key="v.title">
+                        <div class="title"
+                             :id="v.id">
                             <span>{{v.title}}推荐</span>
                             <span @click="toMore(v.title, v.id)">更多</span>
                         </div>
                         <div class="nav-content">
-                            <nav-item
-                                v-for="i in v.data"
-                                :key="i._id"
-                                @show="handleShow"
-                                :item="i"
-                            ></nav-item>
+                            <nav-item v-for="i in v.data"
+                                      :key="i._id"
+                                      @show="handleShow"
+                                      :item="i"></nav-item>
                         </div>
                     </div>
                 </div>
             </div>
-            <dialog-show
-                :info="companyInfo"
-                :show="isShow"
-                :contents="contents"
-                @hide="handleHide"
-            ></dialog-show>
+            <dialog-show :info="companyInfo"
+                         :show="isShow"
+                         :contents="contents"
+                         @hide="handleHide"></dialog-show>
         </div>
     </div>
 </template>
@@ -107,10 +92,8 @@ export default {
     async asyncData ({ $axios }) {
         const { banners } = await $axios.$get('/banner/get')
         const { graphs } = await $axios.$get('/graph/get')
-        const { tag } = await $axios.$post('/tag/get', { page: 0 })
         const { contents } = await $axios.$post('/content/get', { page: 0 })
-        const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
-        return { banners, graphs, tag, contents, categroy }
+        return { banners, graphs, contents }
     },
     mounted () {
         let { url } = this.$route.params
@@ -142,7 +125,12 @@ export default {
         },
         // 最新排行
         newTopData: function () {
-            return this.contents.slice(0, 9)
+            if (this.contents.length > 0) {
+                return this.contents.slice(0, 9)
+            } else {
+                return []
+            }
+
         }
     },
     methods: {
@@ -196,6 +184,10 @@ export default {
             if (!!returnEle) {
                 returnEle.scrollIntoView(true);
             }
+        },
+        handleGetData ({ tag, categroy }) {
+            this.tag = tag
+            this.categroy = categroy
         }
     },
     destroyed () {

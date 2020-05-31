@@ -1,18 +1,12 @@
 <template>
-    <div
-        class="item-container"
-        v-if="item.showIndex"
-    >
-        <div
-            class="item"
-            @click="showDetail"
-        >
+    <div class="item-container"
+         v-if="item.showIndex">
+        <div class="item"
+             @click="showDetail">
             <div>
-                <img
-                    :src="item.avatarUrl"
-                    alt=""
-                    class="logo"
-                >
+                <img :src="item.avatarUrl"
+                     alt=""
+                     class="logo">
             </div>
             <div class="item-info">
                 <div class="item-name">{{item.companyName}}</div>
@@ -23,16 +17,12 @@
                 </div>
             </div>
             <div class="true">
-                <img
-                    src="~/assets/tui-pc.png"
-                    alt="tui"
-                    v-if="item.showType.includes('推荐')"
-                >
-                <img
-                    src="~/assets/zheng-pc.png"
-                    alt="zheng"
-                    v-if="item.showType.includes('认证')"
-                >
+                <img src="~/static/imgs/tui-pc.png"
+                     alt="tui"
+                     v-if="item.showType.includes('推荐')">
+                <img src="~/static/imgs/zheng-pc.png"
+                     alt="zheng"
+                     v-if="item.showType.includes('认证')">
             </div>
         </div>
     </div>

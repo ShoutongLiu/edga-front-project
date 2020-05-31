@@ -1,26 +1,19 @@
 <template>
-    <div
-        class="swiper"
-        ref="mySwiper"
-        v-swiper:myDirectiveSwiper="swiperOptions"
-        @mouseenter="stopSwiper"
-        @mouseleave="startSwiper"
-    >
+    <div class="swiper"
+         ref="mySwiper"
+         v-swiper:myDirectiveSwiper="swiperOptions"
+         @mouseenter="stopSwiper"
+         @mouseleave="startSwiper">
         <div class="swiper-wrapper">
-            <div
-                class="swiper-slide"
-                v-for="b in banners"
-                :key="b._id"
-            >
-                <a
-                    :href="b.url"
-                    class="banner-url"
-                >
-                    <img
-                        :src="b.path"
-                        alt="banner"
-                        class="banner"
-                    >
+            <div class="swiper-slide"
+                 v-for="b in banners"
+                 :key="b._id">
+                <a :href="b.url"
+                   target="_blank"
+                   class="banner-url">
+                    <img :src="b.path"
+                         alt="banner"
+                         class="banner">
                 </a>
             </div>
         </div>

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "279898",
+      "name": "gou",
+      "font_class": "gou",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
       "icon_id": "836537",
       "name": "facebook",
       "font_class": "facebook",

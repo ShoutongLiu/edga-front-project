@@ -1,10 +1,7 @@
 <template>
     <div>
-        <edga-header
-            :categroy="categroy"
-            :tag="tag"
-            @anchor="goAnchor"
-        ></edga-header>
+        <edga-header @data="handleGetData"
+                     @anchor="goAnchor"></edga-header>
         <div class="container more-container">
             <!-- <div class="search">
                 <input
@@ -21,37 +18,29 @@
                 </div>
             </div> -->
             <div class="content">
-                <div
-                    class="title"
-                    v-if="contents.length !== 0"
-                >
+                <div class="title"
+                     v-if="contents.length !== 0">
                     <span>{{type}}:</span>
                     <span>{{value}}</span>
                     <span class="count">{{contents.length}}</span>个
                 </div>
-                <div
-                    class="title"
-                    v-if="contents.length === 0"
-                >
+                <div class="title"
+                     v-if="contents.length === 0">
                     抱歉，找不到任何结果。以下推荐的行家您可能会喜欢！
                 </div>
                 <div class="cate-data">
-                    <nav-item
-                        v-for="v in contents"
-                        :key="v._id"
-                        :item="v"
-                        @show="handleShow"
-                    ></nav-item>
+                    <nav-item v-for="v in contents"
+                              :key="v._id"
+                              :item="v"
+                              @show="handleShow"></nav-item>
                 </div>
             </div>
             <recommend></recommend>
         </div>
-        <dialog-show
-            :info="companyInfo"
-            :show="isShow"
-            :contents="contents"
-            @hide="handleHide"
-        ></dialog-show>
+        <dialog-show :info="companyInfo"
+                     :show="isShow"
+                     :contents="contents"
+                     @hide="handleHide"></dialog-show>
     </div>
 </template>
 
@@ -78,13 +67,7 @@ export default {
         recommend,
         DialogShow
     },
-    async asyncData ({ $axios }) {
-        const { tag } = await $axios.$post('/tag/get', { page: 0 })
-        const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
-
-        return { tag, categroy }
-    },
-    async mounted () {
+    mounted () {
         // 获取传参
         if (this.$route.query.name) {
             let name = this.$route.query.name
@@ -145,6 +128,10 @@ export default {
                 v.showIndex = true
             })
             this.contents = data
+        },
+        handleGetData ({ tag, categroy }) {
+            this.tag = tag
+            this.categroy = categroy
         }
     }
 }

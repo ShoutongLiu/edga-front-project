@@ -19,7 +19,9 @@ $fontColor: #a0a0a0;
 	align-items: center;
 	justify-content: space-between;
 	position: relative;
-
+	.navbar {
+		position: relative;
+	}
 	.navlist {
 		display: flex;
 		align-items: center;
@@ -137,6 +139,27 @@ $fontColor: #a0a0a0;
 				cursor: pointer;
 
 				&:hover {
+					color: #409eff;
+				}
+			}
+		}
+	}
+	.station {
+		position: absolute;
+		top: 65px;
+		right: 0px;
+		background-color: #fff;
+		border-radius: 4px;
+		z-index: 999;
+		li {
+			width: 120px;
+			padding: 10px 20px;
+			a {
+				display: block;
+				color: #000;
+			}
+			&:hover {
+				a {
 					color: #409eff;
 				}
 			}
@@ -669,5 +692,88 @@ $fontColor: #a0a0a0;
 	}
 	.recommend {
 		width: 1400px;
+	}
+}
+
+// 入驻
+.introduce {
+	width: 1024px;
+	margin: 0 auto;
+	padding: 60px 0;
+	.title {
+		font-size: 1.8rem;
+		margin-bottom: 20px;
+		margin-top: 60px;
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+	p {
+		font-size: 1.4rem;
+		line-height: 24px;
+		&.p2 {
+			margin-top: 50px;
+		}
+	}
+	.table {
+		display: flex;
+		justify-content: center;
+		margin-top: 60px;
+
+		.table-item {
+			margin-right: 20px;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.item-title {
+			width: 268px;
+			height: 88px;
+			background-color: #515151;
+			color: #fff;
+			line-height: 88px;
+			font-size: 1.6rem;
+			.hj {
+				padding-left: 30px;
+			}
+			.num {
+				font-size: 3.2rem;
+				padding: 0 4px;
+			}
+			.time {
+				font-size: 1rem;
+			}
+		}
+		.item-list {
+			background-color: #fff;
+			font-size: 1.4rem;
+			padding: 10px 30px 20px 30px;
+			li {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 0;
+				color: #515151;
+				.icon-gou {
+					font-size: 2.2rem;
+				}
+				.icon-close {
+					width: 22px;
+					height: 24px;
+					text-align: center;
+					line-height: 24px;
+				}
+				.val {
+					height: 24px;
+					line-height: 24px;
+				}
+			}
+		}
+	}
+	.contact {
+		img {
+			display: block;
+			margin-top: 10px;
+		}
 	}
 }
