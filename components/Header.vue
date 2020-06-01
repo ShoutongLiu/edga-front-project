@@ -4,31 +4,39 @@
             <div class="title">
                 <h1>
                     <nuxt-link to="/">
-                        <img class="logo"
-                             src="../static/imgs/edga-pc.png"
-                             alt="edga">
+                        <img
+                            class="logo"
+                            src="../static/imgs/edga-pc.png"
+                            alt="edga"
+                        >
                     </nuxt-link>
                 </h1>
             </div>
             <div class="navbar">
                 <ul class="navlist">
-                    <li @click="$router.push('/')"
-                        style="color: #a0a0a0">
+                    <li
+                        @click="$router.push('/')"
+                        style="color: #a0a0a0"
+                    >
                         <span>首页</span>
                     </li>
                     <li>
                         <span>领域</span>
                     </li>
-                    <li v-for="v in categroy"
+                    <li
+                        v-for="v in categroy"
                         :key="v._id"
-                        @click="goCate(v.url)">
+                        @click="goCate(v.url)"
+                    >
                         <span>{{v.name}}</span>
                     </li>
-                    <li class="cate"
+                    <li
+                        class="cate"
                         v-for="v in cateArr"
                         :key="v.key"
                         @mouseenter="handleDownShow(v.value)"
-                        @mouseleave="handleDownHide">
+                        @mouseleave="handleDownHide"
+                    >
                         <span> {{v.name}}</span>
                         <i class="iconfont icon-down"></i>
                     </li>
@@ -39,43 +47,58 @@
                     </li>
                 </ul>
                 <transition name="fade">
-                    <div class="station"
-                         @mouseenter="isStationShow = true"
-                         @mouseleave="isStationShow = false"
-                         v-show="isStationShow">
+                    <div
+                        class="station"
+                        @mouseenter="isStationShow = true"
+                        @mouseleave="isStationShow = false"
+                        v-show="isStationShow"
+                    >
                         <ul class="station-list">
-                            <li v-for="v in station"
-                                :key="v.url">
-                                <a :href="v.url"
-                                   target="_blank">{{v.name}}</a>
+                            <li
+                                v-for="v in station"
+                                :key="v.url"
+                            >
+                                <a
+                                    :href="v.url"
+                                    target="_blank"
+                                >{{v.name}}</a>
                             </li>
                         </ul>
                     </div>
                 </transition>
             </div>
             <div class="search">
-                <input type="text"
-                       :class="`search-input ${searchShow ? 'show' :'hide'}`"
-                       v-model="searchVal"
-                       placeholder="搜索"
-                       @mouseenter="handleEnter"
-                       @focus="handleFocus"
-                       @blur="handleBlur"
-                       @mouseleave="handleLeave">
-                <i class="iconfont icon-search"
-                   @mouseenter="handleEnter"
-                   @mouseleave="handleLeave"
-                   @click="goSearch"></i>
+                <input
+                    type="text"
+                    :class="`search-input ${searchShow ? 'show' :'hide'}`"
+                    v-model="searchVal"
+                    placeholder="搜索"
+                    @mouseenter="handleEnter"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @mouseleave="handleLeave"
+                    @keyup.enter="goSearch"
+                >
+                <i
+                    class="iconfont icon-search"
+                    @mouseenter="handleEnter"
+                    @mouseleave="handleLeave"
+                    @click="goSearch"
+                ></i>
             </div>
             <transition name="fade">
-                <div class="hover"
-                     @mouseenter="handleDownShow"
-                     @mouseleave="handleDownHide"
-                     v-show="isShow">
+                <div
+                    class="hover"
+                    @mouseenter="handleDownShow"
+                    @mouseleave="handleDownHide"
+                    v-show="isShow"
+                >
                     <ul class="hover-list">
-                        <li v-for="v in navList"
+                        <li
+                            v-for="v in navList"
                             :key="v._id"
-                            @click="toMore(v)">{{v.name}}</li>
+                            @click="toMore(v)"
+                        >{{v.name}}</li>
                     </ul>
                 </div>
             </transition>
@@ -152,7 +175,9 @@ export default {
             if (!this.searchVal) {
                 return
             }
+            this.$emit('search', this.searchVal)
             this.$router.push({ path: '/search', query: { name: this.searchVal } })
+            this.searchVal = ''
         },
         // 获取焦点事件
         handleFocus () {

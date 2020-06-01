@@ -1,7 +1,9 @@
 <template>
     <div>
-        <edga-header @data="handleGetData"
-                     @anchor="goAnchor"></edga-header>
+        <edga-header
+            @data="handleGetData"
+            @anchor="goAnchor"
+        ></edga-header>
         <div class="container">
             <div class="main">
                 <div class="banner-container">
@@ -17,43 +19,56 @@
                     <!-- 标签分类 -->
                     <div class="tag-list">
                         <ul class="tag-box">
-                            <li v-for="v in tag"
+                            <li
+                                v-for="v in tag"
                                 :key="v._id"
                                 @mouseenter="handleEnter(v.name)"
-                                :class="{active: v.name === currentTag}">
+                                :class="{active: v.name === currentTag}"
+                            >
                                 <span v-if="v.showIndex">{{v.name}}</span>
                             </li>
                         </ul>
                         <div class="tag-item">
-                            <nav-item v-for="v in screenTag"
-                                      :key="v._id"
-                                      @show="handleShow"
-                                      :item="v"></nav-item>
+                            <nav-item
+                                v-for="v in screenTag"
+                                :key="v._id"
+                                @show="handleShow"
+                                :item="v"
+                            ></nav-item>
                         </div>
                     </div>
                 </div>
                 <div class="nav-list">
-                    <div class="list-box"
-                         v-for="v in newContents"
-                         :key="v.title">
-                        <div class="title"
-                             :id="v.id">
+                    <div
+                        class="list-box"
+                        v-for="v in newContents"
+                        :key="v.title"
+                    >
+                        <div
+                            class="title"
+                            :id="v.id"
+                        >
                             <span>{{v.title}}推荐</span>
                             <span @click="toMore(v.title, v.id)">更多</span>
                         </div>
                         <div class="nav-content">
-                            <nav-item v-for="i in v.data"
-                                      :key="i._id"
-                                      @show="handleShow"
-                                      :item="i"></nav-item>
+                            <nav-item
+                                v-for="i in v.data"
+                                :key="i._id"
+                                :item="i"
+                                @setTime="handleIsView"
+                                @show="handleShow"
+                            ></nav-item>
                         </div>
                     </div>
                 </div>
             </div>
-            <dialog-show :info="companyInfo"
-                         :show="isShow"
-                         :contents="contents"
-                         @hide="handleHide"></dialog-show>
+            <dialog-show
+                :info="companyInfo"
+                :show="isShow"
+                :contents="contents"
+                @hide="handleHide"
+            ></dialog-show>
         </div>
     </div>
 </template>
@@ -78,7 +93,8 @@ export default {
             newContents: [],
             categroy: [],
             companyInfo: {},
-            timer: null
+            timer: null,
+            time: 0
         }
     },
     components: {
@@ -103,11 +119,12 @@ export default {
                 this.goAnchor(url)
             }, 500);
         }
-        // 获取Bus传值
+
+        // 获取推荐的Bus传值
         EventBus.$on('showDetail', (item) => {
             this.companyInfo = item
         })
-        this.cateData()
+
 
         // 将数据存入本地存储
         localStorage.setItem('contents', JSON.stringify(this.contents));
@@ -135,13 +152,23 @@ export default {
     },
     methods: {
         // 显示详情
-        handleShow (info) {
+        async handleShow (info) {
             this.companyInfo = info
             this.isShow = true
             document.body.style.overflow = 'hidden'
+            if (this.time > 0) {
+                return
+            }
+            const { contents } = await this.$axios.$post('/content/get', { page: 0 })
+            this.contents = contents
+            this.cateData(this.categroy)
         },
         handleEnter (tag) {
             this.currentTag = tag
+        },
+        // 获取时间差
+        handleIsView (time) {
+            this.time = time
         },
         handleHide () {
             this.isShow = false
@@ -151,8 +178,14 @@ export default {
         toMore (name, url) {
             this.$router.push({ path: `/${url}`, query: { key: name } })
         },
+        // 获取分类和标签数据
+        handleGetData ({ tag, categroy }) {
+            this.tag = tag
+            this.categroy = categroy
+            this.cateData(this.categroy)
+        },
         // // 分类数据
-        cateData () {
+        cateData (categroy) {
             let cateArr = []
             let CateData = []
             this.contents.forEach(c => {
@@ -169,7 +202,7 @@ export default {
                 })
                 CateData.push({ title: n, data })
             })
-            this.categroy.forEach(v => {
+            categroy.forEach(v => {
                 CateData.forEach(c => {
                     if (c.title === v.name) {
                         c.id = v.url
@@ -184,10 +217,6 @@ export default {
             if (!!returnEle) {
                 returnEle.scrollIntoView(true);
             }
-        },
-        handleGetData ({ tag, categroy }) {
-            this.tag = tag
-            this.categroy = categroy
         }
     },
     destroyed () {

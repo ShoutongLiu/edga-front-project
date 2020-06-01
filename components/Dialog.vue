@@ -1,39 +1,55 @@
 <template>
-    <div class="dialog"
-         v-if="show"
-         @click="dialogHide">
-        <div class="dialog-container"
-             @click.stop="handleStop">
+    <div
+        class="dialog"
+        v-if="show"
+        @click="dialogHide"
+    >
+        <div
+            class="dialog-container"
+            @click.stop="handleStop"
+        >
             <!-- 轮播图 -->
             <div class="banner">
-                <div class="swiper"
-                     ref="mySwiper"
-                     v-swiper:myDirectiveSwiper="swiperOptions"
-                     @mouseenter="stopSwiper"
-                     @mouseleave="startSwiper">
+                <div
+                    class="swiper"
+                    ref="mySwiper"
+                    v-swiper:myDirectiveSwiper="swiperOptions"
+                    @mouseenter="stopSwiper"
+                    @mouseleave="startSwiper"
+                >
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"
-                             v-for="b in info.pics"
-                             :key="b">
-                            <img :src="b"
-                                 alt="banner"
-                                 class="dia-banner">
+                        <div
+                            class="swiper-slide"
+                            v-for="b in info.pics"
+                            :key="b"
+                        >
+                            <img
+                                :src="b"
+                                alt="banner"
+                                class="dia-banner"
+                            >
                         </div>
                     </div>
                     <!-- 前进后退按钮 -->
-                    <div class="swiper-button-prev"
-                         slot="button-prev"></div>
-                    <div class="swiper-button-next"
-                         slot="button-next"></div>
+                    <div
+                        class="swiper-button-prev"
+                        slot="button-prev"
+                    ></div>
+                    <div
+                        class="swiper-button-next"
+                        slot="button-next"
+                    ></div>
                     <div class="swiper-pagination swiper-pagination-bullets"></div>
                 </div>
             </div>
             <!--公司logo等  -->
             <div class="company-logo">
                 <div class="left">
-                    <img :src="info.avatarUrl"
-                         alt="logo"
-                         class="logo">
+                    <img
+                        :src="info.avatarUrl"
+                        alt="logo"
+                        class="logo"
+                    >
                     <div class="view">
                         <div class="name">
                             {{info.companyName}}
@@ -56,19 +72,25 @@
                 </div>
                 <div class="right">
                     <div v-if="info.showType.includes('认证')">
-                        <img src="~/static/imgs/yirenzheng.png"
-                             alt="renzheng"
-                             class="renzheng">
+                        <img
+                            src="~/static/imgs/yirenzheng.png"
+                            alt="renzheng"
+                            class="renzheng"
+                        >
                         <p>已认证</p>
                     </div>
                     <div v-if="info.showType.includes('推荐')">
-                        <img src="~/static/imgs/yituijian.png"
-                             alt="tuijian">
+                        <img
+                            src="~/static/imgs/yituijian.png"
+                            alt="tuijian"
+                        >
                         <p>已推荐</p>
                     </div>
                     <div @click="handleLove">
-                        <img src="~/static/imgs/love-red.png"
-                             alt="love">
+                        <img
+                            src="~/static/imgs/love-red.png"
+                            alt="love"
+                        >
                         <p>喜欢</p>
                     </div>
                 </div>
@@ -80,8 +102,10 @@
                     <div class="guanwang">访问官网</div>
                 </div>
                 <div class="contcant">
-                    <div class="renzheng"
-                         v-if="info.showType.includes('认证')">
+                    <div
+                        class="renzheng"
+                        v-if="info.showType.includes('认证')"
+                    >
                         认证：<span>{{info.companyName}}</span>
                     </div>
                     <div class="skill">
@@ -117,48 +141,68 @@
                     </div>
                     <div class="foces">
                         <div>关注：
-                            <span class="url"
-                                  @mouseenter="qqShow = true"
-                                  @mouseleave="qqShow = false">
-                                <p class="qq"
-                                   v-show="qqShow">{{info.qq}}</p>
+                            <span
+                                class="url"
+                                @mouseenter="qqShow = true"
+                                @mouseleave="qqShow = false"
+                            >
+                                <p
+                                    class="qq"
+                                    v-show="qqShow"
+                                >{{info.qq}}</p>
                                 <i class="iconfont icon-qq"></i>
                             </span>
-                            <span class="url"
-                                  @mouseenter="wechatShow = true"
-                                  @mouseleave="wechatShow = false">
-                                <div v-if="info.wxchat.length !== 0"
-                                     class="wechat">
-                                    <img :src="info.wxchat[0].url"
-                                         alt="wechat"
-                                         v-show="wechatShow">
+                            <span
+                                class="url"
+                                @mouseenter="wechatShow = true"
+                                @mouseleave="wechatShow = false"
+                            >
+                                <div
+                                    v-if="info.wxchat.length !== 0"
+                                    class="wechat"
+                                >
+                                    <img
+                                        :src="info.wxchat[0].url"
+                                        alt="wechat"
+                                        v-show="wechatShow"
+                                    >
                                 </div>
                                 <i class="iconfont icon-wechat"></i>
                             </span>
                             <!-- 使用a标签跳转外部链接需要加上http或https -->
-                            <a :href="info.weibo"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.weibo"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-weibo"></i>
                             </a>
-                            <a :href="info.pinterest"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.pinterest"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-pinterest"></i>
                             </a>
-                            <a :href="info.twitter"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.twitter"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-twitter"></i>
                             </a>
-                            <a :href="info.behance"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.behance"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-behance"></i>
                             </a>
-                            <a :href="info.facebook"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.facebook"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-facebook"></i>
                             </a>
                         </div>
@@ -166,8 +210,10 @@
                 </div>
             </div>
         </div>
-        <i class="iconfont icon-close"
-           @click="dialogHide"></i>
+        <i
+            class="iconfont icon-close"
+            @click="dialogHide"
+        ></i>
         <recommend></recommend>
     </div>
 </template>
@@ -222,8 +268,25 @@ export default {
             this.myDirectiveSwiper.autoplay.start()
         },
         handleStop () { },
-        handleLove () {
-            this.isLoveCount = this.isLoveCount += 1
+        async handleLove () {
+            // 求出时间差
+            let time = this.item.commitTime - new Date().getTime()
+            let currentTimer = this.item.commitTime === 0 || time < 0 ? setTime : time
+            // 把状态传递给父组件，避免多次请求
+            // this.$emit('isView', time)
+            if (this.isView || time > 0) {
+                return
+            }
+            let updateObj = JSON.parse(JSON.stringify(this.item))
+            this.view += 1
+            this.isView = true
+            updateObj.views = this.view
+            updateObj.commitTime = new Date().getTime() + setTime
+            const { isUpdate } = await this.$axios.$post('/content/update', updateObj)
+            console.log(currentTimer);
+            this.timer = setTimeout(() => {
+                this.isView = false
+            }, currentTimer)
         }
     }
 }
