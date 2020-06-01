@@ -21,7 +21,8 @@ export default {
     data () {
         return {
             contents: [],
-            rendomData: []
+            rendomData: [],
+            time: 0
         }
     },
     mounted () {
@@ -33,9 +34,8 @@ export default {
             console.log(item);
             // 求出时间差
             let time = item.commitTime - new Date().getTime()
+            this.time = time
             console.log(time);
-            let currentTimer = item.commitTime === 0 || time < 0 ? setTime : time
-            console.log(currentTimer);
             if (time > 0) {
                 return
             }
@@ -51,9 +51,10 @@ export default {
         async getData () {
             // 先从本地存储拿，没有再去请求
             const contentData = localStorage.getItem('contents')
-            if (!contentData) {
+            if (!contentData || this.time < 0) {
                 const { contents } = await this.$axios.$post('/content/get', { page: 0 })
                 this.contents = contents
+                this.rendom(this.contents)
                 return
             }
             this.contents = JSON.parse(contentData)
