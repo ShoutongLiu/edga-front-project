@@ -40,12 +40,11 @@
                         v-for="v in contents"
                         :key="v._id"
                         :item="v"
-                        @setTime="handleIsView"
                         @show="handleShow"
                     ></nav-item>
                 </div>
             </div>
-            <recommend></recommend>
+            <recommend :data="recommendData"></recommend>
         </div>
         <dialog-show
             :info="companyInfo"
@@ -62,6 +61,7 @@ import NavItem from '../components/NavItem'
 import recommend from '../components/Recommend'
 import DialogShow from '../components/Dialog'
 import { EventBus } from '../utils/bus'
+import rendom from '../utils/rendom'
 export default {
     data () {
         return {
@@ -70,6 +70,7 @@ export default {
             categroy: [],
             tag: [],
             contents: [],
+            recommendData: [],
             companyInfo: {},
             isShow: false,
             time: 0
@@ -95,6 +96,7 @@ export default {
             this.isShow = true
             this.companyInfo = item
         })
+        this.getData()
     },
     methods: {
         // 显示详情
@@ -102,8 +104,12 @@ export default {
             this.companyInfo = info
             this.isShow = true
             document.body.style.overflow = 'hidden'
-            // 时间差大于0 ，不请求
-            if (this.time > 0) {
+        },
+        handleHide (obj) {
+            console.log(obj);
+            this.isShow = false
+            document.body.style.overflow = 'auto'
+            if (!obj.isLove && !obj.isView) {
                 return
             }
             // 重新请求
@@ -111,15 +117,13 @@ export default {
                 let name = this.$route.query.name
                 this.goSearch(name)
             }
-            this.reqJudge(this.type)
+            this.reqJudge(this.type);
+            this.getData()
         },
-        handleHide () {
-            this.isShow = false
-            document.body.style.overflow = 'auto'
-        },
-        // 获取时间差
-        handleIsView (time) {
-            this.time = time
+        // 获取数据
+        async getData () {
+            const { contents } = await this.$axios.$post('/content/get', { page: 0 })
+            this.recommendData = rendom(contents)
         },
         async reqJudge (type) {
             if (type === '类别') {

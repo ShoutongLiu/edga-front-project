@@ -39,14 +39,16 @@
 </template>
 
 <script>
-let setTime = 1000 * 60 * 5
+import { EventBus } from '../utils/bus'
 export default {
     props: {
         item: Object
     },
     data () {
         return {
-            timer: null
+            viewCount: 0,
+            commitTime: 0,
+            isViewCount: false
         }
     },
     methods: {
@@ -55,22 +57,11 @@ export default {
             this.$emit('show', this.item)
         },
         async addView () {
-            // 求出时间差
-            let time = this.item.commitTime - new Date().getTime()
-            let currentTimer = this.item.commitTime === 0 || time < 0 ? setTime : time
-            // 把状态传递给父组件，避免多次请求
-            this.$emit('setTime', time)
-            if (time > 0) {
-                return
-            }
-            let updateObj = JSON.parse(JSON.stringify(this.item))
-            updateObj.views += 1
-            updateObj.commitTime = new Date().getTime() + setTime
-            const { isUpdate } = await this.$axios.$post('/content/update', updateObj)
+            this.commitTime = this.item.commitTime
+            this.viewCount = this.item.views
+            // 把数量传到dialog组件
+            EventBus.$emit('views', { count: this.viewCount, time: this.commitTime })
         }
-    },
-    destroyed () {
-        clearTimeout(this.timer)
     }
 }
 </script>

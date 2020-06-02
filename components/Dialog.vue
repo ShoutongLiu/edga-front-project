@@ -61,11 +61,11 @@
                             </span>
                             <span>
                                 <i class="iconfont icon-eyeopen"></i>
-                                {{info.views}}
+                                {{isViewCount  ? viewCount : info.views}}
                             </span>
                             <span>
                                 <i class="iconfont icon-custom-tolove"></i>
-                                {{isLoveCount}}
+                                {{isLoveCount ? loveCount : info.love}}
                             </span>
                         </div>
                     </div>
@@ -214,16 +214,19 @@
             class="iconfont icon-close"
             @click="dialogHide"
         ></i>
-        <recommend></recommend>
+        <recommend :data="contents"></recommend>
     </div>
 </template>
 
 <script>
 import recommend from './Recommend'
+import { EventBus } from '../utils/bus'
+let setTime = 1000 * 5
 export default {
     props: {
         show: Boolean,
-        info: Object
+        info: Object,
+        contents: Array
     },
     components: { recommend },
     data () {
@@ -251,15 +254,68 @@ export default {
                 mousewheel: true,
                 preloadImages: false
             },
-            isLoveCount: 0,
+            loveCount: 0,
+            viewCount: 0,
             qqShow: false,
             wechatShow: false,
-            recomDetail: {}
+            isLoveCount: false,
+            isViewCount: false,
+            isChange: false,    // 控制显示字段
+            commitTime: 0,
+            recomDetail: {},
         }
     },
+    mounted () {
+        EventBus.$on('views', (res) => {
+            this.handleCount(res.count, res.time)
+        })
+
+        EventBus.$on('resetStatu', (status) => {
+            if (!this.show) {
+                this.handleCount(status.count, status.time)
+            } else {
+                this.isViewCount = false
+            }
+        })
+    },
     methods: {
-        dialogHide () {
-            this.$emit('hide')
+        async dialogHide () {
+            // 关闭时提交更新
+            if (this.isLoveCount || this.isViewCount) {
+                let updateObj = JSON.parse(JSON.stringify(this.info))
+                updateObj.love = this.isLoveCount ? this.loveCount : this.info.love
+                updateObj.views = this.viewCount
+                updateObj.commitTime = this.commitTime
+                const { isUpdate } = await this.$axios.$post('/content/update', updateObj)
+                if (isUpdate) {
+                    this.isLoveCount = false
+                    this.isViewCount = false
+                    this.isChange = false
+                    this.loveCount = 0
+                    this.viewCount = 0
+                }
+                this.$emit('hide', { isLove: true, isView: true })
+                return
+            }
+            this.$emit('hide', { isLove: this.isLoveCount, isView: this.isViewCount })
+        },
+        // 浏览次数数据处理
+        handleCount (count, commitTime) {
+            if (!this.isViewCount) {
+                this.commitTime = commitTime
+                this.viewCount = count
+            }
+            let time = this.commitTime - new Date().getTime()
+            console.log(time);
+            // 把状态传递给父组件，避免多次请求
+            if (time > 0) {
+                return
+            }
+            this.isChange = true
+            this.isViewCount = true
+            this.viewCount += 1
+            // 更新提交时间
+            this.commitTime = new Date().getTime() + setTime
         },
         stopSwiper () {
             this.myDirectiveSwiper.autoplay.stop()
@@ -268,25 +324,22 @@ export default {
             this.myDirectiveSwiper.autoplay.start()
         },
         handleStop () { },
-        async handleLove () {
+        handleLove () {
             // 求出时间差
-            let time = this.item.commitTime - new Date().getTime()
-            let currentTimer = this.item.commitTime === 0 || time < 0 ? setTime : time
+            if (!this.isLoveCount) {
+                this.commitTime = this.info.commitTime
+                this.loveCount = this.info.love
+            }
+            let time = this.commitTime - new Date().getTime()
+            console.log(time);
             // 把状态传递给父组件，避免多次请求
-            // this.$emit('isView', time)
-            if (this.isView || time > 0) {
+            if (time > 0) {
                 return
             }
-            let updateObj = JSON.parse(JSON.stringify(this.item))
-            this.view += 1
-            this.isView = true
-            updateObj.views = this.view
-            updateObj.commitTime = new Date().getTime() + setTime
-            const { isUpdate } = await this.$axios.$post('/content/update', updateObj)
-            console.log(currentTimer);
-            this.timer = setTimeout(() => {
-                this.isView = false
-            }, currentTimer)
+            this.isLoveCount = true
+            this.loveCount += 1
+            // 更新提交时间
+            this.commitTime = new Date().getTime() + setTime
         }
     }
 }

@@ -56,7 +56,6 @@
                                 v-for="i in v.data"
                                 :key="i._id"
                                 :item="i"
-                                @setTime="handleIsView"
                                 @show="handleShow"
                             ></nav-item>
                         </div>
@@ -66,7 +65,7 @@
             <dialog-show
                 :info="companyInfo"
                 :show="isShow"
-                :contents="contents"
+                :contents="recommendData"
                 @hide="handleHide"
             ></dialog-show>
         </div>
@@ -81,6 +80,7 @@ import TopList from '../components/TopList'
 import DialogShow from '../components/Dialog'
 import NavItem from '../components/NavItem'
 import { EventBus } from '../utils/bus'
+import rendom from '../utils/rendom'
 export default {
     data () {
         return {
@@ -91,6 +91,7 @@ export default {
             tag: [],
             contents: [],
             newContents: [],
+            recommendData: [],
             categroy: [],
             companyInfo: {},
             timer: null,
@@ -119,15 +120,12 @@ export default {
                 this.goAnchor(url)
             }, 500);
         }
+        this.recommendData = rendom(this.contents)
 
         // 获取推荐的Bus传值
         EventBus.$on('showDetail', (item) => {
             this.companyInfo = item
         })
-
-
-        // 将数据存入本地存储
-        localStorage.setItem('contents', JSON.stringify(this.contents));
     },
     computed: {
         // 标签分类
@@ -152,27 +150,24 @@ export default {
     },
     methods: {
         // 显示详情
-        async handleShow (info) {
+        handleShow (info) {
             this.companyInfo = info
             this.isShow = true
             document.body.style.overflow = 'hidden'
-            if (this.time > 0) {
-                return
-            }
-            const { contents } = await this.$axios.$post('/content/get', { page: 0 })
-            this.contents = contents
-            this.cateData(this.categroy)
         },
         handleEnter (tag) {
             this.currentTag = tag
         },
-        // 获取时间差
-        handleIsView (time) {
-            this.time = time
-        },
-        handleHide () {
+        async handleHide (obj) {
             this.isShow = false
             document.body.style.overflow = 'auto'
+            if (!obj.isLove && !obj.isView) {
+                return
+            }
+            const { contents } = await this.$axios.$post('/content/get', { page: 0 })
+            this.contents = contents
+            this.recommendData = rendom(this.contents)
+            this.cateData(this.categroy)
         },
         // 更多跳转
         toMore (name, url) {
