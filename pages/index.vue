@@ -11,7 +11,10 @@
                     <small-img :graphs="graphs"></small-img>
                 </div>
                 <div class="top-container">
-                    <top-list :newTop="newTopData"></top-list>
+                    <top-list
+                        :newTop="newTopData"
+                        :loveTop="loveTopData"
+                    ></top-list>
                 </div>
             </div>
             <div class="list">
@@ -145,7 +148,9 @@ export default {
             } else {
                 return []
             }
-
+        },
+        loveTopData: function () {
+            return this.contents.sort(this.compare('love')).slice(0, 9)
         }
     },
     methods: {
@@ -212,10 +217,18 @@ export default {
             if (!!returnEle) {
                 returnEle.scrollIntoView(true);
             }
+        },
+
+        compare (property) {
+            return function (a, b) {
+                var value1 = a[property];
+                var value2 = b[property];
+                return value2 - value1
+            }
+        },
+        destroyed () {
+            clearTimeout(this.timer)
         }
-    },
-    destroyed () {
-        clearTimeout(this.timer)
     }
 }
 </script>
