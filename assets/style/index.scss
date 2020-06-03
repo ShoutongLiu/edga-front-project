@@ -3,11 +3,11 @@
 // @import url('./medium.scss') only screen and (min-width: 960px);
 
 @media only screen and (min-width: 992px) {
-  @import './medium.scss';
+	@import './medium.scss';
 }
 
 @media only screen and (min-width: 1400px) {
-  @import './big.scss';
+	@import './big.scss';
 }
 
 @import './base.scss';

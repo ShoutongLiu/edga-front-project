@@ -19,8 +19,18 @@ $fontColor: #a0a0a0;
 	align-items: center;
 	justify-content: space-between;
 	position: relative;
+	.caidan {
+		display: none;
+	}
 	.navbar {
 		position: relative;
+		display: block;
+	}
+	.title {
+		display: block;
+	}
+	.title-middle {
+		display: none;
 	}
 	.navlist {
 		display: flex;
@@ -233,6 +243,7 @@ $fontColor: #a0a0a0;
 
 // top
 .top-container {
+	display: block;
 	width: 264px;
 	background-color: #fff;
 	.top-header {

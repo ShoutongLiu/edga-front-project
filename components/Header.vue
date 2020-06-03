@@ -1,6 +1,9 @@
 <template>
     <header class="header">
         <div class="container header-container">
+            <div class="caidan">
+                <i class="iconfont icon-caidan2"></i>
+            </div>
             <div class="title">
                 <h1>
                     <nuxt-link to="/">
@@ -66,6 +69,17 @@
                         </ul>
                     </div>
                 </transition>
+            </div>
+            <div class="title-middle">
+                <h1>
+                    <nuxt-link to="/">
+                        <img
+                            class="logo"
+                            src="../static/imgs/edga-pc.png"
+                            alt="edga"
+                        >
+                    </nuxt-link>
+                </h1>
             </div>
             <div class="search">
                 <input
