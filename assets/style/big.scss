@@ -315,18 +315,17 @@ $fontColor: #a0a0a0;
 	.tag-box {
 		display: flex;
 		margin-bottom: 16px;
-		li {
-			margin-left: 24px;
-			padding: 0 0 4px 0;
+		span {
+			display: block;
+			text-align: center;
+			padding: 1px 2px;
+			margin-right: 18px;
 			color: $fontColor;
 			font-size: 1.6rem;
 			cursor: pointer;
 			&.active {
 				color: #000;
 				border-bottom: 4px solid #000;
-			}
-			&:first-child {
-				margin-left: 0;
 			}
 		}
 	}

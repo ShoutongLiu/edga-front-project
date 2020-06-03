@@ -26,9 +26,11 @@
                                 v-for="v in tag"
                                 :key="v._id"
                                 @mouseenter="handleEnter(v.name)"
-                                :class="{active: v.name === currentTag}"
                             >
-                                <span v-if="v.showIndex">{{v.name}}</span>
+                                <span
+                                    v-if="v.showIndex"
+                                    :class="{active: v.name === currentTag}"
+                                >{{v.name}}</span>
                             </li>
                         </ul>
                         <div class="tag-item">
@@ -88,14 +90,17 @@ export default {
     data () {
         return {
             isShow: false,
-            currentTag: '商业',
+            currentTag: '',
             banners: [],
             graphs: [],
             tag: [],
             contents: [],
             newContents: [],
             recommendData: [],
+            loveTopData: [],
+            newTopData: [],
             categroy: [],
+            screenTag: [],
             companyInfo: {},
             timer: null,
             time: 0
@@ -124,34 +129,13 @@ export default {
             }, 500);
         }
         this.recommendData = rendom(this.contents)
-
         // 获取推荐的Bus传值
         EventBus.$on('showDetail', (item) => {
             this.companyInfo = item
         })
-    },
-    computed: {
-        // 标签分类
-        screenTag: function () {
-            let arr = []
-            this.contents.forEach(v => {
-                if (v.tagVal.includes(this.currentTag)) {
-                    arr.push(v)
-                }
-            })
-            return arr
-        },
-        // 最新排行
-        newTopData: function () {
-            if (this.contents.length > 0) {
-                return this.contents.slice(0, 9)
-            } else {
-                return []
-            }
-        },
-        loveTopData: function () {
-            return this.contents.sort(this.compare('love')).slice(0, 9)
-        }
+
+        this.getLoveTopData()
+        this.getNewTopData()
     },
     methods: {
         // 显示详情
@@ -162,6 +146,7 @@ export default {
         },
         handleEnter (tag) {
             this.currentTag = tag
+            this.getScreenTag(this.currentTag)
         },
         async handleHide (obj) {
             this.isShow = false
@@ -182,6 +167,13 @@ export default {
         handleGetData ({ tag, categroy }) {
             this.tag = tag
             this.categroy = categroy
+            let first = tag.find(v => {
+                if (v.showIndex) {
+                    return v
+                }
+            })
+            this.currentTag = first.name
+            this.getScreenTag(this.currentTag)
             this.cateData(this.categroy)
         },
         // // 分类数据
@@ -226,9 +218,31 @@ export default {
                 return value2 - value1
             }
         },
-        destroyed () {
-            clearTimeout(this.timer)
-        }
+        getLoveTopData () {
+            let newContents = [...this.contents]
+            this.loveTopData = newContents.sort(this.compare('love')).slice(0, 9)
+        },
+        // 最新排行
+        getNewTopData () {
+            if (this.contents.length > 0) {
+                this.newTopData = this.contents.slice(0, 9)
+            } else {
+                this.newTopData = []
+            }
+        },
+        // 标签分类
+        getScreenTag (tag) {
+            let arr = []
+            this.contents.forEach(v => {
+                if (v.tagVal.includes(tag)) {
+                    arr.push(v)
+                }
+            })
+            this.screenTag = arr
+        },
+    },
+    destroyed () {
+        clearTimeout(this.timer)
     }
 }
 </script>

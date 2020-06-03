@@ -19,12 +19,12 @@
             <ul class="top-list">
                 <li
                     v-for="v in loveTop"
-                    :key="v"
-                    @mouseenter="handleEnter(v)"
-                    @mouseleave="handleLeave"
+                    :key="v._id"
+                    @mouseenter="handleEnterLove(v)"
+                    @mouseleave="handleLeaveLove"
                 >
                     <img
-                        src="~/static/imgs/cool.png"
+                        :src="v.avatarUrl"
                         alt="logo"
                         class="logo"
                         :class="{big: v._id === loveFirstId}"
@@ -33,18 +33,18 @@
                         class="info"
                         :class="{big: v._id === loveFirstId}"
                     >
-                        <div class="company-name">环图设计</div>
+                        <div class="company-name">{{v.companyName}}</div>
                         <div
                             v-show="v._id === loveFirstId"
                             class="location"
                         >
                             <span class="type">
-                                设计公司
+                                {{v.categroyVal}}
                             </span>
                             <span
                                 class="city"
                                 v-show="v._id === loveFirstId"
-                            >深圳<i class="iconfont icon-location"></i></span>
+                            >{{v.locationVal.join('、')}}<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div
@@ -54,10 +54,12 @@
                         <img
                             src="~/static/imgs/tui-pc.png"
                             alt="tui"
+                            v-if="v.showType.includes('推荐')"
                         >
                         <img
                             src="~/static/imgs/zheng-pc.png"
                             alt="zheng"
+                            v-if="v.showType.includes('认证')"
                         >
                     </div>
                 </li>
@@ -71,8 +73,8 @@
                 <li
                     v-for="v in newTop"
                     :key="v._id"
-                    @mouseenter="handleEnter(v)"
-                    @mouseleave="handleLeave"
+                    @mouseenter="handleEnterNew(v)"
+                    @mouseleave="handleLeaveNew"
                 >
                     <img
                         :src="v.avatarUrl"
@@ -95,7 +97,7 @@
                             <span
                                 class="city"
                                 v-show="v._id === newFirstId"
-                            >深圳<i class="iconfont icon-location"></i></span>
+                            >{{v.locationVal.join('、')}}<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div
@@ -122,23 +124,50 @@
 <script>
 export default {
     props: {
-        newTop: Array,
-        loveTop: Array
+        newTop: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
+        loveTop: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        }
     },
     data () {
         return {
             isActive: true,
-            itemId: 1,
-            newFirstId: this.newTop[0]._id,
-            loveFirstId: this.loveTop[0]._id
+            currentNewId: '',
+            currentLoveId: ''
+        }
+    },
+    computed: {
+        newFirstId () {
+            let id = ''
+            id = this.currentNewId ? this.currentNewId : this.newTop[0]._id
+            return id
+        },
+        loveFirstId () {
+            let id = ''
+            id = this.currentLoveId ? this.currentLoveId : this.loveTop[0]._id
+            return id
         }
     },
     methods: {
-        handleEnter (v) {
-            this.newFirstId = v._id
+        handleEnterNew (v) {
+            this.currentNewId = v._id
         },
-        handleLeave () {
-            this.newFirstId = this.newTop[0]._id
+        handleLeaveNew () {
+            this.currentNewId = this.newTop[0]._id
+        },
+        handleEnterLove (v) {
+            this.currentLoveId = v._id
+        },
+        handleLeaveLove () {
+            this.currentLoveId = this.loveTop[0]._id
         }
     }
 }
