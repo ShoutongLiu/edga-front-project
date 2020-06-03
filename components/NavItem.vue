@@ -1,7 +1,7 @@
 <template>
     <div
         class="item-container"
-        v-if="item.showIndex"
+        v-if="item.showIndex && item.surplusTime > 0"
     >
         <div
             class="item"

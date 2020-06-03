@@ -88,7 +88,6 @@ export default {
             let name = this.$route.query.name
             this.goSearch(name)
             this.type = name
-            return
         }
         this.value = this.$route.query.key
         // 获取Bus传值
@@ -106,7 +105,6 @@ export default {
             document.body.style.overflow = 'hidden'
         },
         handleHide (obj) {
-            console.log(obj);
             this.isShow = false
             document.body.style.overflow = 'auto'
             if (!obj.isLove && !obj.isView) {
@@ -165,7 +163,9 @@ export default {
             if (arr.includes(value)) {
                 this.type = '类别'
             }
-            this.reqJudge(this.type)
+            if (this.type === '类别' || this.type === '标签') {
+                this.reqJudge(this.type)
+            }
         }
     }
 }

@@ -14,6 +14,7 @@
                     <top-list
                         :newTop="newTopData"
                         :loveTop="loveTopData"
+                        @showDetail="handleGetTop"
                     ></top-list>
                 </div>
             </div>
@@ -158,6 +159,9 @@ export default {
             this.contents = contents
             this.recommendData = rendom(this.contents)
             this.cateData(this.categroy)
+            this.getScreenTag(this.currentTag)
+            this.getLoveTopData()
+            this.getNewTopData()
         },
         // 更多跳转
         toMore (name, url) {
@@ -176,7 +180,7 @@ export default {
             this.getScreenTag(this.currentTag)
             this.cateData(this.categroy)
         },
-        // // 分类数据
+        // 分类数据
         cateData (categroy) {
             let cateArr = []
             let CateData = []
@@ -220,17 +224,28 @@ export default {
         },
         getLoveTopData () {
             let newContents = [...this.contents]
-            this.loveTopData = newContents.sort(this.compare('love')).slice(0, 9)
+            let newArr = []
+            // 过滤已经过期的
+            newContents.forEach(v => {
+                if (v.surplusTime > 0) {
+                    newArr.push(v)
+                }
+            })
+            this.loveTopData = newArr.sort(this.compare('love')).slice(0, 10)
         },
         // 最新排行
         getNewTopData () {
-            if (this.contents.length > 0) {
-                this.newTopData = this.contents.slice(0, 9)
-            } else {
-                this.newTopData = []
-            }
+            let newArr = []
+            // 过滤已经过期的
+            this.contents.forEach(v => {
+                if (v.surplusTime > 0) {
+                    newArr.push(v)
+                }
+            })
+            this.newTopData = newArr.slice(0, 10)
+
         },
-        // 标签分类
+        // 标签分类数据
         getScreenTag (tag) {
             let arr = []
             this.contents.forEach(v => {
@@ -240,6 +255,12 @@ export default {
             })
             this.screenTag = arr
         },
+        // 获取排行数据
+        handleGetTop (item) {
+            this.isShow = true
+            this.companyInfo = item
+            document.body.style.overflow = 'hidden'
+        }
     },
     destroyed () {
         clearTimeout(this.timer)

@@ -22,6 +22,7 @@
                     :key="v._id"
                     @mouseenter="handleEnterLove(v)"
                     @mouseleave="handleLeaveLove"
+                    @click="handleOpen(v)"
                 >
                     <img
                         :src="v.avatarUrl"
@@ -75,6 +76,7 @@
                     :key="v._id"
                     @mouseenter="handleEnterNew(v)"
                     @mouseleave="handleLeaveNew"
+                    @click="handleOpen(v)"
                 >
                     <img
                         :src="v.avatarUrl"
@@ -122,6 +124,7 @@
 </template>
 
 <script>
+import { EventBus } from '../utils/bus'
 export default {
     props: {
         newTop: {
@@ -168,6 +171,11 @@ export default {
         },
         handleLeaveLove () {
             this.currentLoveId = this.loveTop[0]._id
+        },
+        handleOpen (item) {
+            this.$emit('showDetail', item)
+            // 把数量传到dialog组件
+            EventBus.$emit('views', { count: item.views, time: item.commitTime })
         }
     }
 }

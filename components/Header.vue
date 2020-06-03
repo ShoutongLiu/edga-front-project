@@ -84,6 +84,7 @@
                     @mouseenter="handleEnter"
                     @mouseleave="handleLeave"
                     @click="goSearch"
+                    @keyup.enter="goSearch"
                 ></i>
             </div>
             <transition name="fade">

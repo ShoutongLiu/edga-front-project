@@ -221,7 +221,7 @@
 <script>
 import recommend from './Recommend'
 import { EventBus } from '../utils/bus'
-let setTime = 1000 * 5
+let setTime = 1000 * 60 * 5
 export default {
     props: {
         show: Boolean,
@@ -267,6 +267,7 @@ export default {
     },
     mounted () {
         EventBus.$on('views', (res) => {
+            console.log(res);
             this.handleCount(res.count, res.time)
         })
 
