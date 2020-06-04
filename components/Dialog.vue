@@ -214,7 +214,9 @@
             class="iconfont icon-close"
             @click="dialogHide"
         ></i>
-        <recommend :data="contents"></recommend>
+        <div class="dia-recommend">
+            <recommend :data="contents"></recommend>
+        </div>
     </div>
 </template>
 

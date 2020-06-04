@@ -4,13 +4,104 @@ $fontColor: #a0a0a0;
 .main {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 60px;
+	margin-top: 95px;
 }
 
 .header {
 	width: 100%;
 	height: 65px;
 	background-color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	.nav-phone {
+		width: 100%;
+		height: 100vh;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 99999;
+		background-color: #fff;
+		overflow: auto;
+		.icon-close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 6px;
+			font-size: 2rem;
+		}
+	}
+	.navlist-phone {
+		li {
+			width: 100%;
+			padding: 15px 20px;
+			cursor: pointer;
+			span {
+				color: #000;
+				line-height: 16px;
+			}
+			&.cate {
+				padding: 0;
+				span {
+					display: flex;
+					align-items: center;
+					padding: 15px 20px;
+				}
+			}
+			.iconfont {
+				display: inline-block;
+				padding-left: 10px;
+				transition: all .3s;
+				&.down {
+					transform: rotate(90deg);
+					-o-transform: rotate(90deg);
+					-ms-transform: rotate(90deg);
+					margin-top: -10px;
+				}
+			}
+		}
+		.list-down-phone {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			padding: 0 30px;
+			li {
+				width: 20%;
+				padding: 10px 0px;
+			}
+
+			a {
+				color: #000;
+			}
+		}
+	}
+	.search-input-phone {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 60px;
+		.input {
+			width: 50%;
+			height: 36px;
+			border-radius: 4px 0 0 4px;
+			padding-left: 10px;
+			border: 0;
+			box-shadow: 0px 0px 2px 1px #ddd;
+			font-size: 1.4rem;
+		}
+		.search-btn {
+			width: 8%;
+			height: 36px;
+			color: #fff;
+			text-align: center;
+			line-height: 34px;
+			font-size: 1.4rem;
+			border-radius: 0 4px 4px 0;
+			border: 1px solid #4284f3;
+			background-color: #4284f3;
+		}
+	}
 }
 
 .header-container {
@@ -21,6 +112,12 @@ $fontColor: #a0a0a0;
 	position: relative;
 	.caidan {
 		display: block;
+		padding-left: 15px;
+		cursor: pointer;
+		.iconfont {
+			color: #000;
+			font-size: 1.8rem;
+		}
 	}
 	.navbar {
 		position: relative;
@@ -117,7 +214,7 @@ $fontColor: #a0a0a0;
 		.icon-search {
 			position: absolute;
 			top: 50%;
-			right: 8px;
+			right: 10px;
 			transform: translate(0, -50%);
 			font-size: 1.8rem;
 			color: #000;
@@ -191,36 +288,19 @@ $fontColor: #a0a0a0;
 	opacity: 0;
 }
 
-// 搜索框动画
-
-// .trans-enter-active {
-// 	transition: width .5s ease;
-// }
-
-// .trans-leave-active {
-// 	transition: width .5s ease;
-// }
-
-// .trans-enter {
-// 	width: 0;
-// }
-
-// .trans-leave-to {
-// 	width: 240px;
-// }
-
 // Banner
 
 .banner-container {
-	width: 1116px;
+	width: 962px;
 	height: auto;
+	margin: 0 auto;
 	.banner-url {
 		display: block;
 	}
 	.swiper,
 	.banner {
 		width: 100%;
-		height: 432px;
+		height: 372px;
 	}
 }
 
@@ -228,7 +308,7 @@ $fontColor: #a0a0a0;
 
 .small-img {
 	width: 100%;
-	height: 136px;
+	height: 117px;
 	display: flex;
 	justify-content: space-between;
 	margin-top: 20px;
@@ -236,7 +316,7 @@ $fontColor: #a0a0a0;
 		display: block;
 	}
 	.small {
-		width: 360px;
+		width: 310px;
 		height: 100%;
 	}
 }
@@ -319,10 +399,11 @@ $fontColor: #a0a0a0;
 
 // TagList标签样式
 .list {
-	margin-top: 60px;
-	margin-bottom: 120px;
+	margin-top: 30px;
+	margin-bottom: 60px;
 }
 .tag-list {
+	padding: 0 15px;
 	.tag-box {
 		display: flex;
 		margin-bottom: 16px;
@@ -332,32 +413,32 @@ $fontColor: #a0a0a0;
 			padding: 1px 2px;
 			margin-right: 18px;
 			color: $fontColor;
-			font-size: 1.6rem;
+			font-size: 1.4rem;
 			cursor: pointer;
 			&.active {
 				color: #000;
-				border-bottom: 4px solid #000;
+				border-bottom: 2px solid #000;
 			}
 		}
 	}
 	.tag-item {
 		display: flex;
 		flex-wrap: wrap;
-		margin-right: -20px;
+		margin-right: -1.4%;
 	}
 }
 
 // ITEM
 .item-container {
-	margin-right: 20px;
+	width: 23.6%;
+	margin-right: 1.4%;
+	background-color: #fff;
+	margin-bottom: 15px;
 }
 .item {
-	width: 224px;
-	height: 56px;
 	display: flex;
 	background-color: #fff;
-	padding: 20px;
-	margin-bottom: 20px;
+	padding: 15px;
 	position: relative;
 	cursor: pointer;
 	.logo {
@@ -370,7 +451,7 @@ $fontColor: #a0a0a0;
 		font-size: 1.2rem;
 		margin-left: 20px;
 		.item-name {
-			font-size: 1.6rem;
+			font-size: 1.4rem;
 			color: #000;
 		}
 		.desc {
@@ -397,9 +478,10 @@ $fontColor: #a0a0a0;
 
 // NavList分类
 .nav-list {
-	margin-top: 50px;
+	margin-top: 30px;
+	padding: 0 15px;
 	.list-box {
-		margin-bottom: 60px;
+		margin-bottom: 40px;
 		&:last-child {
 			margin-bottom: 0;
 		}
@@ -422,7 +504,7 @@ $fontColor: #a0a0a0;
 	.nav-content {
 		display: flex;
 		flex-wrap: wrap;
-		margin-right: -20px;
+		margin-right: -1.4%;
 	}
 }
 
@@ -457,6 +539,13 @@ $fontColor: #a0a0a0;
 		margin: 0 auto;
 		margin-top: 60px;
 		background-color: #fff;
+		.swiper-button-next::after,
+		.swiper-button-prev::after {
+			display: none;
+		}
+		.banner {
+			padding: 0 30px;
+		}
 	}
 	.icon-close {
 		position: absolute;
@@ -467,13 +556,13 @@ $fontColor: #a0a0a0;
 		cursor: pointer;
 	}
 	.dia-banner {
-		width: 1024px;
-		height: 680px;
+		width: 964px;
+		height: 660px;
 	}
 	.company-logo {
 		display: flex;
 		justify-content: space-between;
-		padding: 50px 40px 40px 40px;
+		padding: 40px 30px 40px 30px;
 		border-bottom: 4px solid #f4f4f4;
 		.logo {
 			width: 48px;
@@ -531,7 +620,7 @@ $fontColor: #a0a0a0;
 		}
 	}
 	.company-detail {
-		padding: 100px 40px;
+		padding: 60px 30px;
 		display: flex;
 		justify-content: space-between;
 		.desc {
@@ -630,12 +719,15 @@ $fontColor: #a0a0a0;
 			}
 		}
 	}
+	.dia-recommend {
+		padding: 0 30px;
+	}
 }
 
 // 随机推荐组件样式
 
 .recommend {
-	padding: 40px 0px 120px 0px;
+	padding: 40px 0px 60px 0px;
 	width: 1024px;
 	margin: 0 auto;
 	.company {

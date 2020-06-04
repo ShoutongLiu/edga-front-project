@@ -1,7 +1,100 @@
 <template>
     <header class="header">
+        <transition name="fade">
+            <div
+                class="nav-phone"
+                v-show="navPhone"
+            >
+                <i
+                    class="iconfont icon-close"
+                    @click="phoneNavHide"
+                ></i>
+                <div
+                    class="search-input-phone"
+                    v-show="isSearch"
+                >
+                    <input
+                        type="text"
+                        v-model="searchVal"
+                        class="input"
+                        placeholder="请输入公司名"
+                    >
+                    <div
+                        class="search-btn"
+                        @click="handleSearch"
+                    >搜索</div>
+                </div>
+                <ul
+                    class="navlist-phone"
+                    v-show="isList"
+                >
+                    <li
+                        @click="$router.push('/')"
+                        style="color: #a0a0a0"
+                    >
+                        <span>首页</span>
+                    </li>
+                    <li>
+                        <span>领域</span>
+                    </li>
+                    <li
+                        v-for="v in categroy"
+                        :key="v._id"
+                        @click="goCate(v.url)"
+                    >
+                        <span>{{v.name}}</span>
+                    </li>
+                    <li
+                        class="cate"
+                        v-for="v in cateArr"
+                        :key="v.key"
+                        @click="handleDownShow(v.value, 'phone')"
+                    >
+                        <span>
+                            {{v.name}}
+                            <i :class="`iconfont icon-552cc1babd9aa ${isPhoneShow === v.value ? 'down' : ''}`"></i>
+                        </span>
+                        <!-- 手机标签，类别 -->
+                        <ul
+                            class="list-down-phone"
+                            v-show="isPhoneShow === v.value &&  v.value !== 'zz'"
+                        >
+                            <li
+                                v-for="v in navList"
+                                :key="v._id"
+                                @click="toMore(v)"
+                            >{{v.name}}</li>
+                        </ul>
+                        <!-- 移动设备显示站点 -->
+                        <ul
+                            class="list-down-phone"
+                            v-show="isStationShow && isPhoneShow === v.value"
+                        >
+                            <li
+                                v-for="v in station"
+                                :key="v.url"
+                            >
+                                <a
+                                    :href="v.url"
+                                    target="_blank"
+                                >{{v.name}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="cate">
+                        <nuxt-link to="/join">
+                            <span>入驻</span>
+                        </nuxt-link>
+                    </li>
+                </ul>
+
+            </div>
+        </transition>
         <div class="container header-container">
-            <div class="caidan">
+            <div
+                class="caidan"
+                @click="phoneNavShow"
+            >
                 <i class="iconfont icon-caidan2"></i>
             </div>
             <div class="title">
@@ -37,7 +130,7 @@
                         class="cate"
                         v-for="v in cateArr"
                         :key="v.key"
-                        @mouseenter="handleDownShow(v.value)"
+                        @mouseenter="handleDownShow(v.value, 'pc')"
                         @mouseleave="handleDownHide"
                     >
                         <span> {{v.name}}</span>
@@ -98,13 +191,13 @@
                     @mouseenter="handleEnter"
                     @mouseleave="handleLeave"
                     @click="goSearch"
-                    @keyup.enter="goSearch"
                 ></i>
             </div>
+            <!-- PC下拉菜单 -->
             <transition name="fade">
                 <div
                     class="hover"
-                    @mouseenter="handleDownShow"
+                    @mouseenter="isShow = true"
                     @mouseleave="handleDownHide"
                     v-show="isShow"
                 >
@@ -129,7 +222,12 @@ export default {
             searchShow: false,
             isShow: false,
             isStationShow: false,
+            navPhone: false,
+            isList: false,
+            isSearch: false,
+            isPhoneShow: '',
             searchVal: '',
+            clientWidth: 0,
             navList: [],
             cateArr: [
                 {
@@ -156,6 +254,7 @@ export default {
         }
     },
     async mounted () {
+        this.clientWidth = document.body.clientWidth
         const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
         const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
         this.tag = tag
@@ -163,7 +262,8 @@ export default {
         this.$emit('data', { tag, categroy })
     },
     methods: {
-        handleDownShow (val) {
+        handleDownShow (val, isPhone) {
+            this.isStationShow = false
             if (val === 'rz') {
                 return
             } else if (val === 'fl') {
@@ -172,9 +272,15 @@ export default {
                 this.navList = this.tag
             } else if (val === 'zz') {
                 this.isStationShow = true
+                this.isPhoneShow = this.isPhoneShow === val ? "" : val
                 return
             }
-            this.isShow = true
+            if (isPhone === 'pc') {
+                this.isShow = true
+            } else {
+                this.isPhoneShow = this.isPhoneShow === val ? "" : val
+            }
+
         },
         handleDownHide () {
             this.isShow = false
@@ -185,8 +291,20 @@ export default {
         },
         goCate (url) {
             this.$emit('anchor', url)
+            this.phoneNavHide()
         },
         goSearch () {
+            if (this.clientWidth < 1400) {
+                this.navPhone = true
+                this.isList = false
+                this.isSearch = true
+                document.body.style.overflow = 'hidden'
+                return
+            }
+            this.handleSearch()
+        },
+        // 开始搜索
+        handleSearch () {
             if (!this.searchVal) {
                 return
             }
@@ -207,7 +325,7 @@ export default {
         },
         // 鼠标划入
         handleEnter () {
-            if (this.isFocus) {
+            if (this.isFocus && this.clientWidth < 1400) {
                 return
             }
             this.isFocus = false
@@ -217,6 +335,18 @@ export default {
         handleBlur () {
             this.isFocus = false
             this.searchShow = false
+        },
+        phoneNavHide () {
+            this.navPhone = false
+            this.isStationShow = false
+            this.isPhoneShow = ''
+            document.body.style.overflow = 'auto'
+        },
+        phoneNavShow () {
+            this.navPhone = true
+            this.isList = true
+            this.isSearch = false
+            document.body.style.overflow = 'hidden'
         }
     }
 }
