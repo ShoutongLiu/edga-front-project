@@ -6,20 +6,6 @@
             @search="goSearch"
         ></edga-header>
         <div class="container more-container">
-            <!-- <div class="search">
-                <input
-                    type="text"
-                    class="search-input"
-                    v-model="searchVal"
-                    placeholder="输入公司名搜索"
-                >
-                <div
-                    class="search-icon"
-                    @click="goSearch"
-                >
-                    <i class="iconfont icon-search"></i>
-                </div>
-            </div> -->
             <div class="content">
                 <div
                     class="title"
@@ -44,7 +30,9 @@
                     ></nav-item>
                 </div>
             </div>
-            <recommend :data="recommendData"></recommend>
+            <div class="more-recommend">
+                <recommend :data="recommendData"></recommend>
+            </div>
         </div>
         <dialog-show
             :info="companyInfo"
