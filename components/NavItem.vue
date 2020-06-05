@@ -17,12 +17,18 @@
             <div class="item-info">
                 <div class="item-name">{{item.companyName}}</div>
                 <div class="desc">{{item.describe}}</div>
-                <div class="location">
+                <div
+                    class="location"
+                    v-if="clientWidth > 768"
+                >
                     <span>{{item.categroyVal}}</span>
                     <span>{{item.locationVal.join('、')}}<i class="iconfont icon-location" /></span>
                 </div>
             </div>
-            <div class="true">
+            <div
+                class="true"
+                v-if="clientWidth > 768"
+            >
                 <img
                     src="~/static/imgs/tui-pc.png"
                     alt="tui"
@@ -48,8 +54,12 @@ export default {
         return {
             viewCount: 0,
             commitTime: 0,
-            isViewCount: false
+            isViewCount: false,
+            clientWidth: 0
         }
+    },
+    mounted () {
+        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
     },
     methods: {
         showDetail () {

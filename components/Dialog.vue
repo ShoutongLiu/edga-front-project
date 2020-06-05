@@ -76,6 +76,13 @@
                             src="~/static/imgs/yirenzheng.png"
                             alt="renzheng"
                             class="renzheng"
+                            v-if="clientWidth >= 768"
+                        >
+                        <img
+                            src="~/static/imgs/p-renzheng.png"
+                            alt="renzheng"
+                            class="renzheng"
+                            v-else
                         >
                         <p>已认证</p>
                     </div>
@@ -83,6 +90,12 @@
                         <img
                             src="~/static/imgs/yituijian.png"
                             alt="tuijian"
+                            v-if="clientWidth >= 768"
+                        >
+                        <img
+                            src="~/static/imgs/p-tuijian.png"
+                            alt="tuijian"
+                            v-else
                         >
                         <p>已推荐</p>
                     </div>
@@ -90,6 +103,12 @@
                         <img
                             src="~/static/imgs/love-red.png"
                             alt="love"
+                            v-if="clientWidth >= 768"
+                        >
+                        <img
+                            src="~/static/imgs/p-love.png"
+                            alt="love"
+                            v-else
                         >
                         <p>喜欢</p>
                     </div>
@@ -265,9 +284,12 @@ export default {
             isChange: false,    // 控制显示字段
             commitTime: 0,
             recomDetail: {},
+            clientWidth: 0
         }
     },
     mounted () {
+        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
+
         EventBus.$on('views', (res) => {
             console.log(res);
             this.handleCount(res.count, res.time)

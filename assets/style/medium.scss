@@ -23,7 +23,7 @@ $fontColor: #a0a0a0;
 		left: 0;
 		z-index: 99999;
 		background-color: #fff;
-		overflow-y: auto;
+		overflow-x: hidden;
 		.icon-close {
 			position: absolute;
 			top: 10px;
@@ -116,7 +116,6 @@ $fontColor: #a0a0a0;
 		.iconfont {
 			color: #000;
 			font-size: 1.8rem;
-			padding-left: 15px;
 		}
 	}
 	.navbar {
@@ -214,7 +213,7 @@ $fontColor: #a0a0a0;
 		.icon-search {
 			position: absolute;
 			top: 50%;
-			right: 14px;
+			right: -4px;
 			transform: translate(0, -50%);
 			font-size: 1.8rem;
 			color: #000;
@@ -403,7 +402,6 @@ $fontColor: #a0a0a0;
 	margin-bottom: 60px;
 }
 .tag-list {
-	padding: 0 15px;
 	.tag-box {
 		display: flex;
 		margin-bottom: 16px;
@@ -479,7 +477,6 @@ $fontColor: #a0a0a0;
 // NavList分类
 .nav-list {
 	margin-top: 30px;
-	padding: 0 15px;
 	.list-box {
 		margin-bottom: 40px;
 		&:last-child {
@@ -538,7 +535,7 @@ $fontColor: #a0a0a0;
 		width: 1024px;
 		margin: 0 auto;
 		margin-top: 60px;
-		background-color: #fff;
+		background: rgba(229, 229, 229, .95);
 		.swiper-button-next::after,
 		.swiper-button-prev::after {
 			display: none;
@@ -563,7 +560,9 @@ $fontColor: #a0a0a0;
 		display: flex;
 		justify-content: space-between;
 		padding: 40px 30px 40px 30px;
+		margin: 0 30px;
 		border-bottom: 4px solid #f4f4f4;
+		background-color: #fff;
 		.logo {
 			width: 48px;
 			height: 48px;
@@ -621,6 +620,8 @@ $fontColor: #a0a0a0;
 	}
 	.company-detail {
 		padding: 60px 30px;
+		margin: 0 30px;
+		background-color: #fff;
 		display: flex;
 		justify-content: space-between;
 		.desc {
@@ -753,7 +754,6 @@ $fontColor: #a0a0a0;
 	// 分类数据
 	.content {
 		margin-top: 95px;
-		padding: 0 14px;
 		.title {
 			margin-top: 30px;
 			font-size: 1.6rem;
@@ -779,6 +779,7 @@ $fontColor: #a0a0a0;
 	width: 100%;
 }
 .introduce {
+	width: 964px;
 	margin: 0 auto;
 	padding: 95px 30px 30px 30px;
 	.title {

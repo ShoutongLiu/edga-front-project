@@ -33,8 +33,7 @@ ul {
 
 @media only screen and (max-width: 768px) {
 	.container {
-		width: 100%;
-		margin: 0 auto;
+		margin: 0 20px;
 	}
 }
 
@@ -47,7 +46,7 @@ ul {
 
 @media only screen and (min-width: 992px) {
 	.container {
-		width: 992px;
+		width: 964px;
 		margin: 0 auto;
 	}
 }
@@ -63,9 +62,11 @@ html,
 body,
 #__layout,
 #__nuxt {
+	width: 100%;
 	height: 100%;
 }
 
 html {
 	font-size: 10px;
+	font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft Yahei";
 }

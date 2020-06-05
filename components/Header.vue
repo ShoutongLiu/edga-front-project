@@ -82,9 +82,9 @@
                         </ul>
                     </li>
                     <li class="cate">
-                        <nuxt-link to="/join">
+                        <div @click="goJoin">
                             <span>入驻</span>
-                        </nuxt-link>
+                        </div>
                     </li>
                 </ul>
 
@@ -164,15 +164,27 @@
                 </transition>
             </div>
             <div class="title-middle">
-                <h1>
-                    <nuxt-link to="/">
-                        <img
-                            class="logo"
-                            src="../static/imgs/edga-pc.png"
-                            alt="edga"
-                        >
-                    </nuxt-link>
-                </h1>
+                <nuxt-link
+                    to="/"
+                    v-if="clientWidth >= 768"
+                >
+                    <img
+                        class="logo"
+                        src="../static/imgs/edga-pc.png"
+                        alt="edga"
+                    >
+                </nuxt-link>
+                <nuxt-link
+                    to="/"
+                    v-else
+                >
+                    <img
+                        class="logo"
+                        src="../static/imgs/p-logo.png"
+                        alt="edga"
+                        style="width: 92px"
+                    >
+                </nuxt-link>
             </div>
             <div class="search">
                 <input
@@ -254,7 +266,7 @@ export default {
         }
     },
     async mounted () {
-        this.clientWidth = document.body.clientWidth
+        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
         const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
         const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
         this.tag = tag
@@ -347,6 +359,11 @@ export default {
             this.isList = true
             this.isSearch = false
             document.body.style.overflow = 'hidden'
+        },
+        // 跳转到入驻
+        goJoin () {
+            document.body.style.overflow = 'auto'
+            this.$router.push('/join')
         }
     }
 }

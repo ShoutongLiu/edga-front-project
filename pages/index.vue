@@ -104,7 +104,7 @@ export default {
             screenTag: [],
             companyInfo: {},
             timer: null,
-            time: 0
+            time: 0,
         }
     },
     components: {
