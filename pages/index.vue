@@ -49,11 +49,9 @@
                         class="list-box"
                         v-for="v in newContents"
                         :key="v.title"
+                        :id="v.id"
                     >
-                        <div
-                            class="title"
-                            :id="v.id"
-                        >
+                        <div class="title">
                             <span>{{v.title}}推荐</span>
                             <span @click="toMore(v.title, v.id)">更多</span>
                         </div>
@@ -211,7 +209,7 @@ export default {
         goAnchor (url) {
             const returnEle = document.querySelector(`#${url}`);
             if (!!returnEle) {
-                returnEle.scrollIntoView(true);
+                returnEle.scrollIntoView({ behavior: "smooth", block: "center" });
             }
         },
 
@@ -225,7 +223,7 @@ export default {
         getLoveTopData () {
             let newContents = [...this.contents]
             let newArr = []
-            // 过滤已经过期的
+            // 过滤已经过期的数据
             newContents.forEach(v => {
                 if (v.surplusTime > 0) {
                     newArr.push(v)

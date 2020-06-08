@@ -799,6 +799,7 @@ $fontColor: #a0a0a0;
 	.table {
 		display: flex;
 		justify-content: center;
+		flex-direction: row;
 		margin-top: 60px;
 
 		.table-item {
@@ -808,14 +809,14 @@ $fontColor: #a0a0a0;
 			}
 		}
 		.item-title {
-			width: 226px;
+			width: 222px;
 			height: 78px;
 			background-color: #515151;
 			color: #fff;
 			line-height: 78px;
 			font-size: 1.6rem;
 			.hj {
-				padding-left: 30px;
+				padding-left: 0px;
 			}
 			.num {
 				font-size: 3.2rem;
