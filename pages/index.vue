@@ -108,6 +108,28 @@ export default {
             companyInfo: {},
             timer: null,
             time: 0,
+            headerCate: [
+                {
+                    name: '设计公司',
+                    id: 'sjgs'
+                },
+                {
+                    name: '设计师',
+                    id: 'sjs'
+                },
+                {
+                    name: '制造企业',
+                    id: 'zzqy'
+                },
+                {
+                    name: '平台机构',
+                    id: 'ptjg'
+                },
+                {
+                    name: '产品耗材',
+                    id: 'cphc'
+                }
+            ]
         }
     },
     components: {
@@ -185,30 +207,21 @@ export default {
         },
         // 分类数据
         cateData (categroy) {
-            let cateArr = []
             let CateData = []
-            this.contents.forEach(c => {
-                cateArr.unshift(c.categroyVal)
-            })
-            // 去重
-            let newCate = new Set(cateArr)
-            newCate.forEach(n => {
+            this.headerCate.forEach(n => {
                 let data = []
-                this.contents.some(c => {
-                    if (data.length === 20) {
-                        return true
-                    }
-                    if (n === c.categroyVal && c.showIndex) {
+                this.contents.forEach(c => {
+                    if (c.tagVal.includes(n.name) && c.showIndex) {
                         data.push(c)
                     }
                 })
-                CateData.push({ title: n, data })
+                CateData.push({ title: n.name, data })
             })
             // 添加一个id字段
-            categroy.forEach(v => {
+            this.headerCate.forEach(v => {
                 CateData.forEach(c => {
                     if (c.title === v.name) {
-                        c.id = v.url
+                        c.id = v.id
                     }
                 })
             })

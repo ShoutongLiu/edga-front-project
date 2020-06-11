@@ -39,9 +39,9 @@
                         <span>领域</span>
                     </li>
                     <li
-                        v-for="v in categroy"
-                        :key="v._id"
-                        @click="goCate(v.url)"
+                        v-for="v in headerCate"
+                        :key="v.id"
+                        @click="goCate(v.id)"
                     >
                         <span>{{v.name}}</span>
                     </li>
@@ -122,9 +122,9 @@
                         <span>领域</span>
                     </li>
                     <li
-                        v-for="v in categroy"
-                        :key="v._id"
-                        @click="goCate(v.url)"
+                        v-for="v in headerCate"
+                        :key="v.id"
+                        @click="goCate(v.id)"
                     >
                         <span>{{v.name}}</span>
                     </li>
@@ -248,6 +248,28 @@ export default {
             searchVal: '',
             clientWidth: 0,
             navList: [],
+            headerCate: [
+                {
+                    name: '设计公司',
+                    id: 'sjgs'
+                },
+                {
+                    name: '设计师',
+                    id: 'sjs'
+                },
+                {
+                    name: '制造企业',
+                    id: 'zzqy'
+                },
+                {
+                    name: '平台机构',
+                    id: 'ptjg'
+                },
+                {
+                    name: '产品耗材',
+                    id: 'cphc'
+                }
+            ],
             cateArr: [
                 {
                     name: '分类',
