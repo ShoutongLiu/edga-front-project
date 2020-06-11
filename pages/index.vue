@@ -3,6 +3,7 @@
         <edga-header
             @data="handleGetData"
             @anchor="goAnchor"
+            @toTag="goAnchorTag"
         ></edga-header>
         <div class="container">
             <div class="main">
@@ -22,11 +23,15 @@
                 <div class="list-container">
                     <!-- 标签分类 -->
                     <div class="tag-list">
-                        <ul class="tag-box">
+                        <ul
+                            class="tag-box"
+                            id="tag"
+                        >
                             <li
                                 v-for="v in tag"
                                 :key="v._id"
                                 @mouseenter="handleEnter(v.name)"
+                                @click="handleEnter(v.name)"
                             >
                                 <span
                                     v-if="v.showIndex"
@@ -163,7 +168,7 @@ export default {
         },
         // 更多跳转
         toMore (name, url) {
-            this.$router.push({ path: `/${url}`, query: { key: name } })
+            this.$router.push({ path: `/more/${url}`, query: { key: name, url } })
         },
         // 获取分类和标签数据
         handleGetData ({ tag, categroy }) {
@@ -189,13 +194,17 @@ export default {
             let newCate = new Set(cateArr)
             newCate.forEach(n => {
                 let data = []
-                this.contents.forEach(c => {
-                    if (n === c.categroyVal) {
+                this.contents.some(c => {
+                    if (data.length === 20) {
+                        return true
+                    }
+                    if (n === c.categroyVal && c.showIndex) {
                         data.push(c)
                     }
                 })
                 CateData.push({ title: n, data })
             })
+            // 添加一个id字段
             categroy.forEach(v => {
                 CateData.forEach(c => {
                     if (c.title === v.name) {
@@ -258,6 +267,12 @@ export default {
             this.isShow = true
             this.companyInfo = item
             document.body.style.overflow = 'hidden'
+        },
+        goAnchorTag () {
+            const returnEle = document.querySelector('#tag');
+            if (!!returnEle) {
+                returnEle.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
         }
     },
     destroyed () {

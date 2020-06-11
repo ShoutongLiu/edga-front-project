@@ -22,7 +22,10 @@
                     v-if="clientWidth > 768"
                 >
                     <span>{{item.categroyVal}}</span>
-                    <span>{{item.locationVal.join('、')}}<i class="iconfont icon-location" /></span>
+                    <span v-if="item.locationVal.length > 0">
+                        {{item.locationVal[0]}}
+                        <i class="iconfont icon-location" />
+                    </span>
                 </div>
             </div>
             <div

@@ -1,5 +1,6 @@
 <template>
     <header class="header">
+        <!-- 移动端头部start -->
         <transition name="fade">
             <div
                 class="nav-phone"
@@ -34,7 +35,7 @@
                     >
                         <span>首页</span>
                     </li>
-                    <li>
+                    <li @click="toTag">
                         <span>领域</span>
                     </li>
                     <li
@@ -90,6 +91,7 @@
 
             </div>
         </transition>
+        <!-- 移动端头部end -->
         <div class="container header-container">
             <div
                 class="caidan"
@@ -116,7 +118,7 @@
                     >
                         <span>首页</span>
                     </li>
-                    <li>
+                    <li @click="toTag">
                         <span>领域</span>
                     </li>
                     <li
@@ -202,7 +204,12 @@
                     class="iconfont icon-search"
                     @mouseenter="handleEnter"
                     @mouseleave="handleLeave"
+                    v-if="clientWidth > 1400"
+                ></i>
+                <i
+                    class="iconfont icon-search"
                     @click="goSearch"
+                    v-else
                 ></i>
             </div>
             <!-- PC下拉菜单 -->
@@ -299,7 +306,7 @@ export default {
             this.isStationShow = false
         },
         toMore (v) {
-            this.$router.push({ path: `/${v.url}`, query: { key: v.name } })
+            this.$router.push({ path: `/more/${v.url}`, query: { key: v.name, url: v.url } })
         },
         goCate (url) {
             this.$emit('anchor', url)
@@ -321,7 +328,7 @@ export default {
                 return
             }
             this.$emit('search', this.searchVal)
-            this.$router.push({ path: '/search', query: { name: this.searchVal } })
+            this.$router.push({ path: '/more/search', query: { name: this.searchVal } })
             this.searchVal = ''
         },
         // 获取焦点事件
@@ -337,7 +344,7 @@ export default {
         },
         // 鼠标划入
         handleEnter () {
-            if (this.isFocus && this.clientWidth < 1400) {
+            if (this.isFocus) {
                 return
             }
             this.isFocus = false
@@ -364,6 +371,10 @@ export default {
         goJoin () {
             document.body.style.overflow = 'auto'
             this.$router.push('/join')
+        },
+        // 点击领域跳转锚点
+        toTag () {
+            this.$emit('toTag')
         }
     }
 }

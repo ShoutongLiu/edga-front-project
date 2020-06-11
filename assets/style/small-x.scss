@@ -80,14 +80,13 @@ $fontColor: #a0a0a0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-top: 60px;
+		margin-top: 80px;
 		.input {
 			width: 60%;
 			height: 36px;
 			border-radius: 4px 0 0 4px;
 			padding-left: 10px;
-			border: 0;
-			box-shadow: 0px 0px 2px 1px #ddd;
+			border: 1px solid #ddd;
 			font-size: 1.4rem;
 		}
 		.search-btn {
@@ -454,7 +453,7 @@ $fontColor: #a0a0a0;
 		}
 		.desc {
 			padding: 6px 0;
-			width: 176px;
+			width: 104px;
 			overflow: hidden; //超出的文本隐藏
 			text-overflow: ellipsis; //溢出用省略号显示
 			white-space: nowrap; //溢出不换行
@@ -867,5 +866,26 @@ $fontColor: #a0a0a0;
 			display: block;
 			margin-top: 10px;
 		}
+	}
+}
+
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 18%;
+	.icon-icon-test {
+		font-size: 6rem;
+	}
+	.back {
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 4px;
+		cursor: pointer;
+		margin-top: 20px;
+		background-color: #409eff;
+		color: #fff;
 	}
 }

@@ -37,19 +37,19 @@
         <dialog-show
             :info="companyInfo"
             :show="isShow"
-            :contents="contents"
+            :contents="recommendData"
             @hide="handleHide"
         ></dialog-show>
     </div>
 </template>
 
 <script>
-import edgaHeader from '../components/Header'
-import NavItem from '../components/NavItem'
-import recommend from '../components/Recommend'
-import DialogShow from '../components/Dialog'
-import { EventBus } from '../utils/bus'
-import rendom from '../utils/rendom'
+import edgaHeader from '../../components/Header'
+import NavItem from '../../components/NavItem'
+import recommend from '../../components/Recommend'
+import DialogShow from '../../components/Dialog'
+import { EventBus } from '../../utils/bus'
+import rendom from '../../utils/rendom'
 export default {
     data () {
         return {
@@ -61,7 +61,8 @@ export default {
             recommendData: [],
             companyInfo: {},
             isShow: false,
-            time: 0
+            time: 0,
+            more: null
         }
     },
     components: {
@@ -71,6 +72,11 @@ export default {
         DialogShow
     },
     mounted () {
+        const { index } = this.$route.params
+        const { url } = this.$route.query
+        if (index !== url) {
+            this.$router.push('/notfound')
+        }
         // 获取传参
         if (this.$route.query.name) {
             let name = this.$route.query.name

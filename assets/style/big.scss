@@ -620,7 +620,7 @@ $fontColor: #a0a0a0;
 				.url {
 					font-size: 1.6rem;
 					color: $fontColor;
-					padding: 4px 7px;
+					padding: 4px 6px;
 					cursor: pointer;
 					position: relative;
 					&:last-child {
@@ -648,13 +648,17 @@ $fontColor: #a0a0a0;
 			}
 		}
 	}
+	.dia-recommend {
+		width: 1024px;
+		margin: auto;
+	}
 }
 
 // 随机推荐组件样式
 
 .recommend {
 	padding: 40px 0px 120px 0px;
-	width: 1024px;
+	width: 100%;
 	margin: 0 auto;
 	.company {
 		display: flex;
@@ -781,5 +785,25 @@ $fontColor: #a0a0a0;
 			display: block;
 			margin-top: 10px;
 		}
+	}
+}
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 18%;
+	.icon-icon-test {
+		font-size: 6rem;
+	}
+	.back {
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 4px;
+		cursor: pointer;
+		margin-top: 20px;
+		background-color: #409eff;
+		color: #fff;
 	}
 }

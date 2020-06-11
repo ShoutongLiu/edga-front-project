@@ -4,14 +4,14 @@
         <div class="main-container">
             <nuxt />
         </div>
-        <edga-footer></edga-footer>
+        <edga-footer v-if="$route.name !== 'notfound'"></edga-footer>
     </div>
 </template>
 
 <script>
 import edgaFooter from '../components/Footer'
 export default {
-    components: { edgaFooter }
+    components: { edgaFooter },
 }
 </script>
 

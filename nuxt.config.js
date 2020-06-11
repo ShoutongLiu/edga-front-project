@@ -8,8 +8,9 @@ module.exports = {
         title: 'EGDA行家',
         meta: [
             { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+            { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' },
+            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+            { name: "keywords", content: "" }
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -56,6 +57,7 @@ module.exports = {
         }
     },
     server: {
+        host: '0.0.0.0',
         port: 8000, // default: 3000
     }
 }

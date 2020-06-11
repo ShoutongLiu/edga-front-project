@@ -118,14 +118,18 @@
             <div class="company-detail">
                 <div class="desc">
                     <p>{{info.describe}}</p>
-                    <div class="guanwang">访问官网</div>
+                    <a
+                        class="guanwang"
+                        :href="`${info.url ? info.url : 'javascript:void(0);'}`"
+                        :target="`${info.url ? '_blank' : '_self'}`"
+                    >访问官网</a>
                 </div>
                 <div class="contcant">
                     <div
                         class="renzheng"
-                        v-if="info.showType.includes('认证')"
+                        v-if="info.slogan"
                     >
-                        认证：<span>{{info.companyName}}</span>
+                        认证：<span>{{info.slogan}}</span>
                     </div>
                     <div class="skill">
                         <div class="type">
