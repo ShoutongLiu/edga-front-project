@@ -56,17 +56,19 @@
                         :key="v.title"
                         :id="v.id"
                     >
-                        <div class="title">
-                            <span>{{v.title}}推荐</span>
-                            <span @click="toMore(v.title, v.id)">更多</span>
-                        </div>
-                        <div class="nav-content">
-                            <nav-item
-                                v-for="i in v.data"
-                                :key="i._id"
-                                :item="i"
-                                @show="handleShow"
-                            ></nav-item>
+                        <div v-if="v.data.length > 0">
+                            <div class="title">
+                                <span>{{v.title}}推荐</span>
+                                <span @click="toMore(v.title, v.id)">更多</span>
+                            </div>
+                            <div class="nav-content">
+                                <nav-item
+                                    v-for="i in v.data"
+                                    :key="i._id"
+                                    :item="i"
+                                    @show="handleShow"
+                                ></nav-item>
+                            </div>
                         </div>
                     </div>
                 </div>

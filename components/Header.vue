@@ -104,8 +104,9 @@
                     <nuxt-link to="/">
                         <img
                             class="logo"
-                            src="../static/imgs/edga-pc.png"
+                            src="../static/imgs/edga-pc@2.png"
                             alt="edga"
+                            style="width: 120px;height: 26px"
                         >
                     </nuxt-link>
                 </h1>
@@ -172,8 +173,9 @@
                 >
                     <img
                         class="logo"
-                        src="../static/imgs/edga-pc.png"
+                        src="../static/imgs/edga-pc@2.png"
                         alt="edga"
+                        style="width: 120px;height: 26px"
                     >
                 </nuxt-link>
                 <nuxt-link
