@@ -4,6 +4,7 @@
             @data="handleGetData"
             @anchor="goAnchor"
             @search="goSearch"
+            @toTag="goAnchorTag"
         ></edga-header>
         <div class="container more-container">
             <div class="content">
@@ -73,8 +74,9 @@ export default {
     },
     mounted () {
         const { index } = this.$route.params
+        console.log(index);
         const { url } = this.$route.query
-        if (index !== url) {
+        if (index !== url && index !== 'search') {
             this.$router.push('/notfound')
         }
         // 获取传参
@@ -160,6 +162,9 @@ export default {
             if (this.type === '类别' || this.type === '标签') {
                 this.reqJudge(this.type)
             }
+        },
+        goAnchorTag () {
+            this.$router.push({ name: 'index', params: { url: 'tag' } })
         }
     }
 }

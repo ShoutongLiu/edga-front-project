@@ -5,12 +5,20 @@ module.exports = {
     ** Headers of the page
     */
     head: {
-        title: 'EGDA行家',
+        title: 'EGDA行家 | 行业专家信息搜索平台',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' },
-            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
-            { name: "keywords", content: "" }
+            { hid: 'description', name: 'description', content: 'EGDA行家，一个专业展示供需服务商的网站，为甲方、需求方提供国内外最专业的设计公司、设计师、制造企业、产品及耗材等供应服务商信息搜索平台' },
+            { hid: 'keywords', name: "keywords", content: "EGDA, 行家, EGDA行家,标识,环境图形,展览,标识公司,标识设计,标识厂家,标识设计师,导视公司,标牌,标识平台,美陈公司,美陈制作,展览公司,雕塑公司,城市家具设计,艺术装置设计,互动设计公司,景观设计公司,品牌设计公司" },
+            { hid: 'og:title', property: 'og:title', content: 'EGDA行家 | 行业专家信息搜索平台' },
+            { hid: 'og:description', property: 'og:description', content: 'EGDA行家，一个专业展示供需服务商的网站，为甲方、需求方提供国内外最专业的设计公司、设计师、制造企业、产品及耗材等供应服务商信息搜索平台' },
+            { hid: 'og:url', property: 'og:url', content: 'http://hangjia.egda.com' },
+            { hid: 'og:image', property: 'og:image', content: 'http://hangjia.egda.com/manage/EGDA.png' },
+            { itemprop: 'name', content: 'EGDA行家 | 行业专家信息搜索平台' },
+            { itemprop: 'description', content: 'EGDA行家，一个专业展示供需服务商的网站，为甲方、需求方提供国内外最专业的设计公司、设计师、制造企业、产品及耗材等供应服务商信息搜索平台' },
+            { itemprop: 'url', content: 'http://hangjia.egda.com' },
+            { itemprop: 'image', content: 'http://hangjia.egda.com/manage/EGDA.png' }
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

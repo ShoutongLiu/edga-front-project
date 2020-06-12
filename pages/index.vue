@@ -236,7 +236,10 @@ export default {
                 returnEle.scrollIntoView({ behavior: "smooth", block: "center" });
             }
         },
-
+        // 领域跳转
+        goAnchorTag () {
+            this.goAnchor('tag')
+        },
         compare (property) {
             return function (a, b) {
                 var value1 = a[property];
@@ -282,12 +285,6 @@ export default {
             this.isShow = true
             this.companyInfo = item
             document.body.style.overflow = 'hidden'
-        },
-        goAnchorTag () {
-            const returnEle = document.querySelector('#tag');
-            if (!!returnEle) {
-                returnEle.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
         }
     },
     destroyed () {

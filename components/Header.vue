@@ -17,7 +17,7 @@
                     <input
                         type="text"
                         v-model="searchVal"
-                        class="input"
+                        :class="`input ${isIos ? 'ios' : 'anzhuo'}`"
                         placeholder="请输入公司名"
                     >
                     <div
@@ -246,6 +246,7 @@ export default {
             navPhone: false,
             isList: false,
             isSearch: false,
+            isIos: false,
             isPhoneShow: '',
             searchVal: '',
             clientWidth: 0,
@@ -287,10 +288,11 @@ export default {
                 },
             ],
             station: [
-                { name: '首页', url: '11' },
-                { name: '专辑', url: '22' },
-                { name: '办公室', url: '3' },
-                { name: '招聘', url: '44' },
+                { name: '首页', url: 'https://egda.com' },
+                { name: '杂志', url: 'https://egda.com/magazine' },
+                { name: '专辑', url: 'https://egda.com/Album' },
+                { name: '办公室', url: 'https://egda.com/offices' },
+                { name: '招聘', url: 'https://egda.com/jobs' },
             ],
             tag: [],
             categroy: []
@@ -303,6 +305,7 @@ export default {
         this.tag = tag
         this.categroy = categroy
         this.$emit('data', { tag, categroy })
+        this.judgeClient()
     },
     methods: {
         handleDownShow (val, isPhone) {
@@ -351,6 +354,7 @@ export default {
             if (!this.searchVal) {
                 return
             }
+            console.log(99);
             this.$emit('search', this.searchVal)
             this.$router.push({ path: '/more/search', query: { name: this.searchVal } })
             this.searchVal = ''
@@ -399,6 +403,17 @@ export default {
         // 点击领域跳转锚点
         toTag () {
             this.$emit('toTag')
+        },
+        /*判断客户端*/
+        judgeClient () {
+            let u = navigator.userAgent;
+            let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;   //判断是否是 android终端
+            let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);     //判断是否是 iOS终端
+            if (isAndroid) {
+                this.isIos = false
+            } else if (isIOS) {
+                this.isIos = true
+            }
         }
     }
 }
