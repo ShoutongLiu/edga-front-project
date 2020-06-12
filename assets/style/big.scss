@@ -4,7 +4,7 @@ $fontColor: #a0a0a0;
 .main {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 125px;
+	margin-top: 113px;
 }
 
 .header {
@@ -370,7 +370,7 @@ $fontColor: #a0a0a0;
 	width: 266.4px;
 	margin-right: 16px;
 	background-color: #fff;
-	margin-bottom: 20px;
+	margin-bottom: 16px;
 	&:hover {
 		box-shadow: 0px 4px 12px rgba(0, 0, 0, .1);
 	}
@@ -699,7 +699,7 @@ $fontColor: #a0a0a0;
 .more-container {
 	// 分类数据
 	.content {
-		margin-top: 125px;
+		margin-top: 113px;
 		.title {
 			margin-top: 30px;
 			font-size: 1.6rem;

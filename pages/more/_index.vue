@@ -74,7 +74,6 @@ export default {
     },
     mounted () {
         const { index } = this.$route.params
-        console.log(index);
         const { url } = this.$route.query
         if (index !== url && index !== 'search') {
             this.$router.push('/notfound')
@@ -85,7 +84,7 @@ export default {
             this.goSearch(name)
             this.type = name
         }
-        this.value = this.$route.query.key
+        this.value = this.$route.query.key ? this.$route.query.key : ''
         // 获取Bus传值
         EventBus.$on('showDetail', (item) => {
             this.isShow = true
@@ -107,11 +106,12 @@ export default {
                 return
             }
             // 重新请求
-            if (this.type !== '标签' || this.type !== '类别') {
+            if (!this.value) {
                 let name = this.$route.query.name
                 this.goSearch(name)
+            } else {
+                this.reqJudge(this.type);
             }
-            this.reqJudge(this.type);
             this.getData()
         },
         // 获取数据
