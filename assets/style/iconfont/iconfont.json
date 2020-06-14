@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "406171",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "2585594",
+      "name": "eye",
+      "font_class": "eye1",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
       "icon_id": "5700832",
       "name": "404",
       "font_class": "icon-test",
@@ -102,13 +116,6 @@
       "font_class": "custom-tolove",
       "unicode": "e640",
       "unicode_decimal": 58944
-    },
-    {
-      "icon_id": "721978",
-      "name": "eye-open",
-      "font_class": "eyeopen",
-      "unicode": "e71b",
-      "unicode_decimal": 59163
     },
     {
       "icon_id": "924844",

@@ -598,11 +598,13 @@ $fontColor: #a0a0a0;
 				padding-top: 2px;
 				display: flex;
 				align-items: center;
+				.iconfont {
+					margin-right: 6px;
+				}
 				span {
+					display: flex;
+					align-items: center;
 					padding-right: 18px;
-					&:last-child {
-						margin-top: 5px;
-					}
 				}
 				.icon-eyeopen {
 					font-size: 1.8rem;

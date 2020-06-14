@@ -41,13 +41,14 @@
                         <div class="location">
                             <span>
                                 <i class="iconfont icon-location"></i>
-                                {{info.locationVal[0]}}
+                                {{info.locationVal.join('、')}}
                             </span>
                             <span>
-                                <i class="iconfont icon-eyeopen"></i>
+                                <i class="iconfont icon-eye1"></i>
                                 {{isViewCount  ? viewCount : info.views}}
                             </span>
                             <span>
+                                <!-- 根据isLoveCount判断显示 -->
                                 <i class="iconfont icon-custom-tolove"></i>
                                 {{isLoveCount ? loveCount : info.love}}
                             </span>
