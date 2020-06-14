@@ -488,6 +488,7 @@ $fontColor: #a0a0a0;
 		.swiper-button-next::after,
 		.swiper-button-prev::after {
 			display: block;
+			font-size: 20px;
 		}
 		.banner {
 			padding: 0;
@@ -497,7 +498,7 @@ $fontColor: #a0a0a0;
 		position: absolute;
 		top: 20px;
 		right: 20px;
-		font-size: 3rem;
+		font-size: 2rem;
 		padding: 4px;
 		cursor: pointer;
 	}
@@ -508,8 +509,9 @@ $fontColor: #a0a0a0;
 	.company-logo {
 		display: flex;
 		justify-content: space-between;
-		padding: 50px 40px 40px 40px;
-		border-bottom: 4px solid #f4f4f4;
+		padding: 40px;
+		margin: 0;
+		// border-bottom: 4px solid #f4f4f4;
 		.logo {
 			width: 48px;
 			height: 48px;
@@ -565,8 +567,15 @@ $fontColor: #a0a0a0;
 			}
 		}
 	}
+	.hr {
+		width: 94%;
+		margin: 0 auto;
+		height: 4px;
+		border: 0;
+		background-color: #f4f4f4;
+	}
 	.company-detail {
-		padding: 100px 40px;
+		padding: 80px 40px;
 		margin: 0;
 		display: flex;
 		justify-content: space-between;
@@ -578,6 +587,7 @@ $fontColor: #a0a0a0;
 			p {
 				letter-spacing: 1px;
 				line-height: 24px;
+				padding-bottom: 50px;
 			}
 			.guanwang {
 				width: 160px;
@@ -591,6 +601,9 @@ $fontColor: #a0a0a0;
 				position: absolute;
 				bottom: 0;
 				left: 0;
+				&:hover {
+					background-color: #4284f3;
+				}
 			}
 		}
 		.contcant {
@@ -611,6 +624,9 @@ $fontColor: #a0a0a0;
 				}
 				.shanc {
 					display: flex;
+					.title {
+						min-width: 42px;
+					}
 				}
 			}
 			.tag {
@@ -618,8 +634,8 @@ $fontColor: #a0a0a0;
 				border-bottom: 1px solid #a0a0a0;
 				display: flex;
 				align-items: top;
-				div {
-					width: 60px;
+				.title {
+					min-width: 42px;
 				}
 				span {
 					line-height: 20px;
@@ -641,6 +657,9 @@ $fontColor: #a0a0a0;
 					padding: 4px 6px;
 					cursor: pointer;
 					position: relative;
+					&:hover {
+						color: #000;
+					}
 					&:last-child {
 						margin-right: 0;
 					}
@@ -686,13 +705,20 @@ $fontColor: #a0a0a0;
 		font-size: 1.4rem;
 		color: $fontColor;
 	}
-	.logo {
-		display: block;
+	.recomm-img {
 		width: 32px;
 		height: 32px;
-		border-radius: 50%;
-		padding: 0 8px;
 		cursor: pointer;
+		margin-right: 15px;
+	}
+	.logo {
+		border-radius: 50%;
+		display: block;
+		width: 100%;
+		height: 100%;
+		&:hover {
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 1);
+		}
 	}
 }
 

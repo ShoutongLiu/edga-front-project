@@ -2,14 +2,14 @@
     <div class="recommend">
         <div class="company">
             <span class="title">推荐 ：</span>
-            <img
-                v-for="v in data"
-                :key="v._id"
-                :src="v.avatarUrl"
-                alt="logo"
-                class="logo"
-                @click.stop="handleOpenDetail(v)"
-            >
+            <div class="recomm-img"
+                 v-for="v in data"
+                 :key="v._id">
+                <img :src="v.avatarUrl"
+                     alt="logo"
+                     class="logo"
+                     @click.stop="handleOpenDetail(v)">
+            </div>
         </div>
     </div>
 </template>
