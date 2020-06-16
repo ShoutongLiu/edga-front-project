@@ -73,7 +73,7 @@ export default {
             this.commitTime = this.item.commitTime
             this.viewCount = this.item.views
             // 把数量传到dialog组件
-            EventBus.$emit('views', { count: this.viewCount, time: this.commitTime })
+            EventBus.$emit('views', { count: this.viewCount, time: this.commitTime, loveTime: this.loveTime })
         }
     }
 }

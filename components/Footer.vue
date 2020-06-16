@@ -3,13 +3,15 @@
         <div class="container">
             <div class="logo">
                 <img
-                    src="~/static/imgs/bottom-pc.png"
+                    src="~/static/imgs/buttom@2.png"
                     alt=""
                     v-if="clientWidth > 786"
+                    style="width: 92px;"
                 >
                 <img
-                    src="~/static/imgs/p-logo.png"
+                    src="~/static/imgs/p-buttom@2x.png"
                     alt=""
+                    style="width: 92px;"
                     v-else
                 >
             </div>

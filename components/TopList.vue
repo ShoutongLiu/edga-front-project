@@ -34,7 +34,10 @@
                         class="info"
                         :class="{big: v._id === loveFirstId}"
                     >
-                        <div class="company-name">{{v.companyName}}</div>
+                        <div
+                            class="company-name"
+                            :class="{big: v._id === loveFirstId}"
+                        >{{v.companyName}}</div>
                         <div
                             v-show="v._id === loveFirstId"
                             class="location"
@@ -88,7 +91,10 @@
                         class="info"
                         :class="{big: v._id === newFirstId}"
                     >
-                        <div class="company-name">{{v.companyName}}</div>
+                        <div
+                            class="company-name"
+                            :class="{big: v._id === newFirstId}"
+                        >{{v.companyName}}</div>
                         <div
                             v-show="v._id === newFirstId"
                             class="location"
@@ -175,7 +181,7 @@ export default {
         handleOpen (item) {
             this.$emit('showDetail', item)
             // 把数量传到dialog组件
-            EventBus.$emit('views', { count: item.views, time: item.commitTime })
+            EventBus.$emit('views', { count: item.views, time: item.commitTime, loveTime: item.loveTime })
         }
     }
 }

@@ -12,7 +12,7 @@
                     class="title"
                     v-if="contents.length !== 0"
                 >
-                    <span>{{type}}:</span>
+                    <span>{{typeTitle}}:</span>
                     <span>{{value}}</span>
                     <span class="count">{{contents.length}}</span>个
                 </div>
@@ -55,7 +55,8 @@ export default {
     data () {
         return {
             value: '',  // 路由参数
-            type: '标签',   // 参数类别
+            type: '',   // 参数类别
+            typeTitle: '',
             categroy: [],
             tag: [],
             contents: [],
@@ -78,13 +79,21 @@ export default {
         if (index !== url && index !== 'search') {
             this.$router.push('/notfound')
         }
-        // 获取传参
+        // 获取类型
+        if (this.$route.query.type) {
+            this.type = this.$route.query.type
+            this.typeTitle = this.type === 'fl' ? '类别' : '标签'
+        }
+        // 获取关键词
+        this.value = this.$route.query.key ? this.$route.query.key : ''
+
+        // 获取搜索传参
         if (this.$route.query.name) {
             let name = this.$route.query.name
             this.goSearch(name)
-            this.type = name
+            this.typeTitle = name
         }
-        this.value = this.$route.query.key ? this.$route.query.key : ''
+
         // 获取Bus传值
         EventBus.$on('showDetail', (item) => {
             this.isShow = true
@@ -99,6 +108,7 @@ export default {
             this.isShow = true
             document.body.style.overflow = 'hidden'
         },
+        // 隐藏详情事件
         handleHide (obj) {
             this.isShow = false
             document.body.style.overflow = 'auto'
@@ -120,10 +130,10 @@ export default {
             this.recommendData = rendom(contents)
         },
         async reqJudge (type) {
-            if (type === '类别') {
+            if (type === 'fl') {
                 const { contents } = await this.$axios.$post('/content/cate', { cate: { categroyVal: this.value } })
                 this.changeIndex(contents)
-            } else {
+            } else if (type === 'bq') {
                 const { contents } = await this.$axios.$post('/content/tag', { tag: { tagVal: this.value } })
                 this.changeIndex(contents)
             }
@@ -146,22 +156,7 @@ export default {
         handleGetData ({ tag, categroy }) {
             this.tag = tag
             this.categroy = categroy
-            this.handleJudge(this.value, this.categroy)
-        },
-
-        // 判断是类别还是标签
-        handleJudge (value, categroy) {
-            let arr = []
-            categroy.forEach(v => {
-                arr.push(v.name)
-            })
-            // 获取类别
-            if (arr.includes(value)) {
-                this.type = '类别'
-            }
-            if (this.type === '类别' || this.type === '标签') {
-                this.reqJudge(this.type)
-            }
+            this.reqJudge(this.type)
         },
         goAnchorTag () {
             this.$router.push({ name: 'index', params: { url: 'tag' } })

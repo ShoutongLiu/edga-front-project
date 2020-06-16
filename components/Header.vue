@@ -2,61 +2,91 @@
     <header class="header">
         <!-- 移动端头部start -->
         <transition name="fade">
-            <div class="nav-phone"
-                 v-show="navPhone">
+            <div
+                class="nav-phone"
+                v-show="navPhone"
+            >
                 <div class="p-header">
-                    <img class="logo"
-                         src="../static/imgs/edga-pc@2.png"
-                         alt="edga"
-                         style="width: 92px;">
-                    <i class="iconfont icon-close"
-                       @click="phoneNavHide"></i>
+                    <img
+                        class="logo"
+                        src="../static/imgs/edga-pc@2.png"
+                        alt="edga"
+                        style="width: 92px;"
+                    >
+                    <i
+                        class="iconfont icon-close"
+                        @click="phoneNavHide"
+                    ></i>
                 </div>
-                <div class="search-input-phone"
-                     v-show="isSearch">
-                    <input type="text"
-                           v-model="searchVal"
-                           :class="`input ${isIos ? 'ios' : 'anzhuo'}`"
-                           placeholder="请输入公司名">
-                    <div class="search-btn"
-                         @click="handleSearch">搜索</div>
+                <div
+                    class="search-input-phone"
+                    v-show="isSearch"
+                >
+                    <input
+                        type="text"
+                        v-model="searchVal"
+                        :class="`input ${isIos ? 'ios' : 'anzhuo'}`"
+                        placeholder="请输入公司名"
+                    >
+                    <div
+                        class="search-btn"
+                        @click="handleSearch"
+                    >搜索</div>
                 </div>
-                <ul class="navlist-phone"
-                    v-show="isList">
-                    <li @click="$router.push('/')"
-                        style="color: #a0a0a0">
+                <ul
+                    class="navlist-phone"
+                    v-show="isList"
+                >
+                    <li
+                        @click="$router.push('/')"
+                        style="color: #a0a0a0"
+                    >
                         <span>首页</span>
                     </li>
                     <li @click="toTag">
                         <span>领域</span>
                     </li>
-                    <li v-for="v in headerCate"
+                    <li
+                        v-for="v in headerCate"
                         :key="v.id"
-                        @click="goCate(v.id)">
+                        @click="goCate(v.id)"
+                    >
                         <span>{{v.name}}</span>
                     </li>
-                    <li class="cate"
+                    <li
+                        class="cate"
                         v-for="v in cateArr"
                         :key="v.key"
-                        @click="handleDownShow(v.value, 'phone')">
+                        @click="handleDownShow(v.value, 'phone')"
+                    >
                         <span>
                             {{v.name}}
                             <i :class="`iconfont icon-552cc1babd9aa ${isPhoneShow === v.value ? 'down' : ''}`"></i>
                         </span>
                         <!-- 手机标签，类别 -->
-                        <ul class="list-down-phone"
-                            v-show="isPhoneShow === v.value &&  v.value !== 'zz'">
-                            <li v-for="v in navList"
+                        <ul
+                            class="list-down-phone"
+                            v-show="isPhoneShow === v.value &&  v.value !== 'zz'"
+                        >
+                            <li
+                                v-for="v in navList.data"
                                 :key="v._id"
-                                @click="toMore(v)">{{v.name}}</li>
+                                @click="toMore(v, navList.type)"
+                            >{{v.name}}</li>
                         </ul>
                         <!-- 移动设备显示站点 -->
-                        <ul class="list-down-phone"
-                            v-show="isStationShow && isPhoneShow === v.value">
-                            <li v-for="v in station"
-                                :key="v.url">
-                                <a :href="v.url"
-                                   target="_blank">{{v.name}}</a>
+                        <ul
+                            class="list-down-phone"
+                            v-show="isStationShow && isPhoneShow === v.value"
+                        >
+                            <li
+                                v-for="v in station"
+                                :key="v.url"
+                            >
+                                <a
+                                    :href="v.url"
+                                    target="_blank"
+                                >{{v.name}}</a>
                             </li>
                         </ul>
                     </li>
@@ -71,39 +101,49 @@
         </transition>
         <!-- 移动端头部end -->
         <div class="container header-container">
-            <div class="caidan"
-                 @click="phoneNavShow">
+            <div
+                class="caidan"
+                @click="phoneNavShow"
+            >
                 <i class="iconfont icon-caidan2"></i>
             </div>
             <div class="title">
                 <h1>
                     <nuxt-link to="/">
-                        <img class="logo"
-                             src="../static/imgs/edga-pc@2.png"
-                             alt="edga"
-                             style="width: 120px;height: 26px">
+                        <img
+                            class="logo"
+                            src="../static/imgs/edga-pc@2.png"
+                            alt="edga"
+                            style="width: 120px;height: 26px"
+                        >
                     </nuxt-link>
                 </h1>
             </div>
             <div class="navbar">
                 <ul class="navlist">
-                    <li @click="$router.push('/')"
-                        style="color: #a0a0a0">
+                    <li
+                        @click="$router.push('/')"
+                        style="color: #a0a0a0"
+                    >
                         <span>首页</span>
                     </li>
                     <li @click="toTag">
                         <span>领域</span>
                     </li>
-                    <li v-for="v in headerCate"
+                    <li
+                        v-for="v in headerCate"
                         :key="v.id"
-                        @click="goCate(v.id)">
+                        @click="goCate(v.id)"
+                    >
                         <span>{{v.name}}</span>
                     </li>
-                    <li class="cate"
+                    <li
+                        class="cate"
                         v-for="v in cateArr"
                         :key="v.key"
                         @mouseenter="handleDownShow(v.value, 'pc')"
-                        @mouseleave="handleDownHide">
+                        @mouseleave="handleDownHide"
+                    >
                         <span> {{v.name}}</span>
                         <i class="iconfont icon-down"></i>
                     </li>
@@ -114,64 +154,89 @@
                     </li>
                 </ul>
                 <transition name="fade">
-                    <div class="station"
-                         @mouseenter="isStationShow = true"
-                         @mouseleave="isStationShow = false"
-                         v-show="isStationShow">
+                    <div
+                        class="station"
+                        @mouseenter="isStationShow = true"
+                        @mouseleave="isStationShow = false"
+                        v-show="isStationShow"
+                    >
                         <ul class="station-list">
-                            <li v-for="v in station"
-                                :key="v.url">
-                                <a :href="v.url"
-                                   target="_blank">{{v.name}}</a>
+                            <li
+                                v-for="v in station"
+                                :key="v.url"
+                            >
+                                <a
+                                    :href="v.url"
+                                    target="_blank"
+                                >{{v.name}}</a>
                             </li>
                         </ul>
                     </div>
                 </transition>
             </div>
             <div class="title-middle">
-                <nuxt-link to="/"
-                           v-if="clientWidth >= 768">
-                    <img class="logo"
-                         src="../static/imgs/edga-pc@2.png"
-                         alt="edga"
-                         style="width: 120px;height: 26px">
+                <nuxt-link
+                    to="/"
+                    v-if="clientWidth >= 768"
+                >
+                    <img
+                        class="logo"
+                        src="../static/imgs/edga-pc@2.png"
+                        alt="edga"
+                        style="width: 120px;height: 26px"
+                    >
                 </nuxt-link>
-                <nuxt-link to="/"
-                           v-else>
-                    <img class="logo"
-                         src="../static/imgs/p-logo.png"
-                         alt="edga"
-                         style="width: 92px">
+                <nuxt-link
+                    to="/"
+                    v-else
+                >
+                    <img
+                        class="logo"
+                        src="../static/imgs/p-logo.png"
+                        alt="edga"
+                        style="width: 92px"
+                    >
                 </nuxt-link>
             </div>
             <div class="search">
-                <input type="text"
-                       :class="`search-input ${searchShow ? 'show' :'hide'}`"
-                       v-model="searchVal"
-                       placeholder="搜索"
-                       @mouseenter="handleEnter"
-                       @focus="handleFocus"
-                       @blur="handleBlur"
-                       @mouseleave="handleLeave"
-                       @keyup.enter="goSearch">
-                <i class="iconfont icon-search"
-                   @mouseenter="handleEnter"
-                   @mouseleave="handleLeave"
-                   v-if="clientWidth > 1400"></i>
-                <i class="iconfont icon-search"
-                   @click="goSearch"
-                   v-else></i>
+                <input
+                    type="text"
+                    :class="`search-input ${searchShow ? 'show' :'hide'}`"
+                    v-model="searchVal"
+                    placeholder="搜索"
+                    @mouseenter="handleEnter"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @mouseleave="handleLeave"
+                    @keyup.enter="goSearch"
+                >
+                <i
+                    class="iconfont icon-search"
+                    @mouseenter="handleEnter"
+                    @mouseleave="handleLeave"
+                    @click="goSearch"
+                    v-if="clientWidth > 1400"
+                ></i>
+                <i
+                    class="iconfont icon-search"
+                    @click="goSearch"
+                    v-else
+                ></i>
             </div>
             <!-- PC下拉菜单 -->
             <transition name="fade">
-                <div class="hover"
-                     @mouseenter="isShow = true"
-                     @mouseleave="handleDownHide"
-                     v-show="isShow">
+                <div
+                    class="hover"
+                    @mouseenter="isShow = true"
+                    @mouseleave="handleDownHide"
+                    v-show="isShow"
+                >
                     <ul class="hover-list">
-                        <li v-for="v in navList"
+                        <li
+                            v-for="v in navList.data"
                             :key="v._id"
-                            @click="toMore(v)">{{v.name}}</li>
+                            @click="toMore(v,navList.type)"
+                        >{{v.name}}</li>
                     </ul>
                 </div>
             </transition>
@@ -194,7 +259,10 @@ export default {
             isPhoneShow: '',
             searchVal: '',
             clientWidth: 0,
-            navList: [],
+            navList: {
+                data: [],
+                type: ''
+            },
             headerCate: [
                 {
                     name: '设计公司',
@@ -257,9 +325,11 @@ export default {
             if (val === 'rz') {
                 return
             } else if (val === 'fl') {
-                this.navList = this.categroy
+                this.navList.data = this.categroy
+                this.navList.type = 'fl'
             } else if (val === 'bq') {
-                this.navList = this.tag
+                this.navList.data = this.tag
+                this.navList.type = 'bq'
             } else if (val === 'zz') {
                 this.isStationShow = true
                 this.isPhoneShow = this.isPhoneShow === val ? "" : val
@@ -276,8 +346,8 @@ export default {
             this.isShow = false
             this.isStationShow = false
         },
-        toMore (v) {
-            this.$router.push({ path: `/more/${v.url}`, query: { key: v.name, url: v.url } })
+        toMore (v, type) {
+            this.$router.push({ path: `/more/${v.url}`, query: { key: v.name, url: v.url, type } })
         },
         goCate (url) {
             this.$emit('anchor', url)
@@ -298,7 +368,6 @@ export default {
             if (!this.searchVal) {
                 return
             }
-            console.log(99);
             this.$emit('search', this.searchVal)
             this.$router.push({ path: '/more/search', query: { name: this.searchVal } })
             this.searchVal = ''

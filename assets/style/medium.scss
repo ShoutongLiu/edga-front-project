@@ -11,6 +11,7 @@ $fontColor: #a0a0a0;
 	width: 100%;
 	height: 65px;
 	background-color: #fff;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -31,6 +32,7 @@ $fontColor: #a0a0a0;
 		.p-header {
 			height: 65px;
 			background-color: #fff;
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -467,6 +469,9 @@ $fontColor: #a0a0a0;
 		.item-name {
 			font-size: 1.4rem;
 			color: #000;
+			width: 112px;
+			white-space: nowrap; //溢出不换行
+			overflow: hidden; //超出的文本隐藏
 		}
 		.desc {
 			padding: 5px 0;
@@ -480,6 +485,9 @@ $fontColor: #a0a0a0;
 				&:last-child {
 					padding-left: 6px;
 				}
+			}
+			.iconfont {
+				font-size: 14px;
 			}
 		}
 	}
@@ -600,14 +608,16 @@ $fontColor: #a0a0a0;
 				align-items: center;
 				.iconfont {
 					margin-right: 6px;
+					font-size: 1.4rem;
 				}
 				span {
 					display: flex;
 					align-items: center;
 					padding-right: 18px;
-				}
-				.icon-eyeopen {
-					font-size: 1.8rem;
+					&:nth-child(2),
+					&:last-child {
+						margin-top: 4px;
+					}
 				}
 			}
 		}
@@ -700,6 +710,9 @@ $fontColor: #a0a0a0;
 				border-bottom: 1px solid #a0a0a0;
 				display: flex;
 				align-items: top;
+				div {
+					min-width: 42px;
+				}
 				.title {
 					min-width: 42px;
 				}
@@ -766,6 +779,7 @@ $fontColor: #a0a0a0;
 	.title {
 		font-size: 1.4rem;
 		color: $fontColor;
+		padding-right: 8px;
 	}
 	.recomm-img {
 		width: 32px;

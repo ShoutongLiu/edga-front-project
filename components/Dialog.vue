@@ -1,39 +1,55 @@
 <template>
-    <div class="dialog"
-         v-if="show"
-         @click="dialogHide">
-        <div class="dialog-container"
-             @click.stop="handleStop">
+    <div
+        class="dialog"
+        v-if="show"
+        @click="dialogHide"
+    >
+        <div
+            class="dialog-container"
+            @click.stop="handleStop"
+        >
             <!-- 轮播图 -->
             <div class="banner">
-                <div class="swiper"
-                     ref="mySwiper"
-                     v-swiper:myDirectiveSwiper="swiperOptions"
-                     @mouseenter="stopSwiper"
-                     @mouseleave="startSwiper">
+                <div
+                    class="swiper"
+                    ref="mySwiper"
+                    v-swiper:myDirectiveSwiper="swiperOptions"
+                    @mouseenter="stopSwiper"
+                    @mouseleave="startSwiper"
+                >
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"
-                             v-for="b in info.pics"
-                             :key="b">
-                            <img :src="b"
-                                 alt="banner"
-                                 class="dia-banner">
+                        <div
+                            class="swiper-slide"
+                            v-for="b in info.pics"
+                            :key="b"
+                        >
+                            <img
+                                :src="b"
+                                alt="banner"
+                                class="dia-banner"
+                            >
                         </div>
                     </div>
                     <!-- 前进后退按钮 -->
-                    <div class="swiper-button-prev"
-                         slot="button-prev"></div>
-                    <div class="swiper-button-next"
-                         slot="button-next"></div>
+                    <div
+                        class="swiper-button-prev"
+                        slot="button-prev"
+                    ></div>
+                    <div
+                        class="swiper-button-next"
+                        slot="button-next"
+                    ></div>
                     <div class="swiper-pagination swiper-pagination-bullets"></div>
                 </div>
             </div>
             <!--公司logo等  -->
             <div class="company-logo">
                 <div class="left">
-                    <img :src="info.avatarUrl"
-                         alt="logo"
-                         class="logo">
+                    <img
+                        :src="info.avatarUrl"
+                        alt="logo"
+                        class="logo"
+                    >
                     <div class="view">
                         <div class="name">
                             {{info.companyName}}
@@ -57,35 +73,49 @@
                 </div>
                 <div class="right">
                     <div v-if="info.showType.includes('认证')">
-                        <img src="~/static/imgs/yirenzheng.png"
-                             alt="renzheng"
-                             class="renzheng"
-                             v-if="clientWidth >= 768">
-                        <img src="~/static/imgs/p-renzheng.png"
-                             alt="renzheng"
-                             class="renzheng"
-                             v-else>
+                        <img
+                            src="~/static/imgs/yirenzheng.png"
+                            alt="renzheng"
+                            class="renzheng"
+                            v-if="clientWidth >= 768"
+                        >
+                        <img
+                            src="~/static/imgs/p-renzheng.png"
+                            alt="renzheng"
+                            class="renzheng"
+                            v-else
+                        >
                         <p>已认证</p>
                     </div>
                     <div v-if="info.showType.includes('推荐')">
-                        <img src="~/static/imgs/yituijian.png"
-                             alt="tuijian"
-                             v-if="clientWidth >= 768">
-                        <img src="~/static/imgs/p-tuijian.png"
-                             alt="tuijian"
-                             v-else>
+                        <img
+                            src="~/static/imgs/yituijian.png"
+                            alt="tuijian"
+                            v-if="clientWidth >= 768"
+                        >
+                        <img
+                            src="~/static/imgs/p-tuijian.png"
+                            alt="tuijian"
+                            v-else
+                        >
                         <p>已推荐</p>
                     </div>
                     <div @click="handleLove">
-                        <img src="~/static/imgs/love-red.png"
-                             alt="love"
-                             v-show="clientWidth >= 768 && !isLove">
-                        <img src="~/static/imgs/isLove.png"
-                             alt="love"
-                             v-show="clientWidth >= 768 && isLove">
-                        <img src="~/static/imgs/p-love.png"
-                             alt="love"
-                             v-if="clientWidth < 768">
+                        <img
+                            src="~/static/imgs/love-red.png"
+                            alt="love"
+                            v-show="clientWidth >= 768 && !isLove"
+                        >
+                        <img
+                            src="~/static/imgs/isLove.png"
+                            alt="love"
+                            v-show="clientWidth >= 768 && isLove"
+                        >
+                        <img
+                            src="~/static/imgs/p-love.png"
+                            alt="love"
+                            v-if="clientWidth < 768"
+                        >
                         <p>喜欢</p>
                     </div>
                 </div>
@@ -95,13 +125,17 @@
             <div class="company-detail">
                 <div class="desc">
                     <p>{{info.describe}}</p>
-                    <a class="guanwang"
-                       :href="`${info.url ? info.url : 'javascript:void(0);'}`"
-                       :target="`${info.url ? '_blank' : '_self'}`">访问官网</a>
+                    <a
+                        class="guanwang"
+                        :href="`${info.url ? info.url : 'javascript:void(0);'}`"
+                        :target="`${info.url ? '_blank' : '_self'}`"
+                    >访问官网</a>
                 </div>
                 <div class="contcant">
-                    <div class="renzheng"
-                         v-if="info.slogan">
+                    <div
+                        class="renzheng"
+                        v-if="info.slogan"
+                    >
                         认证：<span>{{info.slogan}}</span>
                     </div>
                     <div class="skill">
@@ -137,48 +171,68 @@
                     </div>
                     <div class="foces">
                         <div>关注：
-                            <span class="url"
-                                  @mouseenter="qqShow = true"
-                                  @mouseleave="qqShow = false">
-                                <p class="qq"
-                                   v-show="qqShow">{{info.qq}}</p>
+                            <span
+                                class="url"
+                                @mouseenter="qqShow = true"
+                                @mouseleave="qqShow = false"
+                            >
+                                <p
+                                    class="qq"
+                                    v-show="qqShow"
+                                >{{info.qq}}</p>
                                 <i class="iconfont icon-qq"></i>
                             </span>
-                            <span class="url"
-                                  @mouseenter="wechatShow = true"
-                                  @mouseleave="wechatShow = false">
-                                <div v-if="info.wxchat.length !== 0"
-                                     class="wechat">
-                                    <img :src="info.wxchat[0].url"
-                                         alt="wechat"
-                                         v-show="wechatShow">
+                            <span
+                                class="url"
+                                @mouseenter="wechatShow = true"
+                                @mouseleave="wechatShow = false"
+                            >
+                                <div
+                                    v-if="info.wxchat.length !== 0"
+                                    class="wechat"
+                                >
+                                    <img
+                                        :src="info.wxchat[0].url"
+                                        alt="wechat"
+                                        v-show="wechatShow"
+                                    >
                                 </div>
                                 <i class="iconfont icon-wechat"></i>
                             </span>
                             <!-- 使用a标签跳转外部链接需要加上http或https -->
-                            <a :href="info.weibo"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.weibo"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-weibo"></i>
                             </a>
-                            <a :href="info.pinterest"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.pinterest"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-pinterest"></i>
                             </a>
-                            <a :href="info.twitter"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.twitter"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-twitter"></i>
                             </a>
-                            <a :href="info.behance"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.behance"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-behance"></i>
                             </a>
-                            <a :href="info.facebook"
-                               class="url"
-                               target="_blank">
+                            <a
+                                :href="info.facebook"
+                                class="url"
+                                target="_blank"
+                            >
                                 <i class="iconfont icon-facebook"></i>
                             </a>
                         </div>
@@ -186,8 +240,10 @@
                 </div>
             </div>
         </div>
-        <i class="iconfont icon-close"
-           @click="dialogHide"></i>
+        <i
+            class="iconfont icon-close"
+            @click="dialogHide"
+        ></i>
         <div class="dia-recommend">
             <recommend :data="contents"></recommend>
         </div>
@@ -239,6 +295,7 @@ export default {
             isLove: false,
             isChange: false,    // 控制显示字段
             commitTime: 0,
+            loveTime: 0,
             recomDetail: {},
             clientWidth: 0
         }
@@ -248,14 +305,14 @@ export default {
 
         // 接收传来数据
         EventBus.$on('views', (res) => {
-            this.handleIsLove(res.time)
+            this.handleIsLove(res.loveTime)
             this.handleCount(res.count, res.time)
         })
 
         EventBus.$on('resetStatu', (status) => {
             if (!this.show) {
                 this.handleCount(status.count, status.time)
-                this.handleIsLove(status.time)
+                this.handleIsLove(status.loveTime)
             } else {
                 this.isViewCount = false
             }
@@ -263,8 +320,8 @@ export default {
     },
     methods: {
         // 判断是否已经点过赞
-        handleIsLove (commitTime) {
-            let time = commitTime - new Date().getTime()
+        handleIsLove (loveTime) {
+            let time = loveTime - new Date().getTime()
             if (time > 0) {
                 this.isLove = true
             } else {
@@ -278,6 +335,7 @@ export default {
                 updateObj.love = this.isLoveCount ? this.loveCount : this.info.love
                 updateObj.views = this.viewCount
                 updateObj.commitTime = this.commitTime
+                updateObj.loveTime = this.loveTime
                 const { isUpdate } = await this.$axios.$post('/content/update', updateObj)
                 if (isUpdate) {
                     this.isLoveCount = false
@@ -319,10 +377,10 @@ export default {
         handleLove () {
             // 求出时间差
             if (!this.isLoveCount) {
-                this.commitTime = this.info.commitTime
+                this.loveTime = this.info.loveTime
                 this.loveCount = this.info.love
             }
-            let time = this.commitTime - new Date().getTime()
+            let time = this.loveTime - new Date().getTime()
             console.log(time);
             // 把状态传递给父组件，避免多次请求
             if (time > 0) {
@@ -332,7 +390,7 @@ export default {
             this.isLove = true
             this.loveCount += 1
             // 更新提交时间
-            this.commitTime = new Date().getTime() + setTime
+            this.loveTime = new Date().getTime() + setTime
         }
     }
 }
