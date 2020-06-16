@@ -11,7 +11,7 @@
                         class="logo"
                         src="../static/imgs/edga-pc@2.png"
                         alt="edga"
-                        style="width: 92px;"
+                        style="width: 120px;"
                     >
                     <i
                         class="iconfont icon-close"
@@ -192,9 +192,9 @@
                 >
                     <img
                         class="logo"
-                        src="../static/imgs/p-logo.png"
+                        src="../static/imgs/edga-pc@2.png"
                         alt="edga"
-                        style="width: 92px"
+                        style="width: 120px"
                     >
                 </nuxt-link>
             </div>

@@ -77,12 +77,13 @@
                             src="~/static/imgs/yirenzheng.png"
                             alt="renzheng"
                             class="renzheng"
-                            v-if="clientWidth >= 768"
+                            v-if="clientWidth >= 1024"
                         >
                         <img
-                            src="~/static/imgs/p-renzheng.png"
+                            src="~/static/imgs/p-renzheng@2.png"
                             alt="renzheng"
                             class="renzheng"
+                            style="height: 24px;"
                             v-else
                         >
                         <p>已认证</p>
@@ -91,11 +92,12 @@
                         <img
                             src="~/static/imgs/yituijian.png"
                             alt="tuijian"
-                            v-if="clientWidth >= 768"
+                            v-if="clientWidth >= 1024"
                         >
                         <img
-                            src="~/static/imgs/p-tuijian.png"
+                            src="~/static/imgs/p-tuijian@2.png"
                             alt="tuijian"
+                            style="height: 22px;"
                             v-else
                         >
                         <p>已推荐</p>
@@ -104,17 +106,24 @@
                         <img
                             src="~/static/imgs/love-red.png"
                             alt="love"
-                            v-show="clientWidth >= 768 && !isLove"
+                            v-show="clientWidth >= 1024 && !isLove"
                         >
                         <img
                             src="~/static/imgs/isLove.png"
                             alt="love"
-                            v-show="clientWidth >= 768 && isLove"
+                            v-show="clientWidth >= 1024 && isLove"
                         >
                         <img
-                            src="~/static/imgs/p-love.png"
+                            src="~/static/imgs/p-love@2.png"
                             alt="love"
-                            v-if="clientWidth < 768"
+                            style="height: 22px;"
+                            v-show="clientWidth < 1024 && !isLove"
+                        >
+                        <img
+                            src="~/static/imgs/p-islove@2.png"
+                            alt="love"
+                            style="height: 22px;"
+                            v-show="clientWidth < 1024  && isLove"
                         >
                         <p>喜欢</p>
                     </div>
@@ -321,7 +330,9 @@ export default {
     methods: {
         // 判断是否已经点过赞
         handleIsLove (loveTime) {
+            console.log(loveTime);
             let time = loveTime - new Date().getTime()
+            console.log(time, 'love');
             if (time > 0) {
                 this.isLove = true
             } else {

@@ -74,6 +74,8 @@ export default {
         DialogShow
     },
     mounted () {
+        document.body.style.overflow = 'auto'
+
         const { index } = this.$route.params
         const { url } = this.$route.query
         if (index !== url && index !== 'search') {

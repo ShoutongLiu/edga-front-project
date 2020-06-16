@@ -273,9 +273,6 @@ $fontColor: #a0a0a0;
 			&.active {
 				color: #000;
 				border-bottom: 4px solid #000;
-				&:hover {
-					color: #4284f3;
-				}
 			}
 		}
 	}
@@ -289,6 +286,11 @@ $fontColor: #a0a0a0;
 				padding: 8px 20px;
 				cursor: pointer;
 				position: relative;
+				&:hover {
+					.company-name {
+						color: #4284f3;
+					}
+				}
 			}
 			.logo {
 				width: 32px;
@@ -308,15 +310,13 @@ $fontColor: #a0a0a0;
 					justify-content: center;
 				}
 				.company-name {
-					color: #888888;
+					color: #000;
 					font-size: 1.6rem;
 					width: 176px;
 					white-space: nowrap; //溢出不换行
 					overflow: hidden; //超出的文本隐藏
 					&.big {
-						width: 146px;
-						white-space: normal;
-						overflow: visible;
+						width: 95px;
 					}
 				}
 				.company-name,
@@ -327,16 +327,24 @@ $fontColor: #a0a0a0;
 				.city {
 					color: $fontColor;
 					font-size: 1.2rem;
+					.iconfont {
+						font-size: 14px;
+						padding-left: 2px;
+					}
 				}
 				.city {
 					padding-left: 8px;
 				}
 			}
 			.true {
+				display: flex;
+				align-items: center;
 				position: absolute;
-				top: 50%;
-				transform: translateY(-50%);
+				top: 28px;
 				right: 20px;
+				img {
+					margin-left: 4px;
+				}
 			}
 		}
 	}
@@ -344,7 +352,7 @@ $fontColor: #a0a0a0;
 
 // TagList标签样式
 .list {
-	margin-top: 60px;
+	margin-top: 48px;
 	margin-bottom: 100px;
 }
 .tag-list {
@@ -430,9 +438,14 @@ $fontColor: #a0a0a0;
 		}
 	}
 	.true {
+		display: flex;
+		align-items: center;
 		position: absolute;
 		top: 20px;
 		right: 16px;
+		img {
+			margin-left: 2px;
+		}
 	}
 }
 

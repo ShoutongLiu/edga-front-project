@@ -149,6 +149,8 @@ export default {
         return { banners, graphs, contents }
     },
     mounted () {
+        document.body.style.overflow = 'auto'
+
         let { url } = this.$route.params
         if (url) {
             // 定时器等待dom渲染完成

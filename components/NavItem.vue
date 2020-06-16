@@ -57,6 +57,7 @@ export default {
         return {
             viewCount: 0,
             commitTime: 0,
+            loveTime: 0,
             isViewCount: false,
             clientWidth: 0
         }
@@ -72,6 +73,7 @@ export default {
         async addView () {
             this.commitTime = this.item.commitTime
             this.viewCount = this.item.views
+            this.loveTime = this.item.loveTime
             // 把数量传到dialog组件
             EventBus.$emit('views', { count: this.viewCount, time: this.commitTime, loveTime: this.loveTime })
         }

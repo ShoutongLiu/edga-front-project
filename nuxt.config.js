@@ -5,7 +5,7 @@ module.exports = {
     ** Headers of the page
     */
     head: {
-        title: 'EGDA行家 | 行业专家信息搜索平台',
+        title: 'EGDA行家 | 环境图形设计行业专家信息搜索平台',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' },

@@ -6,7 +6,7 @@
                     src="~/static/imgs/buttom@2.png"
                     alt=""
                     v-if="clientWidth > 786"
-                    style="width: 92px;"
+                    style="width: 101px;"
                 >
                 <img
                     src="~/static/imgs/p-buttom@2x.png"
