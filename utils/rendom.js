@@ -15,7 +15,17 @@ const rendom = (contents) => {
     numArr.forEach(v => {
         rendomArr.push(contents[v])
     })
-    return rendomArr
+
+    let clientWidth = document.body.clientWidth
+    if (clientWidth < 375) {
+        return rendomArr.slice(0, 5)
+    } else if (clientWidth < 768) {
+        return rendomArr.slice(0, 7)
+    } else if (clientWidth < 1024) {
+        return rendomArr.slice(0, 14)
+    } else {
+        return rendomArr
+    }
 }
 
 export default rendom

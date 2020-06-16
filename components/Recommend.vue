@@ -4,7 +4,7 @@
             <span class="title">推荐:</span>
             <div
                 class="recomm-img"
-                v-for="v in recommData"
+                v-for="v in data"
                 :key="v._id"
             >
                 <img
@@ -24,24 +24,6 @@ let setTime = 1000 * 60 * 5
 export default {
     props: {
         data: Array
-    },
-    data () {
-        return {
-            clientWidth: null,
-            recommData: []
-        }
-    },
-    mounted () {
-        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
-        if (this.clientWidth < 375) {
-            this.recommData = this.data.slice(0, 5)
-        } else if (this.clientWidth < 768) {
-            this.recommData = this.data.slice(0, 7)
-        } else if (this.clientWidth < 1024) {
-            this.recommData = this.data.slice(0, 14)
-        } else {
-            this.recommData = this.data
-        }
     },
     methods: {
         handleOpenDetail (item) {
