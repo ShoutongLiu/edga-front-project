@@ -14,5 +14,5 @@ export default function ({ $axios, redirect }) {
         }
     })
     // $axios.setBaseURL('http://127.0.0.1:3000')
-    $axios.setBaseURL('http://hangjia.egda.com:3000')
+    $axios.setBaseURL('https://hangjia.egda.com:3000')
 }
