@@ -24,12 +24,17 @@
                     @mouseleave="handleLeaveLove"
                     @click="handleOpen(v)"
                 >
-                    <img
-                        :src="v.avatarUrl"
-                        alt="logo"
-                        class="logo"
+                    <div
+                        class="logo-container"
                         :class="{big: v._id === loveFirstId}"
                     >
+                        <img
+                            :src="v.avatarUrl"
+                            alt="logo"
+                            class="logo"
+                            :class="{big: v._id === loveFirstId}"
+                        >
+                    </div>
                     <div
                         class="info"
                         :class="{big: v._id === loveFirstId}"

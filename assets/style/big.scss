@@ -292,6 +292,14 @@ $fontColor: #a0a0a0;
 					}
 				}
 			}
+			.logo-container {
+				height: 32px;
+				width: 32px;
+				&.big {
+					width: 64px;
+					height: 64px;
+				}
+			}
 			.logo {
 				width: 32px;
 				height: 32px;
@@ -319,9 +327,8 @@ $fontColor: #a0a0a0;
 						width: 95px;
 					}
 				}
-				.company-name,
-				.location {
-					padding: 6px 0;
+				.company-name {
+					margin-bottom: 6px;
 				}
 				.type,
 				.city {
