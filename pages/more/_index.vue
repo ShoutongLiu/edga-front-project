@@ -18,7 +18,7 @@
                 </div>
                 <div
                     class="title"
-                    v-if="contents.length === 0"
+                    v-else
                 >
                     抱歉，找不到任何结果。以下推荐的行家您可能会喜欢！
                 </div>
@@ -59,7 +59,7 @@ export default {
             typeTitle: '',
             categroy: [],
             tag: [],
-            contents: [],
+            contents: [{}],
             recommendData: [],
             companyInfo: {},
             isShow: false,

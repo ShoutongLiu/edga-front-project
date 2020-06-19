@@ -1,7 +1,9 @@
 <template>
     <div
-        class="item-container"
+        :class="`item-container ${isTouch ? 'touch' : ''}`"
         v-if="item.showIndex && item.surplusTime > 0"
+        @touchmove="gtouchmove"
+        @touchend="gtouchend"
     >
         <div
             class="item"
@@ -15,7 +17,7 @@
                 >
             </div>
             <div class="item-info">
-                <div class="item-name">{{item.companyName}}</div>
+                <div :class="`item-name ${isTouch ? 'touch' : ''}`">{{item.companyName}}</div>
                 <div class="desc">{{item.describe}}</div>
                 <div
                     class="location"
@@ -59,6 +61,7 @@ export default {
             commitTime: 0,
             loveTime: 0,
             isViewCount: false,
+            isTouch: false,
             clientWidth: 0
         }
     },
@@ -76,6 +79,14 @@ export default {
             this.loveTime = this.item.loveTime
             // 把数量传到dialog组件
             EventBus.$emit('views', { count: this.viewCount, time: this.commitTime, loveTime: this.loveTime })
+        },
+        // 移动端滑动事件
+        gtouchmove () {
+            this.isTouch = true
+        },
+        // 移动端停止滑动事件
+        gtouchend () {
+            this.isTouch = false
         }
     }
 }

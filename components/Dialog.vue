@@ -100,30 +100,30 @@
                             style="height: 22px;"
                             v-else
                         >
-                        <p>已推荐</p>
+                        <p>推荐行家</p>
                     </div>
                     <div @click="handleLove">
                         <img
                             src="~/static/imgs/love-red.png"
                             alt="love"
-                            v-show="clientWidth >= 1024 && !isLove"
+                            v-show="clientWidth >= 1024 && isLove"
                         >
                         <img
                             src="~/static/imgs/isLove.png"
                             alt="love"
-                            v-show="clientWidth >= 1024 && isLove"
+                            v-show="clientWidth >= 1024 && !isLove"
                         >
                         <img
                             src="~/static/imgs/p-love@2.png"
                             alt="love"
                             style="height: 22px;"
-                            v-show="clientWidth < 1024 && !isLove"
+                            v-show="clientWidth < 1024 && isLove"
                         >
                         <img
                             src="~/static/imgs/p-islove@2.png"
                             alt="love"
                             style="height: 22px;"
-                            v-show="clientWidth < 1024  && isLove"
+                            v-show="clientWidth < 1024  && !isLove"
                         >
                         <p>喜欢</p>
                     </div>
@@ -133,7 +133,28 @@
             <!-- 公司详细信息 -->
             <div class="company-detail">
                 <div class="desc">
-                    <p>{{info.describe}}</p>
+                    <div
+                        v-if="info.describe.length > 320 && info.describe.length < 600"
+                        class="desc-container"
+                    >
+                        <p>{{info.describe.slice(0, 200)}}</p>
+                        <p>{{info.describe.slice(200, info.describe.length - 1)}}</p>
+                    </div>
+                    <div
+                        v-if="info.describe.length > 600"
+                        class="desc-container"
+                    >
+                        <p>{{info.describe.slice(0, 200)}}</p>
+                        <p>{{info.describe.slice(200, 420)}}</p>
+                        <p>{{info.describe.slice(420, info.describe.length - 1)}}</p>
+                    </div>
+                    <div
+                        v-else
+                        class="desc-container"
+                    >
+                        <p>{{info.describe}}</p>
+                    </div>
+
                     <a
                         class="guanwang"
                         :href="`${info.url ? info.url : 'javascript:void(0);'}`"
@@ -145,15 +166,17 @@
                         class="renzheng"
                         v-if="info.slogan"
                     >
-                        认证：<span>{{info.slogan}}</span>
+                        <span class="title">认证：</span>
+                        <span>{{info.slogan}}</span>
                     </div>
                     <div class="skill">
                         <div class="type">
-                            类型：<span>{{info.categroyVal}}</span>
+                            <span class="title">类型：</span>
+                            <span>{{info.categroyVal}}</span>
                         </div>
                         <div class="location">
                             <div>
-                                位置：
+                                <span class="title">位置：</span>
                                 <span>{{info.locationVal.join('、')}}</span>
                             </div>
                         </div>

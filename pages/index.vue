@@ -194,7 +194,7 @@ export default {
         },
         // 更多跳转
         toMore (name, url) {
-            this.$router.push({ path: `/more/${url}`, query: { key: name, url } })
+            this.$router.push({ path: `/more/${url}`, query: { key: name, url, type: 'bq' } })
         },
         // 获取分类和标签数据
         handleGetData ({ tag, categroy }) {

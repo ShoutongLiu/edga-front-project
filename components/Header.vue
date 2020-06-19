@@ -121,10 +121,7 @@
             </div>
             <div class="navbar">
                 <ul class="navlist">
-                    <li
-                        @click="$router.push('/')"
-                        style="color: #a0a0a0"
-                    >
+                    <li @click="$router.push('/')">
                         <span>首页</span>
                     </li>
                     <li @click="toTag">

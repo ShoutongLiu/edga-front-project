@@ -447,6 +447,9 @@ $fontColor: #a0a0a0;
 	margin-right: 2.4%;
 	background-color: #fff;
 	margin-bottom: 10px;
+	&.touch {
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, .1);
+	}
 }
 .item {
 	display: flex;
@@ -470,10 +473,13 @@ $fontColor: #a0a0a0;
 			font-size: 1.4rem;
 			color: #000;
 			white-space: nowrap; //溢出不换行
+			&.touch {
+				color: #4284f3 !important;
+			}
 		}
 		.desc {
 			padding: 5px 0;
-			width: 104px;
+			width: auto;
 			overflow: hidden; //超出的文本隐藏
 			text-overflow: ellipsis; //溢出用省略号显示
 			white-space: nowrap; //溢出不换行
@@ -498,16 +504,16 @@ $fontColor: #a0a0a0;
 
 // NavList分类
 .nav-list {
-	margin-top: 30px;
+	margin-top: 20px;
 	.list-box {
-		margin-bottom: 40px;
+		margin-bottom: 20px;
 		&:last-child {
 			margin-bottom: 0;
 		}
 	}
 	.title {
 		font-size: 1.6rem;
-		margin-bottom: 20px;
+		margin-bottom: 16px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -586,6 +592,7 @@ $fontColor: #a0a0a0;
 		padding: 40px 20px 20px 20px;
 		margin: 0 20px;
 		background-color: #fff;
+		border-bottom: 4px solid #f4f4f4;
 		.logo {
 			width: 32px;
 			height: 32px;
@@ -647,7 +654,8 @@ $fontColor: #a0a0a0;
 		}
 	}
 	.hr {
-		width: 94%;
+		display: none;
+		width: 100%;
 		margin: 0 auto;
 		height: 4px;
 		border: 0;
@@ -665,6 +673,9 @@ $fontColor: #a0a0a0;
 			color: #515151;
 			font-size: 1.4rem;
 			position: relative;
+			.desc-container {
+				margin-bottom: 30px;
+			}
 			p {
 				letter-spacing: 0px;
 				line-height: 20px;
@@ -703,11 +714,16 @@ $fontColor: #a0a0a0;
 						margin-bottom: 0;
 					}
 				}
-				.shanc {
-					display: flex;
-					.title {
-						min-width: 42px;
-					}
+			}
+
+			.renzheng,
+			.type,
+			.location,
+			.shanc {
+				display: flex;
+				.title {
+					min-width: 42px;
+					color: #000;
 				}
 			}
 			.tag {
