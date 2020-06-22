@@ -419,6 +419,7 @@ $fontColor: #a0a0a0;
 			white-space: nowrap; //溢出不换行
 		}
 		.location {
+			display: block;
 			span {
 				&:last-child {
 					padding-left: 6px;

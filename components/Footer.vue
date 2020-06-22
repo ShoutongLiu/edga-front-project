@@ -5,14 +5,14 @@
                 <img
                     src="~/static/imgs/buttom@2.png"
                     alt=""
-                    v-if="clientWidth > 786"
+                    class="hide-768"
                     style="width: 101px;"
                 >
                 <img
                     src="~/static/imgs/p-buttom@2x.png"
                     alt=""
                     style="width: 92px;"
-                    v-else
+                    class="hide-992"
                 >
             </div>
             <div class="copy-right">
@@ -24,14 +24,7 @@
 
 <script>
 export default {
-    data () {
-        return {
-            clientWidth: 0
-        }
-    },
-    mounted () {
-        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
-    }
+
 }
 </script>
 

@@ -76,15 +76,13 @@
                         <img
                             src="~/static/imgs/yirenzheng.png"
                             alt="renzheng"
-                            class="renzheng"
-                            v-if="clientWidth >= 1024"
+                            class="renzheng hide-768"
                         >
                         <img
                             src="~/static/imgs/p-renzheng@2.png"
                             alt="renzheng"
-                            class="renzheng"
+                            class="renzheng hide-992"
                             style="height: 24px;"
-                            v-else
                         >
                         <p>已认证</p>
                     </div>
@@ -92,13 +90,13 @@
                         <img
                             src="~/static/imgs/yituijian.png"
                             alt="tuijian"
-                            v-if="clientWidth >= 1024"
+                            class="hide-768"
                         >
                         <img
                             src="~/static/imgs/p-tuijian@2.png"
                             alt="tuijian"
                             style="height: 22px;"
-                            v-else
+                            class="hide-992"
                         >
                         <p>推荐行家</p>
                     </div>
@@ -106,24 +104,28 @@
                         <img
                             src="~/static/imgs/love-red.png"
                             alt="love"
-                            v-show="clientWidth >= 1024 && isLove"
+                            class="hide-768"
+                            v-show="isLove"
                         >
                         <img
                             src="~/static/imgs/isLove.png"
                             alt="love"
-                            v-show="clientWidth >= 1024 && !isLove"
+                            class="hide-768"
+                            v-show="!isLove"
                         >
                         <img
                             src="~/static/imgs/p-love@2.png"
                             alt="love"
                             style="height: 22px;"
-                            v-show="clientWidth < 1024 && isLove"
+                            class="hide-992"
+                            v-show="isLove"
                         >
                         <img
                             src="~/static/imgs/p-islove@2.png"
                             alt="love"
                             style="height: 22px;"
-                            v-show="clientWidth < 1024  && !isLove"
+                            class="hide-992"
+                            v-show="!isLove"
                         >
                         <p>喜欢</p>
                     </div>
@@ -329,12 +331,9 @@ export default {
             commitTime: 0,
             loveTime: 0,
             recomDetail: {},
-            clientWidth: 0
         }
     },
     mounted () {
-        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
-
         // 接收传来数据
         EventBus.$on('views', (res) => {
             this.handleIsLove(res.loveTime)

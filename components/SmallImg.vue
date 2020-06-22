@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="small-img"
-        v-if="clientWidth >= 768"
-    >
+    <div class="small-img">
         <a
             :href="v.url"
             v-for="v in graphs"
@@ -22,14 +19,6 @@ export default {
     props: {
         graphs: Array
     },
-    data () {
-        return {
-            clientWidth: 0
-        }
-    },
-    mounted () {
-        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
-    }
 }
 </script>
 

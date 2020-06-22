@@ -19,10 +19,7 @@
             <div class="item-info">
                 <div :class="`item-name ${isTouch ? 'touch' : ''}`">{{item.companyName}}</div>
                 <div class="desc">{{item.describe}}</div>
-                <div
-                    class="location"
-                    v-if="clientWidth > 768"
-                >
+                <div class="location">
                     <span>{{item.categroyVal}}</span>
                     <span v-if="item.locationVal.length > 0">
                         {{item.locationVal[0]}}
@@ -30,10 +27,7 @@
                     </span>
                 </div>
             </div>
-            <div
-                class="true"
-                v-if="clientWidth > 768"
-            >
+            <div class="true hide-768">
                 <img
                     src="~/static/imgs/tui-pc.png"
                     alt="tui"
@@ -62,12 +56,9 @@ export default {
             loveTime: 0,
             isViewCount: false,
             isTouch: false,
-            clientWidth: 0
         }
     },
-    mounted () {
-        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
-    },
+
     methods: {
         showDetail () {
             this.addView()

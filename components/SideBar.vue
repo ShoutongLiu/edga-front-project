@@ -1,55 +1,86 @@
 <template>
-    <transition name="fadeside">
-        <div :class="`side-bar ${navPhone  ? 'show' : ''}`"
-             v-if="clientWidth < 1400">
+    <div>
+        <div
+            class="mask"
+            v-show="navPhone"
+            @click="phoneNavHide"
+        ></div>
+        <div :class="`hide-1024 side-bar ${navPhone  ? 'show' : ''}`">
             <div class="nav-phone">
                 <div class="p-header">
-                    <img class="logo"
-                         src="../static/imgs/edga-pc@2.png"
-                         alt="edga"
-                         style="width: 120px;">
-                    <i class="iconfont icon-close"
-                       @click="phoneNavHide"></i>
+                    <img
+                        class="logo"
+                        src="../static/imgs/edga-pc@2.png"
+                        alt="edga"
+                        style="width: 120px;"
+                    >
+                    <i
+                        class="iconfont icon-close"
+                        @click="phoneNavHide"
+                    ></i>
                 </div>
                 <ul class="navlist-phone">
-                    <li @click="$router.push('/')"
-                        style="color: #a0a0a0">
+                    <li
+                        class="item-li"
+                        @click="$router.push('/')"
+                        style="color: #a0a0a0"
+                    >
                         <span>首页</span>
                     </li>
-                    <li @click="toTag">
+                    <li
+                        @click="toTag"
+                        class="item-li"
+                    >
                         <span>领域</span>
                     </li>
-                    <li v-for="v in headerCate"
+                    <li
+                        class="item-li"
+                        v-for="v in headerCate"
                         :key="v.id"
-                        @click="goCate(v.id)">
+                        @click="goCate(v.id)"
+                    >
                         <span>{{v.name}}</span>
                     </li>
-                    <li class="cate"
+                    <li
+                        class="cate item-li"
                         v-for="v in cateArr"
                         :key="v.key"
-                        @click="handleDownShow(v.value, 'phone')">
-                        <span>
-                            {{v.name}}
-                            <i :class="`iconfont icon-552cc1babd9aa ${isPhoneShow === v.value ? 'down' : ''}`"></i>
+                    >
+                        <span
+                            class="down-li"
+                            @click="handleDownShow(v.value, 'phone')"
+                        >
+                            <span>{{v.name}}</span>
+                            <i :class="`iconfont icon-down ${isPhoneShow === v.value ? 'down' : ''}`"></i>
                         </span>
                         <!-- 手机标签，类别 -->
-                        <ul class="list-down-phone"
-                            v-show="isPhoneShow === v.value &&  v.value !== 'zz'">
-                            <li v-for="v in navList.data"
+                        <ul
+                            class="list-down-phone"
+                            v-show="isPhoneShow === v.value &&  v.value !== 'zz'"
+                        >
+                            <li
+                                class="li-child"
+                                v-for="v in navList.data"
                                 :key="v._id"
-                                @click="toMore(v, navList.type)">{{v.name}}</li>
+                                @click="toMore(v, navList.type)"
+                            >{{v.name}}</li>
                         </ul>
                         <!-- 移动设备显示站点 -->
-                        <ul class="list-down-phone"
-                            v-show="isStationShow && isPhoneShow === v.value">
-                            <li v-for="v in station"
-                                :key="v.url">
-                                <a :href="v.url"
-                                   target="_blank">{{v.name}}</a>
+                        <ul
+                            class="list-down-phone"
+                            v-show="isStationShow && isPhoneShow === v.value"
+                        >
+                            <li
+                                class="li-child"
+                                v-for="v in station"
+                                :key="v.url"
+                                @click="dropOther(v.url)"
+                            >
+                                {{v.name}}
                             </li>
                         </ul>
                     </li>
-                    <li class="cate">
+                    <li class="item-li">
                         <div @click="goJoin">
                             <span>入驻</span>
                         </div>
@@ -57,7 +88,8 @@
                 </ul>
             </div>
         </div>
-    </transition>
+    </div>
+
 </template>
 
 <script>
@@ -66,10 +98,10 @@ export default {
     data () {
         return {
             isShow: false,
+            isDownShow: false,
             isStationShow: false,
             navPhone: false,
             isPhoneShow: '',
-            clientWidth: 0,
             navList: {
                 data: [],
                 type: ''
@@ -122,14 +154,10 @@ export default {
         }
     },
     async mounted () {
-        this.clientWidth = document.body.clientWidth    // 获取屏幕宽度
-        const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
-        const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
-        this.tag = tag
-        this.categroy = categroy
-
         EventBus.$on('sidebarshow', (obj) => {
             this.navPhone = obj.navPhone
+            this.tag = obj.tag
+            this.categroy = obj.cate
         })
     },
     methods: {
@@ -160,12 +188,14 @@ export default {
             this.isStationShow = false
         },
         toMore (v, type) {
+            this.phoneNavHide()
             this.$router.push({ path: `/more/${v.url}`, query: { key: v.name, url: v.url, type } })
         },
         goCate (url) {
             this.$emit('anchor', url)
             this.phoneNavHide()
         },
+        // 关闭侧边栏
         phoneNavHide () {
             this.navPhone = false
             EventBus.$emit('sidebarhide', { navPhone: false })
@@ -178,12 +208,18 @@ export default {
         },
         // 跳转到入驻
         goJoin () {
+            this.phoneNavHide()
             document.body.style.overflow = 'auto'
             this.$router.push('/join')
         },
         // 点击领域跳转锚点
         toTag () {
             this.$emit('toTag')
+        },
+        // 跳转主站链接
+        dropOther (url) {
+            this.phoneNavHide()
+            window.open(url, '_blank');
         }
     }
 }

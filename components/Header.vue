@@ -1,20 +1,38 @@
 <template>
     <header :class="`header ${navPhone ? 'static' : ''}`">
-        <!-- 移动端头部start -->
-        <div class="mask"
-             v-show="navPhone"></div>
+        <div
+            class="search-mask"
+            v-show="isPhoneSearch"
+        >
+            <input
+                type="text"
+                v-model="searchVal"
+                class="p-search"
+                placeholder="输入关键字"
+                ref="input"
+                @keyup.enter="handleSearch"
+            >
+            <i
+                class="iconfont icon-close"
+                @click="searchHide"
+            ></i>
+        </div>
         <div class="container header-container">
-            <div class="caidan"
-                 @click="phoneNavShow">
+            <div
+                class="caidan"
+                @click="phoneNavShow"
+            >
                 <i class="iconfont icon-caidan2"></i>
             </div>
             <div class="title">
                 <h1>
                     <nuxt-link to="/">
-                        <img class="logo"
-                             src="../static/imgs/edga-pc@2.png"
-                             alt="edga"
-                             style="width: 120px;height: 26px">
+                        <img
+                            class="logo"
+                            src="../static/imgs/edga-pc@2.png"
+                            alt="edga"
+                            style="width: 120px;height: 26px"
+                        >
                     </nuxt-link>
                 </h1>
             </div>
@@ -26,16 +44,20 @@
                     <li @click="toTag">
                         <span>领域</span>
                     </li>
-                    <li v-for="v in headerCate"
+                    <li
+                        v-for="v in headerCate"
                         :key="v.id"
-                        @click="goCate(v.id)">
+                        @click="goCate(v.id)"
+                    >
                         <span>{{v.name}}</span>
                     </li>
-                    <li class="cate"
+                    <li
+                        class="cate"
                         v-for="v in cateArr"
                         :key="v.key"
                         @mouseenter="handleDownShow(v.value, 'pc')"
-                        @mouseleave="handleDownHide">
+                        @mouseleave="handleDownHide"
+                    >
                         <span> {{v.name}}</span>
                         <i class="iconfont icon-down"></i>
                     </li>
@@ -46,65 +68,87 @@
                     </li>
                 </ul>
                 <transition name="fade">
-                    <div class="station"
-                         @mouseenter="isStationShow = true"
-                         @mouseleave="isStationShow = false"
-                         v-show="isStationShow">
+                    <div
+                        class="station"
+                        @mouseenter="isStationShow = true"
+                        @mouseleave="isStationShow = false"
+                        v-show="isStationShow"
+                    >
                         <ul class="station-list">
-                            <li v-for="v in station"
-                                :key="v.url">
-                                <a :href="v.url"
-                                   target="_blank">{{v.name}}</a>
+                            <li
+                                v-for="v in station"
+                                :key="v.url"
+                            >
+                                <a
+                                    :href="v.url"
+                                    target="_blank"
+                                >{{v.name}}</a>
                             </li>
                         </ul>
                     </div>
                 </transition>
             </div>
             <div class="title-middle">
-                <nuxt-link to="/"
-                           v-if="clientWidth >= 768">
-                    <img class="logo"
-                         src="../static/imgs/edga-pc@2.png"
-                         alt="edga"
-                         style="width: 120px;height: 26px">
+                <nuxt-link
+                    to="/"
+                    class="hide-768"
+                >
+                    <img
+                        class="logo"
+                        src="../static/imgs/edga-pc@2.png"
+                        alt="edga"
+                        style="width: 120px;height: 26px"
+                    >
                 </nuxt-link>
-                <nuxt-link to="/"
-                           v-else>
-                    <img class="logo"
-                         src="../static/imgs/edga-pc@2.png"
-                         alt="edga"
-                         style="width: 120px">
+                <nuxt-link
+                    to="/"
+                    class="hide-992"
+                >
+                    <img
+                        class="logo"
+                        src="../static/imgs/edga-pc@2.png"
+                        alt="edga"
+                        style="width: 120px"
+                    >
                 </nuxt-link>
             </div>
             <div class="search">
-                <input type="text"
-                       :class="`search-input ${searchShow ? 'show' :'hide'}`"
-                       v-model="searchVal"
-                       placeholder="搜索"
-                       @mouseenter="handleEnter"
-                       @focus="handleFocus"
-                       @blur="handleBlur"
-                       @mouseleave="handleLeave"
-                       @keyup.enter="goSearch">
-                <i class="iconfont icon-search"
-                   @mouseenter="handleEnter"
-                   @mouseleave="handleLeave"
-                   @click="goSearch"
-                   v-if="clientWidth > 1400"></i>
-                <i class="iconfont icon-search"
-                   @click="goSearch"
-                   v-else></i>
+                <input
+                    type="text"
+                    :class="`search-input ${searchShow ? 'show' :'hide'}`"
+                    v-model="searchVal"
+                    placeholder="搜索"
+                    @mouseenter="handleEnter"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @mouseleave="handleLeave"
+                    @keyup.enter="handleSearch"
+                >
+                <i
+                    class="iconfont icon-search hide-768 hide-only-992"
+                    @mouseenter="handleEnter"
+                    @mouseleave="handleLeave"
+                    @click="handleSearch"
+                ></i>
+                <i
+                    class="iconfont icon-search hide-1400"
+                    @click="goSearch"
+                ></i>
             </div>
             <!-- PC下拉菜单 -->
             <transition name="fade">
-                <div class="hover"
-                     @mouseenter="isShow = true"
-                     @mouseleave="handleDownHide"
-                     v-show="isShow">
+                <div
+                    class="hover"
+                    @mouseenter="isShow = true"
+                    @mouseleave="handleDownHide"
+                    v-show="isShow"
+                >
                     <ul class="hover-list">
-                        <li v-for="v in navList.data"
+                        <li
+                            v-for="v in navList.data"
                             :key="v._id"
-                            @click="toMore(v,navList.type)">{{v.name}}</li>
+                            @click="toMore(v,navList.type)"
+                        >{{v.name}}</li>
                     </ul>
                 </div>
             </transition>
@@ -119,6 +163,7 @@ export default {
         return {
             isFocus: false,
             searchShow: false,
+            isPhoneSearch: false,
             isShow: false,
             isStationShow: false,
             navPhone: false,
@@ -189,6 +234,7 @@ export default {
 
         EventBus.$on('sidebarhide', (obj) => {
             this.navPhone = obj.navPhone
+            document.body.style.overflow = 'auto'
         })
     },
     methods: {
@@ -226,13 +272,12 @@ export default {
             this.phoneNavHide()
         },
         goSearch () {
-            if (this.clientWidth < 1400) {
-                this.navPhone = true
-                this.isSearch = true
-                document.body.style.overflow = 'hidden'
-                return
-            }
-            this.handleSearch()
+            this.isPhoneSearch = true
+            this.$refs.input.focus()
+            document.body.style.overflow = 'hidden'
+            this.$nextTick(function () {
+                this.$refs.input.focus()
+            })
         },
         // 开始搜索
         handleSearch () {
@@ -242,6 +287,10 @@ export default {
             this.$emit('search', this.searchVal)
             this.$router.push({ path: '/more/search', query: { name: this.searchVal } })
             this.searchVal = ''
+        },
+        searchHide () {
+            this.isPhoneSearch = false
+            document.body.style.overflow = 'auto'
         },
         // 获取焦点事件
         handleFocus () {
@@ -275,7 +324,7 @@ export default {
         },
         phoneNavShow () {
             this.navPhone = true
-            EventBus.$emit('sidebarshow', { navPhone: true, isList: true })
+            EventBus.$emit('sidebarshow', { navPhone: true, tag: this.tag, cate: this.categroy })
             document.body.style.overflow = 'hidden'
         },
         // 跳转到入驻
