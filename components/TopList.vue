@@ -136,6 +136,8 @@
 
 <script>
 import { EventBus } from '../utils/bus'
+import pinyin from 'pinyin'
+let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     props: {
         newTop: {
@@ -184,6 +186,20 @@ export default {
             this.currentLoveId = this.loveTop[0]._id
         },
         handleOpen (item) {
+            let url = ''
+            if (rtx.test(item.companyName)) {
+                let pinyinArr = pinyin(item.companyName, {
+                    style: pinyin.STYLE_NORMAL                })
+                url = pinyinArr[0] + pinyinArr[1]
+            } else {
+                url = item.companyName
+            }
+
+            // 设置title
+            let title = item.companyName + '|' + item.describe
+            document.title = title
+            window.history.pushState(null, null, url); // 改变url但是不跳转
+
             this.$emit('showDetail', item)
             // 把数量传到dialog组件
             EventBus.$emit('views', { count: item.views, time: item.commitTime, loveTime: item.loveTime })

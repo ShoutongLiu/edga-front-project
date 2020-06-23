@@ -3,7 +3,6 @@
         <edga-header
             @data="handleGetData"
             @anchor="goAnchor"
-            @toTag="goAnchorTag"
         ></edga-header>
         <div class="container">
             <div class="main">
@@ -19,14 +18,14 @@
                     ></top-list>
                 </div>
             </div>
-            <div class="list">
+            <div
+                class="list"
+                id="tag"
+            >
                 <div class="list-container">
                     <!-- 标签分类 -->
                     <div class="tag-list">
-                        <ul
-                            class="tag-box"
-                            id="tag"
-                        >
+                        <ul class="tag-box">
                             <li
                                 v-for="v in tag"
                                 :key="v._id"
@@ -117,19 +116,19 @@ export default {
                 },
                 {
                     name: '设计师',
-                    id: 'sjs'
+                    id: 'designer'
                 },
                 {
                     name: '制造企业',
-                    id: 'zzqy'
+                    id: 'zhizao'
                 },
                 {
                     name: '平台机构',
-                    id: 'ptjg'
+                    id: 'pingtai'
                 },
                 {
                     name: '产品耗材',
-                    id: 'cphc'
+                    id: 'chanpin'
                 }
             ]
         }
@@ -148,9 +147,12 @@ export default {
         const { contents } = await $axios.$post('/content/get', { page: 0 })
         return { banners, graphs, contents }
     },
-    mounted () {
-        document.body.style.overflow = 'auto'
 
+    mounted () {
+        // window.history.pushState(null, null, 'shenshi'); // 改变url但是不跳转
+        console.log(this.$route);
+
+        document.body.style.overflow = 'auto'
         let { url } = this.$route.params
         if (url) {
             // 定时器等待dom渲染完成
@@ -164,6 +166,9 @@ export default {
             this.companyInfo = item
         })
 
+        EventBus.$on('anchor', (url) => {
+            this.goAnchor(url)
+        })
         this.getLoveTopData()
         this.getNewTopData()
     },
@@ -194,7 +199,8 @@ export default {
         },
         // 更多跳转
         toMore (name, url) {
-            this.$router.push({ path: `/more/${url}`, query: { key: name, url, type: 'bq' } })
+            console.log(url);
+            this.$router.push({ name: 'design-url', params: { key: name, url: url } })
         },
         // 获取分类和标签数据
         handleGetData ({ tag, categroy }) {
@@ -234,13 +240,7 @@ export default {
         // 锚点跳转
         goAnchor (url) {
             const returnEle = document.querySelector(`#${url}`);
-            if (!!returnEle) {
-                returnEle.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-        },
-        // 领域跳转
-        goAnchorTag () {
-            this.goAnchor('tag')
+            window.scrollTo({ top: returnEle.offsetTop - 65, behavior: "smooth" })
         },
         compare (property) {
             return function (a, b) {

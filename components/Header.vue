@@ -147,7 +147,7 @@
                         <li
                             v-for="v in navList.data"
                             :key="v._id"
-                            @click="toMore(v,navList.type)"
+                            @click="toMore(v, navList.type)"
                         >{{v.name}}</li>
                     </ul>
                 </div>
@@ -265,7 +265,7 @@ export default {
             this.isStationShow = false
         },
         toMore (v, type) {
-            this.$router.push({ path: `/more/${v.url}`, query: { key: v.name, url: v.url, type } })
+            this.$router.push({ name: 'design-url', params: { key: v.name, url: v.url } })
         },
         goCate (url) {
             this.$emit('anchor', url)
@@ -285,7 +285,7 @@ export default {
                 return
             }
             this.$emit('search', this.searchVal)
-            this.$router.push({ path: '/more/search', query: { name: this.searchVal } })
+            this.$router.push({ path: '/design/search', query: { name: this.searchVal } })
             this.searchVal = ''
         },
         searchHide () {
@@ -334,7 +334,7 @@ export default {
         },
         // 点击领域跳转锚点
         toTag () {
-            this.$emit('toTag')
+            this.goCate('tag')
         },
         /*判断客户端*/
         judgeClient () {

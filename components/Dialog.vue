@@ -158,7 +158,9 @@
                     </div>
 
                     <a
-                        class="guanwang"
+                        :class="`guanwang ${isTouch ? 'touch' : ''}`"
+                        @touchmove="isTouch = true"
+                        @touchend="isTouch = false"
                         :href="`${info.url ? info.url : 'javascript:void(0);'}`"
                         :target="`${info.url ? '_blank' : '_self'}`"
                     >访问官网</a>
@@ -276,7 +278,7 @@
         </div>
         <i
             class="iconfont icon-close"
-            @click="dialogHide"
+            @click.stop="dialogHide"
         ></i>
         <div class="dia-recommend">
             <recommend :data="contents"></recommend>
@@ -288,6 +290,7 @@
 import recommend from './Recommend'
 import { EventBus } from '../utils/bus'
 let setTime = 1000 * 60 * 5
+let timer = null
 export default {
     props: {
         show: Boolean,
@@ -328,12 +331,14 @@ export default {
             isViewCount: false,
             isLove: false,
             isChange: false,    // 控制显示字段
+            isTouch: false,
             commitTime: 0,
             loveTime: 0,
             recomDetail: {},
         }
     },
     mounted () {
+
         // 接收传来数据
         EventBus.$on('views', (res) => {
             this.handleIsLove(res.loveTime)
@@ -378,9 +383,11 @@ export default {
                     this.viewCount = 0
                 }
                 this.$emit('hide', { isLove: true, isView: true })
+                this.goBack()
                 return
             }
             this.$emit('hide', { isLove: this.isLoveCount, isView: this.isViewCount })
+            this.goBack()
         },
         // 浏览次数数据处理
         handleCount (count, commitTime) {
@@ -424,7 +431,16 @@ export default {
             this.loveCount += 1
             // 更新提交时间
             this.loveTime = new Date().getTime() + setTime
+        },
+        goBack () {
+            timer = setTimeout(() => {
+                document.title = 'EGDA行家 | 环境图形设计行业专家信息搜索平台'
+            }, 300);
+            window.history.back()
         }
+    },
+    destroyed () {
+        clearTimeout(timer)
     }
 }
 </script>

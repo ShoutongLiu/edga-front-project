@@ -24,7 +24,6 @@ export default {
     },
     mounted () {
         EventBus.$on('sidebarshow', (obj) => {
-            console.log(obj);
             this.navPhone = obj.navPhone
         })
 

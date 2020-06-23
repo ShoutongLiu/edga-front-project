@@ -489,7 +489,7 @@ $fontColor: #a0a0a0;
 			padding: 1px 2px;
 			margin-right: 18px;
 			color: $fontColor;
-			font-size: 1.4rem;
+			font-size: 1.6rem;
 			cursor: pointer;
 			&.active {
 				color: #000;
@@ -655,6 +655,7 @@ $fontColor: #a0a0a0;
 		justify-content: space-between;
 		padding: 40px 30px 40px 30px;
 		margin: 0 30px;
+		margin-top: -3px;
 		background-color: #fff;
 		border-bottom: 4px solid #f4f4f4;
 		.logo {
@@ -695,6 +696,7 @@ $fontColor: #a0a0a0;
 		.right {
 			display: flex;
 			align-items: center;
+			margin-top: 0;
 			div {
 				margin-left: 60px;
 				img {
@@ -755,6 +757,15 @@ $fontColor: #a0a0a0;
 				position: absolute;
 				bottom: 0;
 				left: 0;
+				&.touch {
+					background-color: #409eff;
+				}
+				&:active {
+					background-color: #409eff;
+				}
+				&:visited {
+					background-color: #409eff;
+				}
 			}
 		}
 		.contcant {

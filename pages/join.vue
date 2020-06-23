@@ -22,26 +22,34 @@
             <div class="price">
                 <p class="p3">专业平台+全网流量，为您提高企业的爆光率和提升品牌的影响力，助力您实现业务增长率。</p>
                 <div class="table">
-                    <div class="table-item"
-                         v-for="v in tableData"
-                         :key="v.price">
+                    <div
+                        class="table-item"
+                        v-for="v in tableData"
+                        :key="v.price"
+                    >
                         <div class="item-title">
                             <span class="hj">{{v.title}}行家</span>
                             <span class="num">{{v.price}}</span>
                             <span class="time">元/年</span>
                         </div>
                         <ul class="item-list">
-                            <li v-for="p in v.detail"
-                                :key="p.text">
+                            <li
+                                v-for="p in v.detail"
+                                :key="p.text"
+                            >
                                 <span class="text">{{p.text}}</span>
-                                <span class="val"
-                                      v-if="p.text === '图片数量' 
+                                <span
+                                    class="val"
+                                    v-if="p.text === '图片数量' 
                                       || p.text === '位置' 
-                                      || (p.text === '微信公众号推广' && p.value === '一次')">
+                                      || (p.text === '微信公众号推广' && p.value === '一次')"
+                                >
                                     {{p.value}}
                                 </span>
-                                <i v-else
-                                   :class="`iconfont icon-${p.value ? 'gou' : 'close'}`"></i>
+                                <i
+                                    v-else
+                                    :class="`iconfont icon-${p.value ? 'gou' : 'close'}`"
+                                ></i>
                             </li>
                         </ul>
                     </div>
@@ -117,8 +125,10 @@
                 <p>邮箱：egda@egda.com</p>
                 <p>Q Q：2750426350</p>
                 <p>微信</p>
-                <img src="~/static/imgs/edga.png"
-                     alt="wechat">
+                <img
+                    src="~/static/imgs/edga.png"
+                    alt="wechat"
+                >
             </div>
         </div>
     </div>
@@ -126,6 +136,7 @@
 <script>
 import EgdaHeader from '../components/Header'
 import data from '../utils/peiceTable'
+import { EventBus } from '../utils/bus'
 export default {
     data () {
         return {
@@ -133,6 +144,12 @@ export default {
         }
     },
     components: { EgdaHeader },
+    mounted () {
+        // 移动端锚点跳转
+        EventBus.$on('anchor', (url) => {
+            this.goAnchor(url)
+        })
+    },
     methods: {
         goAnchor (url) {
             this.$router.push({ name: 'index', params: { url } })

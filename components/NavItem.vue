@@ -45,6 +45,8 @@
 
 <script>
 import { EventBus } from '../utils/bus'
+import pinyin from 'pinyin'
+let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     props: {
         item: Object
@@ -61,6 +63,19 @@ export default {
 
     methods: {
         showDetail () {
+            let url = ''
+            if (rtx.test(this.item.companyName)) {
+                let pinyinArr = pinyin(this.item.companyName, {
+                    style: pinyin.STYLE_NORMAL                })
+                url = 'design/' + pinyinArr[0] + pinyinArr[1]
+            } else {
+                url = 'design/' + this.item.companyName
+            }
+
+            // 设置title
+            let title = this.item.companyName + '|' + this.item.describe
+            document.title = title
+            window.history.pushState(null, null, url); // 改变url但是不跳转
             this.addView()
             this.$emit('show', this.item)
         },

@@ -1,10 +1,8 @@
 <template>
     <div>
         <edga-header
-            @data="handleGetData"
             @anchor="goAnchor"
             @search="goSearch"
-            @toTag="goAnchorTag"
         ></edga-header>
         <div class="container more-container">
             <div class="content">
@@ -51,15 +49,19 @@ import recommend from '../../components/Recommend'
 import DialogShow from '../../components/Dialog'
 import { EventBus } from '../../utils/bus'
 import rendom from '../../utils/rendom'
+import pinyin from 'pinyin'
+let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     data () {
         return {
             value: '',  // 路由参数
-            type: '',   // 参数类别
-            typeTitle: '',
+            type: 'fl',   // 参数类别
+            url: '',
+            typeTitle: '标签',
             categroy: [],
             tag: [],
             contents: [{}],
+            pinyinArr: [],
             recommendData: [],
             companyInfo: {},
             isShow: false,
@@ -74,36 +76,67 @@ export default {
         DialogShow
     },
     mounted () {
+        console.log(this.$route);
         document.body.style.overflow = 'auto'
+        // 获取Bus传值
+        EventBus.$on('showDetail', (item) => {
+            this.isShow = true
+            this.companyInfo = item
+        })
 
-        const { index } = this.$route.params
-        const { url } = this.$route.query
-        if (index !== url && index !== 'search') {
-            this.$router.push('/notfound')
-        }
-        // 获取类型
-        if (this.$route.query.type) {
-            this.type = this.$route.query.type
-            this.typeTitle = this.type === 'fl' ? '类别' : '标签'
-        }
-        // 获取关键词
-        this.value = this.$route.query.key ? this.$route.query.key : ''
+        // 移动端锚点跳转
+        EventBus.$on('anchor', (url) => {
+            this.goAnchor(url)
+        })
 
         // 获取搜索传参
         if (this.$route.query.name) {
             let name = this.$route.query.name
             this.goSearch(name)
             this.typeTitle = name
+            this.getData()
+            return
         }
 
-        // 获取Bus传值
-        EventBus.$on('showDetail', (item) => {
-            this.isShow = true
-            this.companyInfo = item
-        })
         this.getData()
+
+        const { key, url } = this.$route.params
+        // 在首页点击更多的时候可以直接获取
+        this.value = key ? key : ''
+        this.url = url
+
+        if (!this.value && this.url !== 'search') {
+            this.$router.push('/notfound')
+        }
+
+        this.reqJudge(this.typeTitle)
+
+    },
+    async asyncData ({ $axios }) {
+        const { tag } = await $axios.$post('/tag/get', { page: 0 })
+        const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
+        return { tag, categroy }
     },
     methods: {
+        // 获取value
+        getValue (url) {
+            let cateObj = this.categroy.find(v => {
+                return v.url === url
+            })
+            let tagObj = this.tag.find(v => {
+                if (v.url === url) {
+                    return v
+                }
+            })
+
+            if (cateObj) {
+                this.typeTitle = '类别'
+                this.value = cateObj.name
+            } else {
+                this.typeTitle = '标签'
+                this.value = tagObj.name
+            }
+        },
         // 显示详情
         handleShow (info) {
             this.companyInfo = info
@@ -130,14 +163,40 @@ export default {
         async getData () {
             const { contents } = await this.$axios.$post('/content/get', { page: 0 })
             this.recommendData = rendom(contents)
+            this.pinyin(contents)
         },
         async reqJudge (type) {
-            if (type === 'fl') {
+            if (type === '类别') {
                 const { contents } = await this.$axios.$post('/content/cate', { cate: { categroyVal: this.value } })
                 this.changeIndex(contents)
-            } else if (type === 'bq') {
+            } else if (type === '标签') {
                 const { contents } = await this.$axios.$post('/content/tag', { tag: { tagVal: this.value } })
                 this.changeIndex(contents)
+            }
+        },
+
+        // 如果是详情的url，跳转到index
+        goHome (url) {
+            this.$router.push({ name: 'index', params: { detail: url } })
+        },
+        pinyin (contents) {
+            // 获取公司名拼音
+            contents.forEach(v => {
+                let str = ''
+                if (rtx.test(v.companyName)) {
+                    let arr = pinyin(v.companyName, {
+                        style: pinyin.STYLE_NORMAL                    })
+                    str = arr[0] + arr[1]
+                } else {
+                    str = v.companyName
+                }
+                this.pinyinArr.push(str)
+            })
+            if (this.pinyinArr.includes(this.url)) {
+                this.goHome(this.url)
+            } else {
+                // 获取关键词
+                this.getValue(this.url)
             }
         },
         goAnchor (url) {
@@ -154,14 +213,6 @@ export default {
                 v.showIndex = true
             })
             this.contents = data
-        },
-        handleGetData ({ tag, categroy }) {
-            this.tag = tag
-            this.categroy = categroy
-            this.reqJudge(this.type)
-        },
-        goAnchorTag () {
-            this.$router.push({ name: 'index', params: { url: 'tag' } })
         }
     }
 }

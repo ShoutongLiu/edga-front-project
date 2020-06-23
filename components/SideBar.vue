@@ -28,7 +28,7 @@
                         <span>首页</span>
                     </li>
                     <li
-                        @click="toTag"
+                        @click="goCate('tag')"
                         class="item-li"
                     >
                         <span>领域</span>
@@ -189,10 +189,10 @@ export default {
         },
         toMore (v, type) {
             this.phoneNavHide()
-            this.$router.push({ path: `/more/${v.url}`, query: { key: v.name, url: v.url, type } })
+            this.$router.push({ name: 'design-url', params: { key: v.name, url: v.url, type } })
         },
         goCate (url) {
-            this.$emit('anchor', url)
+            EventBus.$emit('anchor', url)
             this.phoneNavHide()
         },
         // 关闭侧边栏
@@ -211,10 +211,6 @@ export default {
             this.phoneNavHide()
             document.body.style.overflow = 'auto'
             this.$router.push('/join')
-        },
-        // 点击领域跳转锚点
-        toTag () {
-            this.$emit('toTag')
         },
         // 跳转主站链接
         dropOther (url) {

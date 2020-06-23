@@ -486,7 +486,7 @@ $fontColor: #a0a0a0;
 			padding: 1px 0px;
 			margin-right: 12px;
 			color: $fontColor;
-			font-size: 1.4rem;
+			font-size: 1.6rem;
 			cursor: pointer;
 			&.active {
 				color: #000;
@@ -650,18 +650,20 @@ $fontColor: #a0a0a0;
 	}
 	.company-logo {
 		display: block;
-		padding: 40px 20px 20px 20px;
+		padding: 35px 20px 20px 20px;
 		margin: 0 20px;
+		margin-top: -3px;
 		background-color: #fff;
 		border-bottom: 4px solid #f4f4f4;
 		.logo {
-			width: 32px;
-			height: 32px;
+			width: 40px;
+			height: 40px;
 			border-radius: 50%;
-			margin-right: 20px;
+			margin-right: 10px;
 		}
 		.left {
 			display: flex;
+			align-items: center;
 			.name {
 				color: #484848;
 				font-size: 1.6rem;
@@ -671,6 +673,7 @@ $fontColor: #a0a0a0;
 				color: $fontColor;
 				font-size: 1.2rem;
 				padding-top: 2px;
+				margin-left: -2px;
 				display: flex;
 				align-items: center;
 				.iconfont {
@@ -692,7 +695,7 @@ $fontColor: #a0a0a0;
 			display: flex;
 			align-items: center;
 			justify-content: flex-end;
-			margin-top: 30px;
+			margin-top: 70px;
 			div {
 				margin-left: 30px;
 				img {
@@ -757,6 +760,15 @@ $fontColor: #a0a0a0;
 				position: static;
 				bottom: 0;
 				left: 0;
+				&.touch {
+					background-color: #409eff;
+				}
+				&:active {
+					background-color: #409eff;
+				}
+				&:visited {
+					background-color: #409eff;
+				}
 			}
 		}
 		.contcant {
