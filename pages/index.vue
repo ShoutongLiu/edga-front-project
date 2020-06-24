@@ -91,6 +91,8 @@ import DialogShow from '../components/Dialog'
 import NavItem from '../components/NavItem'
 import { EventBus } from '../utils/bus'
 import rendom from '../utils/rendom'
+import pinyin from 'pinyin'
+let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     data () {
         return {
@@ -149,11 +151,15 @@ export default {
     },
 
     mounted () {
-        // window.history.pushState(null, null, 'shenshi'); // 改变url但是不跳转
-        console.log(this.$route);
-
-        document.body.style.overflow = 'auto'
-        let { url } = this.$route.params
+        this.init()
+        const { path, url } = this.$route.params
+        if (path) {
+            const info = this.getDetail(path)
+            this.handleShow(info)
+            let title = info.companyName + '|' + info.describe
+            document.title = title
+            window.history.pushState(null, null, 'hangjia/' + path); // 改变url但是不跳转
+        }
         if (url) {
             // 定时器等待dom渲染完成
             this.timer = setTimeout(() => {
@@ -161,18 +167,40 @@ export default {
             }, 500);
         }
         this.recommendData = rendom(this.contents)
-        // 获取推荐的Bus传值
-        EventBus.$on('showDetail', (item) => {
-            this.companyInfo = item
-        })
 
-        EventBus.$on('anchor', (url) => {
-            this.goAnchor(url)
-        })
         this.getLoveTopData()
         this.getNewTopData()
     },
     methods: {
+        init () {
+            document.body.style.overflow = 'auto'
+            // 获取推荐的Bus传值
+            EventBus.$on('showDetail', (item) => {
+                this.companyInfo = item
+            })
+
+            EventBus.$on('anchor', (url) => {
+                this.goAnchor(url)
+            })
+        },
+        // 根据传来的url获取对应的详情数据
+        getDetail (path) {
+            let detailInfo = this.contents.find(v => {
+                let str = ''
+                if (rtx.test(v.companyName)) {
+                    let pinyinArr = pinyin(v.companyName, {
+                        style: pinyin.STYLE_NORMAL                    })
+                    str = pinyinArr[0] + pinyinArr[1]
+                } else {
+                    str = v.companyName
+                }
+
+                if (str === path) {
+                    return v
+                }
+            })
+            return detailInfo
+        },
         // 显示详情
         handleShow (info) {
             this.companyInfo = info
@@ -240,6 +268,7 @@ export default {
         // 锚点跳转
         goAnchor (url) {
             const returnEle = document.querySelector(`#${url}`);
+            console.log(returnEle);
             window.scrollTo({ top: returnEle.offsetTop - 65, behavior: "smooth" })
         },
         compare (property) {

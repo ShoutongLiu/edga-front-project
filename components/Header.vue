@@ -183,19 +183,19 @@ export default {
                 },
                 {
                     name: '设计师',
-                    id: 'sjs'
+                    id: 'designer'
                 },
                 {
                     name: '制造企业',
-                    id: 'zzqy'
+                    id: 'zhizao'
                 },
                 {
                     name: '平台机构',
-                    id: 'ptjg'
+                    id: 'pingtai'
                 },
                 {
                     name: '产品耗材',
-                    id: 'cphc'
+                    id: 'chanpin'
                 }
             ],
             cateArr: [

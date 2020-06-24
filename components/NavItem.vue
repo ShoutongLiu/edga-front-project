@@ -63,13 +63,15 @@ export default {
 
     methods: {
         showDetail () {
+            const pathArr = this.$route.path.split('/')
+            let isHas = pathArr.includes('design')
             let url = ''
             if (rtx.test(this.item.companyName)) {
                 let pinyinArr = pinyin(this.item.companyName, {
                     style: pinyin.STYLE_NORMAL                })
-                url = 'design/' + pinyinArr[0] + pinyinArr[1]
+                url = isHas ? pinyinArr[0] + pinyinArr[1] : 'hangjia/' + pinyinArr[0] + pinyinArr[1]
             } else {
-                url = 'design/' + this.item.companyName
+                url = isHas ? this.item.companyName : 'hangjia/' + this.item.companyName
             }
 
             // 设置title

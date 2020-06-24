@@ -190,9 +190,9 @@ export default {
             if (rtx.test(item.companyName)) {
                 let pinyinArr = pinyin(item.companyName, {
                     style: pinyin.STYLE_NORMAL                })
-                url = pinyinArr[0] + pinyinArr[1]
+                url = 'hangjia/' + pinyinArr[0] + pinyinArr[1]
             } else {
-                url = item.companyName
+                url = 'hangjia/' + item.companyName
             }
 
             // 设置title

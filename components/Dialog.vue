@@ -382,12 +382,12 @@ export default {
                     this.loveCount = 0
                     this.viewCount = 0
                 }
-                this.$emit('hide', { isLove: true, isView: true })
                 this.goBack()
+                this.$emit('hide', { isLove: true, isView: true })
                 return
             }
-            this.$emit('hide', { isLove: this.isLoveCount, isView: this.isViewCount })
             this.goBack()
+            this.$emit('hide', { isLove: this.isLoveCount, isView: this.isViewCount })
         },
         // 浏览次数数据处理
         handleCount (count, commitTime) {

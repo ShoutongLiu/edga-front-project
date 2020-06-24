@@ -1,6 +1,9 @@
 <template>
     <div class="recommend">
-        <div class="company">
+        <div
+            class="company"
+            v-if="data.length > 0"
+        >
             <span class="title">推荐:</span>
             <div
                 class="recomm-img"
@@ -29,13 +32,15 @@ export default {
     },
     methods: {
         handleOpenDetail (item) {
+            const pathArr = this.$route.path.split('/')
+            let isHas = pathArr.includes('design')
             let url = ''
             if (rtx.test(item.companyName)) {
                 let pinyinArr = pinyin(item.companyName, {
                     style: pinyin.STYLE_NORMAL                })
-                url = 'design/' + pinyinArr[0] + pinyinArr[1]
+                url = isHas ? pinyinArr[0] + pinyinArr[1] : 'hangjia/' + pinyinArr[0] + pinyinArr[1]
             } else {
-                url = 'design/' + item.companyName
+                url = isHas ? item.companyName : 'hangjia/' + item.companyName
             }
 
             // 设置title

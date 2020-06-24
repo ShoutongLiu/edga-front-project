@@ -8,21 +8,21 @@
             <div class="content">
                 <div
                     class="title"
-                    v-if="contents.length !== 0"
+                    v-if="contData.length !== 0"
                 >
                     <span>{{typeTitle}}:</span>
                     <span>{{value}}</span>
-                    <span class="count">{{contents.length}}</span>个
+                    <span class="count">{{contData.length}}</span>个
                 </div>
                 <div
                     class="title"
                     v-else
                 >
-                    抱歉，找不到任何结果。以下推荐的行家您可能会喜欢！
+                    {{tipTitle}}
                 </div>
                 <div class="cate-data">
                     <nav-item
-                        v-for="v in contents"
+                        v-for="v in contData"
                         :key="v._id"
                         :item="v"
                         @show="handleShow"
@@ -57,10 +57,12 @@ export default {
             value: '',  // 路由参数
             type: 'fl',   // 参数类别
             url: '',
+            tipTitle: '',
             typeTitle: '标签',
             categroy: [],
             tag: [],
-            contents: [{}],
+            contents: [],
+            contData: [],
             pinyinArr: [],
             recommendData: [],
             companyInfo: {},
@@ -77,47 +79,81 @@ export default {
     },
     mounted () {
         console.log(this.$route);
-        document.body.style.overflow = 'auto'
-        // 获取Bus传值
-        EventBus.$on('showDetail', (item) => {
-            this.isShow = true
-            this.companyInfo = item
-        })
-
-        // 移动端锚点跳转
-        EventBus.$on('anchor', (url) => {
-            this.goAnchor(url)
-        })
-
+        this.init()
+        this.pinyin(this.contents)
         // 获取搜索传参
         if (this.$route.query.name) {
             let name = this.$route.query.name
             this.goSearch(name)
             this.typeTitle = name
-            this.getData()
             return
         }
 
-        this.getData()
-
         const { key, url } = this.$route.params
+
         // 在首页点击更多的时候可以直接获取
         this.value = key ? key : ''
         this.url = url
 
-        if (!this.value && this.url !== 'search') {
-            this.$router.push('/notfound')
+        if (this.pinyinArr.includes(this.url)) {
+            const info = this.getDetail(url)
+            this.handleShow(info)
+            window.history.pushState(null, null, this.url); // 改变url但是不跳转
+            let title = info.companyName + '|' + info.describe
+            document.title = title
+            return
         }
-
+        // 获取关键词
+        this.getValue(this.url)
+        this.isNotfound()
         this.reqJudge(this.typeTitle)
 
     },
     async asyncData ({ $axios }) {
         const { tag } = await $axios.$post('/tag/get', { page: 0 })
         const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
-        return { tag, categroy }
+        const { contents } = await $axios.$post('/content/get', { page: 0 })
+        return { tag, categroy, contents }
     },
     methods: {
+        init () {
+            document.body.style.overflow = 'auto'
+            // 获取Bus传值
+            EventBus.$on('showDetail', (item) => {
+                this.isShow = true
+                this.companyInfo = item
+            })
+
+            // 移动端锚点跳转
+            EventBus.$on('anchor', (url) => {
+                this.goAnchor(url)
+            })
+
+            this.recommendData = rendom(this.contents)
+        },
+        isNotfound () {
+            // 判断url是否存在
+            if (!this.value && this.url !== 'search') {
+                this.$router.push('/notfound')
+            }
+        },
+        getDetail (path) {
+            let detailInfo = this.contents.find(v => {
+                let str = ''
+                if (rtx.test(v.companyName)) {
+                    let pinyinArr = pinyin(v.companyName, {
+                        style: pinyin.STYLE_NORMAL                    })
+                    str = pinyinArr[0] + pinyinArr[1]
+                } else {
+                    str = v.companyName
+                }
+
+                if (str === path) {
+                    return v
+                }
+            })
+            return detailInfo
+        },
         // 获取value
         getValue (url) {
             let cateObj = this.categroy.find(v => {
@@ -145,6 +181,9 @@ export default {
         },
         // 隐藏详情事件
         handleHide (obj) {
+            if (this.contData.length === 0) {
+                window.history.back()
+            }
             this.isShow = false
             document.body.style.overflow = 'auto'
             if (!obj.isLove && !obj.isView) {
@@ -162,8 +201,6 @@ export default {
         // 获取数据
         async getData () {
             const { contents } = await this.$axios.$post('/content/get', { page: 0 })
-            this.recommendData = rendom(contents)
-            this.pinyin(contents)
         },
         async reqJudge (type) {
             if (type === '类别') {
@@ -175,10 +212,7 @@ export default {
             }
         },
 
-        // 如果是详情的url，跳转到index
-        goHome (url) {
-            this.$router.push({ name: 'index', params: { detail: url } })
-        },
+
         pinyin (contents) {
             // 获取公司名拼音
             contents.forEach(v => {
@@ -192,12 +226,7 @@ export default {
                 }
                 this.pinyinArr.push(str)
             })
-            if (this.pinyinArr.includes(this.url)) {
-                this.goHome(this.url)
-            } else {
-                // 获取关键词
-                this.getValue(this.url)
-            }
+
         },
         goAnchor (url) {
             this.$router.push({ name: 'index', params: { url } })
@@ -212,7 +241,8 @@ export default {
             data.forEach(v => {
                 v.showIndex = true
             })
-            this.contents = data
+            this.contData = data
+            this.tipTitle = '抱歉，找不到任何结果。以下推荐的行家您可能会喜欢！'
         }
     }
 }
