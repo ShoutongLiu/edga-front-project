@@ -76,6 +76,7 @@
                 :info="companyInfo"
                 :show="isShow"
                 :contents="recommendData"
+                :path="path"
                 @hide="handleHide"
             ></dialog-show>
         </div>
@@ -111,6 +112,7 @@ export default {
             companyInfo: {},
             timer: null,
             time: 0,
+            path: '',
             headerCate: [
                 {
                     name: '设计公司',
@@ -173,6 +175,7 @@ export default {
     },
     methods: {
         init () {
+            this.path = this.$route.path
             document.body.style.overflow = 'auto'
             // 获取推荐的Bus传值
             EventBus.$on('showDetail', (item) => {

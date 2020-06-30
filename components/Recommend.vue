@@ -28,19 +28,20 @@ import pinyin from 'pinyin'
 let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     props: {
-        data: Array
+        data: Array,
+        isShow: Boolean,
     },
     methods: {
         handleOpenDetail (item) {
             const pathArr = this.$route.path.split('/')
-            let isHas = pathArr.includes('design')
+            let isHas = pathArr.includes('design') || this.isShow
             let url = ''
             if (rtx.test(item.companyName)) {
                 let pinyinArr = pinyin(item.companyName, {
                     style: pinyin.STYLE_NORMAL                })
-                url = isHas ? pinyinArr[0] + pinyinArr[1] : 'hangjia/' + pinyinArr[0] + pinyinArr[1]
+                url = isHas ? this.$route.path + '-' + pinyinArr[0] + pinyinArr[1] : 'hangjia/' + pinyinArr[0] + pinyinArr[1]
             } else {
-                url = isHas ? item.companyName : 'hangjia/' + item.companyName
+                url = isHas ? this.$route.path + '-' + item.companyName : 'hangjia/' + item.companyName
             }
 
             // 设置title

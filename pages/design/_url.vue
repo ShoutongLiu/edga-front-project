@@ -37,6 +37,7 @@
             :info="companyInfo"
             :show="isShow"
             :contents="recommendData"
+            :path="path"
             @hide="handleHide"
         ></dialog-show>
     </div>
@@ -68,6 +69,7 @@ export default {
             companyInfo: {},
             isShow: false,
             time: 0,
+            path: '',
             more: null
         }
     },
@@ -93,12 +95,19 @@ export default {
 
         // 在首页点击更多的时候可以直接获取
         this.value = key ? key : ''
-        this.url = url
+        // 获取url参数
+        if (url.split('-').length === 2) {
+            this.url = url.split('-')[1]
+            this.path = '/design/' + url.split('-')[0]
+        } else {
+            this.url = url
+        }
+
 
         if (this.pinyinArr.includes(this.url)) {
-            const info = this.getDetail(url)
+            const info = this.getDetail(this.url)
             this.handleShow(info)
-            window.history.pushState(null, null, this.url); // 改变url但是不跳转
+            window.history.pushState(null, null, url); // 改变url但是不跳转
             let title = info.companyName + '|' + info.describe
             document.title = title
             return
@@ -117,6 +126,8 @@ export default {
     },
     methods: {
         init () {
+            console.log(this.$route);
+            this.path = this.$route.path
             document.body.style.overflow = 'auto'
             // 获取Bus传值
             EventBus.$on('showDetail', (item) => {
@@ -181,9 +192,6 @@ export default {
         },
         // 隐藏详情事件
         handleHide (obj) {
-            if (this.contData.length === 0) {
-                window.history.back()
-            }
             this.isShow = false
             document.body.style.overflow = 'auto'
             if (!obj.isLove && !obj.isView) {

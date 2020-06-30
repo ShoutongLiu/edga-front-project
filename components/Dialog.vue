@@ -281,7 +281,10 @@
             @click.stop="dialogHide"
         ></i>
         <div class="dia-recommend">
-            <recommend :data="contents"></recommend>
+            <recommend
+                :data="contents"
+                :isShow="show"
+            ></recommend>
         </div>
     </div>
 </template>
@@ -295,7 +298,8 @@ export default {
     props: {
         show: Boolean,
         info: Object,
-        contents: Array
+        contents: Array,
+        path: String
     },
     components: { recommend },
     data () {
@@ -357,7 +361,6 @@ export default {
     methods: {
         // 判断是否已经点过赞
         handleIsLove (loveTime) {
-            console.log(loveTime);
             let time = loveTime - new Date().getTime()
             console.log(time, 'love');
             if (time > 0) {
@@ -396,7 +399,6 @@ export default {
                 this.viewCount = count
             }
             let time = this.commitTime - new Date().getTime()
-            console.log(time);
             // 把状态传递给父组件，避免多次请求
             if (time > 0) {
                 return
@@ -436,7 +438,7 @@ export default {
             timer = setTimeout(() => {
                 document.title = 'EGDA行家 | 环境图形设计行业专家信息搜索平台'
             }, 300);
-            window.history.back()
+            this.$router.push(this.path)
         }
     },
     destroyed () {
