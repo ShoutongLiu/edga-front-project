@@ -505,8 +505,8 @@ $fontColor: #a0a0a0;
 .item-container {
 	width: 47.6%;
 	margin-right: 2.4%;
-	background-color: #fff;
 	margin-bottom: 10px;
+	border-radius: 3px;
 	&.touch {
 		box-shadow: 0px 4px 12px rgba(0, 0, 0, .1);
 	}

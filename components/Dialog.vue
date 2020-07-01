@@ -292,7 +292,8 @@
 <script>
 import recommend from './Recommend'
 import { EventBus } from '../utils/bus'
-let setTime = 1000 * 60 * 5
+let viewTime = 1000 * 30
+let clickLoveTime = 1000 * 60
 let timer = null
 export default {
     props: {
@@ -342,6 +343,7 @@ export default {
         }
     },
     mounted () {
+        this.handleBack()
 
         // 接收传来数据
         EventBus.$on('views', (res) => {
@@ -359,6 +361,18 @@ export default {
         })
     },
     methods: {
+        handleBack () {
+            // 监听浏览器返回
+            window.addEventListener('popstate', (e) => {
+                if (e.state) {
+                    //侦测是用户触发的后退操作, dosomething
+                    //这里刷新当前 url
+                    if (this.show) {
+                        this.dialogHide()
+                    }
+                }
+            }, false)
+        },
         // 判断是否已经点过赞
         handleIsLove (loveTime) {
             let time = loveTime - new Date().getTime()
@@ -407,7 +421,7 @@ export default {
             this.isViewCount = true
             this.viewCount += 1
             // 更新提交时间
-            this.commitTime = new Date().getTime() + setTime
+            this.commitTime = new Date().getTime() + viewTime
         },
         stopSwiper () {
             this.myDirectiveSwiper.autoplay.stop()
@@ -432,7 +446,7 @@ export default {
             this.isLove = true
             this.loveCount += 1
             // 更新提交时间
-            this.loveTime = new Date().getTime() + setTime
+            this.loveTime = new Date().getTime() + clickLoveTime
         },
         goBack () {
             timer = setTimeout(() => {

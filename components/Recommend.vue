@@ -23,7 +23,6 @@
 
 <script>
 import { EventBus } from '../utils/bus'
-let setTime = 1000 * 60 * 5
 import pinyin from 'pinyin'
 let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
