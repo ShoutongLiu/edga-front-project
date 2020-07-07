@@ -151,7 +151,6 @@ export default {
         const { contents } = await $axios.$post('/content/get', { page: 0 })
         return { banners, graphs, contents }
     },
-
     mounted () {
         this.init()
         const { path, url } = this.$route.params
@@ -193,7 +192,7 @@ export default {
                 if (rtx.test(v.companyName)) {
                     let pinyinArr = pinyin(v.companyName, {
                         style: pinyin.STYLE_NORMAL                    })
-                    str = pinyinArr[0] + pinyinArr[1]
+                    str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
                 } else {
                     str = v.companyName
                 }

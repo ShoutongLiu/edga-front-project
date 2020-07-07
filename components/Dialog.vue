@@ -55,18 +55,18 @@
                             {{info.companyName}}
                         </div>
                         <div class="location">
-                            <span>
+                            <span class="item-icon">
                                 <i class="iconfont icon-location"></i>
-                                {{info.locationVal.join('、')}}
+                                <span>{{info.locationVal.join('、')}}</span>
                             </span>
-                            <span>
+                            <span class="item-icon">
                                 <i class="iconfont icon-eye1"></i>
-                                {{isViewCount  ? viewCount : info.views}}
+                                <span>{{isViewCount  ? viewCount : info.views}}</span>
                             </span>
-                            <span>
+                            <span class="item-icon">
                                 <!-- 根据isLoveCount判断显示 -->
                                 <i class="iconfont icon-custom-tolove"></i>
-                                {{isLoveCount ? loveCount : info.love}}
+                                <span>{{isLoveCount ? loveCount : info.love}}</span>
                             </span>
                         </div>
                     </div>
@@ -104,27 +104,27 @@
                         <img
                             src="~/static/imgs/love-red.png"
                             alt="love"
-                            class="hide-768"
+                            class="hide-768 love"
                             v-show="isLove"
                         >
                         <img
                             src="~/static/imgs/isLove.png"
                             alt="love"
-                            class="hide-768"
+                            class="hide-768 love"
                             v-show="!isLove"
                         >
                         <img
                             src="~/static/imgs/p-love@2.png"
                             alt="love"
                             style="height: 22px;"
-                            class="hide-992"
+                            class="hide-992 love"
                             v-show="isLove"
                         >
                         <img
                             src="~/static/imgs/p-islove@2.png"
                             alt="love"
                             style="height: 22px;"
-                            class="hide-992"
+                            class="hide-992 love"
                             v-show="!isLove"
                         >
                         <p>喜欢</p>
@@ -133,32 +133,20 @@
             </div>
             <hr class="hr" />
             <!-- 公司详细信息 -->
-            <div class="company-detail">
+            <div
+                class="company-detail"
+                @click="wechatShow = false"
+            >
                 <div class="desc">
-                    <div
-                        v-if="info.describe.length > 320 && info.describe.length < 600"
-                        class="desc-container"
-                    >
-                        <p>{{info.describe.slice(0, 200)}}</p>
-                        <p>{{info.describe.slice(200, info.describe.length - 1)}}</p>
+                    <div class="content-p">
+                        <p
+                            class="desc-p"
+                            v-for="(v, i) in info.describe.split('\n')"
+                            :key="i"
+                        >{{v}}</p>
                     </div>
-                    <div
-                        v-if="info.describe.length > 600"
-                        class="desc-container"
-                    >
-                        <p>{{info.describe.slice(0, 200)}}</p>
-                        <p>{{info.describe.slice(200, 420)}}</p>
-                        <p>{{info.describe.slice(420, info.describe.length - 1)}}</p>
-                    </div>
-                    <div
-                        v-else
-                        class="desc-container"
-                    >
-                        <p>{{info.describe}}</p>
-                    </div>
-
                     <a
-                        :class="`guanwang ${isTouch ? 'touch' : ''}`"
+                        :class="`guanwang ${isTouch ? 'touch' : ''} ${info.url ? 'is-url' :''}`"
                         @touchmove="isTouch = true"
                         @touchend="isTouch = false"
                         :href="`${info.url ? info.url : 'javascript:void(0);'}`"
@@ -196,10 +184,16 @@
                     </div>
                     <div class="concat">
                         <div class="phone">
-                            电话：<span>{{info.Landline}}</span>
+                            电话：<a
+                                class="click-num"
+                                :href="`tel:${info.Landline}`"
+                            >{{info.Landline}}</a>
                         </div>
                         <div class="cellphfone">
-                            手机：<span>{{info.phone}}</span>
+                            手机：<a
+                                class="click-num"
+                                :href="`tel:${info.phone}`"
+                            >{{info.phone}}</a>
                         </div>
                         <div class="email">
                             邮箱：<span>{{info.email}}</span>
@@ -233,7 +227,10 @@
                                         v-show="wechatShow"
                                     >
                                 </div>
-                                <i class="iconfont icon-wechat"></i>
+                                <i
+                                    class="iconfont icon-wechat"
+                                    @click.stop="wechatShow = true"
+                                ></i>
                             </span>
                             <!-- 使用a标签跳转外部链接需要加上http或https -->
                             <a

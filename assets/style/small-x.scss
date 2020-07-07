@@ -1,6 +1,7 @@
 /**Header*/
 
 $fontColor: #a0a0a0;
+$blueColor: #4285f3;
 .main {
 	display: flex;
 	justify-content: space-between;
@@ -140,12 +141,18 @@ $fontColor: #a0a0a0;
 			height: 84px;
 			border: none;
 			margin: 160px auto;
+			margin-bottom: 20px;
 			font-size: 5rem;
 		}
 		input::placeholder {
 			color: #000;
 			text-align: center;
 		}
+	}
+
+	.search-tip {
+		text-align: center;
+		color: #666;
 	}
 
 	.search-input-phone {
@@ -166,17 +173,6 @@ $fontColor: #a0a0a0;
 			&.anzhuo {
 				border: 1px solid #ddd;
 			}
-		}
-		.search-btn {
-			width: 16%;
-			height: 36px;
-			color: #fff;
-			text-align: center;
-			line-height: 34px;
-			font-size: 1.4rem;
-			border-radius: 0 4px 4px 0;
-			border: 1px solid #4284f3;
-			background-color: #4284f3;
 		}
 	}
 }
@@ -507,13 +503,13 @@ $fontColor: #a0a0a0;
 	margin-right: 2.4%;
 	margin-bottom: 10px;
 	border-radius: 3px;
+	background-color: #fff;
 	&.touch {
 		box-shadow: 0px 4px 12px rgba(0, 0, 0, .1);
 	}
 }
 .item {
 	display: flex;
-	background-color: #fff;
 	padding: 12px 15px;
 	border-radius: 3px;
 	position: relative;
@@ -534,7 +530,7 @@ $fontColor: #a0a0a0;
 			color: #000;
 			white-space: nowrap; //溢出不换行
 			&.touch {
-				color: #4284f3 !important;
+				color: $blueColor !important;
 			}
 		}
 		.desc {
@@ -677,16 +673,25 @@ $fontColor: #a0a0a0;
 				display: flex;
 				align-items: center;
 				.iconfont {
-					margin-right: 6px;
+					margin-right: 4px;
 					font-size: 1.4rem;
+					&.icon-location,
+					&.icon-eye1 {
+						font-size: 1.6rem;
+					}
 				}
-				span {
+				.item-icon {
 					display: flex;
 					align-items: center;
 					padding-right: 18px;
 					&:nth-child(2),
 					&:last-child {
 						margin-top: 4px;
+					}
+					&:first-child {
+						span {
+							margin-top: 2px;
+						}
 					}
 				}
 			}
@@ -740,10 +745,14 @@ $fontColor: #a0a0a0;
 			.desc-container {
 				margin-bottom: 30px;
 			}
-			p {
+			.desc-p {
 				letter-spacing: 0px;
 				line-height: 22px;
 				padding-bottom: 20px;
+				font-size: 1.4rem;
+				&:last-child {
+					padding-bottom: 0;
+				}
 			}
 			.guanwang {
 				display: block;
@@ -760,13 +769,13 @@ $fontColor: #a0a0a0;
 				position: static;
 				bottom: 0;
 				left: 0;
+				&.is-url {
+					background-color: #409eff;
+				}
 				&.touch {
 					background-color: #409eff;
 				}
 				&:active {
-					background-color: #409eff;
-				}
-				&:visited {
 					background-color: #409eff;
 				}
 			}
@@ -843,12 +852,12 @@ $fontColor: #a0a0a0;
 					}
 					.wechat {
 						position: absolute;
-						top: -156px;
+						top: -196px;
 						left: 0;
 						z-index: 999;
 						img {
-							width: 100px;
-							height: 150px;
+							width: 180px;
+							height: 200px;
 						}
 					}
 				}

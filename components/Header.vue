@@ -16,6 +16,7 @@
                 class="iconfont icon-close"
                 @click="searchHide"
             ></i>
+            <p class="search-tip">输入完按换行开始搜索</p>
         </div>
         <div class="container header-container">
             <div

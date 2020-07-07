@@ -1,6 +1,7 @@
 /**Header*/
 
 $fontColor: #a0a0a0;
+$blueColor: #4285f3;
 .main {
 	display: flex;
 	justify-content: space-between;
@@ -141,7 +142,7 @@ $fontColor: #a0a0a0;
 	}
 
 	.hover {
-		width: 1400px;
+		width: 1396px;
 		background-color: #fff;
 		position: absolute;
 		top: 66px;
@@ -274,7 +275,7 @@ $fontColor: #a0a0a0;
 				position: relative;
 				&:hover {
 					.company-name {
-						color: #4284f3;
+						color: $blueColor;
 					}
 				}
 			}
@@ -393,7 +394,7 @@ $fontColor: #a0a0a0;
 	cursor: pointer;
 	&:hover {
 		.item-name {
-			color: #4284f3 !important;
+			color: $blueColor !important;
 		}
 	}
 	.logo {
@@ -534,7 +535,6 @@ $fontColor: #a0a0a0;
 		justify-content: space-between;
 		padding: 40px;
 		margin: 0;
-		// border-bottom: 4px solid #f4f4f4;
 		.logo {
 			width: 48px;
 			height: 48px;
@@ -556,10 +556,17 @@ $fontColor: #a0a0a0;
 				display: flex;
 				align-items: center;
 				.iconfont {
-					margin-right: 6px;
-					font-size: 1.4rem;
+					margin-right: 4px;
+					margin-top: 2px;
+					font-size: 1.6rem;
+					&.icon-location {
+						font-size: 1.7rem;
+					}
+					&.icon-custom-tolove {
+						margin-top: 1px;
+					}
 				}
-				span {
+				.item-icon {
 					display: flex;
 					align-items: center;
 					padding-right: 18px;
@@ -583,6 +590,9 @@ $fontColor: #a0a0a0;
 					margin-bottom: 10px;
 					&.renzheng {
 						margin-bottom: 5px;
+					}
+					&.love {
+						margin-top: 4px;
 					}
 				}
 				p {
@@ -617,10 +627,17 @@ $fontColor: #a0a0a0;
 			.desc-container {
 				margin-bottom: 30px;
 			}
-			p {
+			.content-p {
+				padding-bottom: 40px;
+			}
+			.desc-p {
 				letter-spacing: 1px;
 				line-height: 24px;
 				padding-bottom: 30px;
+				font-size: 1.4rem;
+				&:last-child {
+					padding-bottom: 30px;
+				}
 			}
 			.guanwang {
 				width: 160px;
@@ -634,8 +651,11 @@ $fontColor: #a0a0a0;
 				position: absolute;
 				bottom: 0;
 				left: 0;
+				&.is-url {
+					background-color: $blueColor;
+				}
 				&:hover {
-					background-color: #4284f3;
+					background-color: #2f78f3;
 				}
 			}
 		}
@@ -690,6 +710,10 @@ $fontColor: #a0a0a0;
 					&:last-child {
 						margin-bottom: 0;
 					}
+					a,
+					span {
+						color: $blueColor;
+					}
 				}
 			}
 			.foces {
@@ -715,12 +739,12 @@ $fontColor: #a0a0a0;
 					}
 					.wechat {
 						position: absolute;
-						top: -156px;
+						top: -216px;
 						left: 0;
 						z-index: 999;
 						img {
-							width: 100px;
-							height: 150px;
+							width: 200px;
+							height: 220px;
 						}
 					}
 				}

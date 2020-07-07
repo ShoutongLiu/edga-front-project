@@ -1,6 +1,7 @@
 /**Header*/
 
 $fontColor: #a0a0a0;
+$blueColor: #4285f3;
 .main {
 	display: flex;
 	justify-content: space-between;
@@ -144,12 +145,18 @@ $fontColor: #a0a0a0;
 			height: 84px;
 			border: none;
 			margin: 160px auto;
+			margin-bottom: 20px;
 			font-size: 5rem;
 		}
 		input::placeholder {
 			color: #000;
 			text-align: center;
 		}
+	}
+
+	.search-tip {
+		text-align: center;
+		color: #666;
 	}
 
 	.search-input-phone {
@@ -170,17 +177,6 @@ $fontColor: #a0a0a0;
 			&.anzhuo {
 				border: 1px solid #ddd;
 			}
-		}
-		.search-btn {
-			width: 8%;
-			height: 36px;
-			color: #fff;
-			text-align: center;
-			line-height: 34px;
-			font-size: 1.4rem;
-			border-radius: 0 4px 4px 0;
-			border: 1px solid #4284f3;
-			background-color: #4284f3;
 		}
 	}
 }
@@ -324,7 +320,7 @@ $fontColor: #a0a0a0;
 				cursor: pointer;
 
 				&:hover {
-					color: #409eff;
+					color: $blueColor;
 				}
 			}
 		}
@@ -344,7 +340,7 @@ $fontColor: #a0a0a0;
 			}
 			&:hover {
 				a {
-					color: #409eff;
+					color: $blueColor;
 				}
 			}
 		}
@@ -540,7 +536,7 @@ $fontColor: #a0a0a0;
 			white-space: nowrap; //溢出不换行
 			overflow: hidden; //超出的文本隐藏
 			&.touch {
-				color: #4284f3 !important;
+				color: $blueColor !important;
 			}
 		}
 		.desc {
@@ -681,10 +677,13 @@ $fontColor: #a0a0a0;
 				display: flex;
 				align-items: center;
 				.iconfont {
-					margin-right: 6px;
-					font-size: 1.4rem;
+					margin-right: 4px;
+					font-size: 1.6rem;
+					&.icon-location {
+						font-size: 1.7rem;
+					}
 				}
-				span {
+				.item-icon {
 					display: flex;
 					align-items: center;
 					padding-right: 18px;
@@ -707,6 +706,9 @@ $fontColor: #a0a0a0;
 					margin-bottom: 10px;
 					&.renzheng {
 						margin-bottom: 5px;
+					}
+					&.love {
+						margin-top: 4px;
 					}
 				}
 				p {
@@ -742,10 +744,17 @@ $fontColor: #a0a0a0;
 			.desc-container {
 				margin-bottom: 30px;
 			}
-			p {
+			.content-p {
+				padding-bottom: 40px;
+			}
+			.desc-p {
 				letter-spacing: 1px;
 				line-height: 24px;
 				padding-bottom: 30px;
+				font-size: 1.4rem;
+				&:last-child {
+					padding-bottom: 30px;
+				}
 			}
 			.guanwang {
 				width: 160px;
@@ -759,13 +768,13 @@ $fontColor: #a0a0a0;
 				position: absolute;
 				bottom: 0;
 				left: 0;
+				&.is-url {
+					background-color: #409eff;
+				}
 				&.touch {
 					background-color: #409eff;
 				}
 				&:active {
-					background-color: #409eff;
-				}
-				&:visited {
 					background-color: #409eff;
 				}
 			}
@@ -841,12 +850,12 @@ $fontColor: #a0a0a0;
 					}
 					.wechat {
 						position: absolute;
-						top: -156px;
+						top: -216px;
 						left: 0;
 						z-index: 999;
 						img {
-							width: 100px;
-							height: 150px;
+							width: 200px;
+							height: 220px;
 						}
 					}
 				}

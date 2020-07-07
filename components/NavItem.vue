@@ -69,7 +69,8 @@ export default {
             if (rtx.test(this.item.companyName)) {
                 let pinyinArr = pinyin(this.item.companyName, {
                     style: pinyin.STYLE_NORMAL                })
-                url = isHas ? this.$route.path + '-' + pinyinArr[0] + pinyinArr[1] : 'hangjia/' + pinyinArr[0] + pinyinArr[1]
+                let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
+                url = isHas ? this.$route.path + '-' + str : 'hangjia/' + str
             } else {
                 url = isHas ? this.$route.path + '-' + this.item.companyName : 'hangjia/' + this.item.companyName
             }

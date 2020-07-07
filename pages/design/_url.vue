@@ -80,7 +80,6 @@ export default {
         DialogShow
     },
     mounted () {
-        console.log(this.$route);
         this.init()
         this.pinyin(this.contents)
         // 获取搜索传参
@@ -126,7 +125,6 @@ export default {
     },
     methods: {
         init () {
-            console.log(this.$route);
             this.path = this.$route.path
             document.body.style.overflow = 'auto'
             // 获取Bus传值
@@ -154,7 +152,7 @@ export default {
                 if (rtx.test(v.companyName)) {
                     let pinyinArr = pinyin(v.companyName, {
                         style: pinyin.STYLE_NORMAL                    })
-                    str = pinyinArr[0] + pinyinArr[1]
+                    str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
                 } else {
                     str = v.companyName
                 }
@@ -228,7 +226,7 @@ export default {
                 if (rtx.test(v.companyName)) {
                     let arr = pinyin(v.companyName, {
                         style: pinyin.STYLE_NORMAL                    })
-                    str = arr[0] + arr[1]
+                    str = arr.length > 2 ? arr[0] + arr[1] + arr[2] : arr[0] + arr[1]
                 } else {
                     str = v.companyName
                 }
