@@ -830,6 +830,10 @@ $blueColor: #4285f3;
 					&:last-child {
 						margin-bottom: 0;
 					}
+					a,
+					span {
+						color: $blueColor;
+					}
 				}
 			}
 			.foces {
