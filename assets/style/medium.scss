@@ -47,7 +47,7 @@ $blueColor: #4285f3;
 			padding: 30px;
 		}
 		.p-header {
-			height: 65px;
+			height: 64px;
 			background-color: #fff;
 			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 			display: flex;
@@ -203,6 +203,10 @@ $blueColor: #4285f3;
 		display: none;
 	}
 	.title-middle {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		display: block;
 	}
 	.navlist {
@@ -295,6 +299,7 @@ $blueColor: #4285f3;
 			font-size: 1.8rem;
 			color: #000;
 			padding: 4px;
+			margin-right: -4px;
 			cursor: pointer;
 			z-index: 9999;
 		}
@@ -523,6 +528,7 @@ $blueColor: #4285f3;
 		width: 32px;
 		height: 32px;
 		border-radius: 50%;
+		margin-top: 0px;
 	}
 	.item-info {
 		color: $fontColor;
