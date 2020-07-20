@@ -86,7 +86,6 @@ export default {
         if (this.$route.query.name) {
             let name = this.$route.query.name
             this.goSearch(name)
-            this.typeTitle = name
             return
         }
 
@@ -239,6 +238,7 @@ export default {
         },
         // 搜索函数
         async goSearch (name) {
+            this.typeTitle = name
             const { contents } = await this.$axios.$post('/content/company', { name: name })
             this.changeIndex(contents)
         },

@@ -193,7 +193,7 @@ export default {
                 let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
                 url = 'hangjia/' + str
             } else {
-                url = 'hangjia/' + item.companyName
+                url = 'hangjia/' + item.companyName.replace(/\s+/g, "")
             }
 
             // 设置title

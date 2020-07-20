@@ -72,7 +72,7 @@ export default {
                 let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
                 url = isHas ? this.$route.path + '-' + str : 'hangjia/' + str
             } else {
-                url = isHas ? this.$route.path + '-' + this.item.companyName : 'hangjia/' + this.item.companyName
+                url = isHas ? this.$route.path + '-' + this.item.companyName.replace(/\s+/g, "") : 'hangjia/' + this.item.companyName.replace(/\s+/g, "")
             }
 
             // 设置title

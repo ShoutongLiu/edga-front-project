@@ -32,22 +32,36 @@ export default {
     },
     methods: {
         handleOpenDetail (item) {
+            console.log(this.$route)
             const pathArr = this.$route.path.split('/')
-            let isHas = pathArr.includes('design') || this.isShow
+            let isHas = pathArr.includes('design')
             let url = ''
             if (rtx.test(item.companyName)) {
                 let pinyinArr = pinyin(item.companyName, {
                     style: pinyin.STYLE_NORMAL                })
                 // 判断数组长度截取字符
                 let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
-                url = isHas ? this.$route.path + '-' + str : 'hangjia/' + str
+                if (this.isShow && this.$route.path === '/') {
+                    url = this.$route.path + 'hangjia/' + str
+                } else if (isHas) {
+                    url = this.$route.path + '-' + str
+                } else {
+                    url = 'hangjia/' + str
+                }
             } else {
-                url = isHas ? this.$route.path + '-' + item.companyName : 'hangjia/' + item.companyName
+                if (this.isShow && this.$route.path === '/') {
+                    url = this.$route.path + 'hangjia/' + item.companyName.replace(/\s+/g, "")
+                } else if (isHas) {
+                    url = this.$route.path + '-' + item.companyName.replace(/\s+/g, "")
+                } else {
+                    url = 'hangjia/' + item.companyName.replace(/\s+/g, "")
+                }
             }
 
             // 设置title
             let title = item.companyName + '|' + item.describe
             document.title = title
+            console.log(url)
             window.history.pushState(null, null, url); // 改变url但是不跳转
 
             EventBus.$emit('showDetail', item)
