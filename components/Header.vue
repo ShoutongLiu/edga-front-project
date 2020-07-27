@@ -286,7 +286,7 @@ export default {
                 return
             }
             this.$emit('search', this.searchVal)
-            this.$router.push({ path: '/design/search', query: { name: this.searchVal } })
+            this.$router.push({ path: '/search', query: { name: this.searchVal } })
             this.searchVal = ''
         },
         searchHide () {

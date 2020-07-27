@@ -4,18 +4,13 @@
         v-if="show"
         @click="dialogHide"
     >
-        <div
-            class="dialog-container"
-            @click.stop="handleStop"
-        >
+        <div class="dialog-container">
             <!-- 轮播图 -->
             <div class="banner">
                 <div
                     class="swiper"
                     ref="mySwiper"
                     v-swiper:myDirectiveSwiper="swiperOptions"
-                    @mouseenter="stopSwiper"
-                    @mouseleave="startSwiper"
                 >
                     <div class="swiper-wrapper">
                         <div
@@ -43,7 +38,10 @@
                 </div>
             </div>
             <!--公司logo等  -->
-            <div class="company-logo">
+            <div
+                class="company-logo"
+                @click.stop="handleStop"
+            >
                 <div class="left">
                     <img
                         :src="info.avatarUrl"
@@ -135,7 +133,7 @@
             <!-- 公司详细信息 -->
             <div
                 class="company-detail"
-                @click="wechatShow = false"
+                @click.stop="handleStop"
             >
                 <div class="desc">
                     <div class="content-p">
@@ -297,14 +295,18 @@ export default {
         show: Boolean,
         info: Object,
         contents: Array,
-        path: String
+        path: String,
+        query: {
+            type: String,
+            default: ''
+        }
     },
     components: { recommend },
     data () {
         return {
             swiperOptions: {
                 loop: true,
-                speed: 500,
+                // speed: 500,
                 // notNextTick是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
                 notNextTick: true,
                 slidesPerView: 'auto',
@@ -317,10 +319,7 @@ export default {
                     el: '.swiper-pagination',
                     clickable: true
                 },
-                autoplay: {
-                    delay: 3500,
-                    disableOnInteraction: false,
-                },
+                autoplay: false,
                 autoplayDisableOnInteraction: false,
                 mousewheel: true,
                 preloadImages: false
@@ -420,13 +419,15 @@ export default {
             // 更新提交时间
             this.commitTime = new Date().getTime() + viewTime
         },
-        stopSwiper () {
-            this.myDirectiveSwiper.autoplay.stop()
+        // stopSwiper () {
+        //     this.myDirectiveSwiper.autoplay.stop()
+        // },
+        // startSwiper () {
+        //     this.myDirectiveSwiper.autoplay.start()
+        // },
+        handleStop () {
+            this.wechatShow = false
         },
-        startSwiper () {
-            this.myDirectiveSwiper.autoplay.start()
-        },
-        handleStop () { },
         handleLove () {
             // 求出时间差
             if (!this.isLoveCount) {
@@ -449,7 +450,8 @@ export default {
             timer = setTimeout(() => {
                 document.title = 'EGDA行家 | 环境图形设计行业专家信息搜索平台'
             }, 300);
-            this.$router.push(this.path)
+            // 判断是查询页面的，加上query
+            this.query ? this.$router.push({ path: this.path, query: { name: this.query } }) : this.$router.push(this.path)
         }
     },
     destroyed () {

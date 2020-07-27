@@ -64,15 +64,18 @@ export default {
     methods: {
         showDetail () {
             const pathArr = this.$route.path.split('/')
-            let isHas = pathArr.includes('design')
+            console.log(this.$route.path)
+            let path = pathArr[1]
             let url = ''
             if (rtx.test(this.item.companyName)) {
                 let pinyinArr = pinyin(this.item.companyName, {
-                    style: pinyin.STYLE_NORMAL                })
+                    style: pinyin.STYLE_NORMAL
+                })
                 let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
-                url = isHas ? this.$route.path + '-' + str : 'hangjia/' + str
+
+                url = path ? this.$route.path + '-' + str : 'hangjia/' + str
             } else {
-                url = isHas ? this.$route.path + '-' + this.item.companyName.replace(/\s+/g, "") : 'hangjia/' + this.item.companyName.replace(/\s+/g, "")
+                url = path ? this.$route.path + '-' + this.item.companyName.replace(/\s+/g, "") : 'hangjia/' + this.item.companyName.replace(/\s+/g, "")
             }
 
             // 设置title

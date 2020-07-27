@@ -191,7 +191,8 @@ export default {
                 let str = ''
                 if (rtx.test(v.companyName)) {
                     let pinyinArr = pinyin(v.companyName, {
-                        style: pinyin.STYLE_NORMAL                    })
+                        style: pinyin.STYLE_NORMAL
+                    })
                     str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
                 } else {
                     str = v.companyName
