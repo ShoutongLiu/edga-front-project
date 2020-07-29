@@ -28,37 +28,40 @@ let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     props: {
         data: Array,
-        isShow: Boolean,
-        query: {
-            type: String,
-            default: ''
-        }
+        isShow: Boolean
     },
     methods: {
         handleOpenDetail (item) {
+            console.log(this.$route)
+            const query = this.$route.query.name
             const pathArr = this.$route.path.split('/')
             let path = pathArr[1]
             let url = ''
+            let fPath = this.$route.params.url + '/'
             if (rtx.test(item.companyName)) {
                 let pinyinArr = pinyin(item.companyName, {
                     style: pinyin.STYLE_NORMAL
                 })
                 // 判断数组长度截取字符
                 let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
-                if (this.isShow && this.$route.path === '/') {
-                    url = this.$route.path + 'hangjia/' + str
-                } else if (path && this.query) {
-                    url = this.$route.path + '-' + str + '?name=' + this.query
+                if (this.isShow && !query) {
+                    url = str
+                } else if (this.isShow && query) {
+                    url = this.$route.path + '/' + str + '?name=' + query
+                } else if (path && query) {
+                    url = this.$route.path + '/' + str + '?name=' + query
                 } else {
-                    url = 'hangjia/' + str
+                    url = fPath + str
                 }
             } else {
-                if (this.isShow && this.$route.path === '/') {
-                    url = this.$route.path + 'hangjia/' + item.companyName.replace(/\s+/g, "")
-                } else if (path && this.query) {
-                    url = this.$route.path + '-' + item.companyName.replace(/\s+/g, "") + '?name=' + this.query
+                if (this.isShow && !query) {
+                    url = item.companyName.replace(/\s+/g, "")
+                } else if (this.isShow && query) {
+                    url = this.$route.path + '/' + item.companyName.replace(/\s+/g, "") + '?name=' + query
+                } else if (path && query) {
+                    url = this.$route.path + '/' + item.companyName.replace(/\s+/g, "") + '?name=' + query
                 } else {
-                    url = 'hangjia/' + item.companyName.replace(/\s+/g, "")
+                    url = fPath + item.companyName.replace(/\s+/g, "")
                 }
             }
 

@@ -10,7 +10,7 @@
                     class="title"
                     v-if="contData.length !== 0"
                 >
-                    <span>{{typeTitle}}:</span>
+                    <span>{{title}}:</span>
                     <span>{{value}}</span>
                     <span class="count">{{contData.length}}</span>个
                 </div>
@@ -44,34 +44,34 @@
 </template>
 
 <script>
-import edgaHeader from '../../components/Header'
-import NavItem from '../../components/NavItem'
-import recommend from '../../components/Recommend'
-import DialogShow from '../../components/Dialog'
-import { EventBus } from '../../utils/bus'
-import rendom from '../../utils/rendom'
+import edgaHeader from './Header'
+import NavItem from './NavItem'
+import recommend from './Recommend'
+import DialogShow from './Dialog'
+import { EventBus } from '../utils/bus'
+import rendom from '../utils/rendom'
 import pinyin from 'pinyin'
 let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     data () {
         return {
             value: '',  // 路由参数
-            type: 'fl',   // 参数类别
             url: '',
-            tipTitle: '',
-            typeTitle: '标签',
-            categroy: [],
-            tag: [],
             contents: [],
             contData: [],
             pinyinArr: [],
             recommendData: [],
             companyInfo: {},
             isShow: false,
-            time: 0,
             path: '',
-            more: null
+            more: null,
+            tipTitle: '',
+            itemUrl: ''
         }
+    },
+    props: {
+        title: String,
+        reqPath: String
     },
     components: {
         edgaHeader,
@@ -81,49 +81,19 @@ export default {
     },
     mounted () {
         this.init()
-        this.pinyin(this.contents)
-        // 获取搜索传参
-        if (this.$route.query.name) {
-            let name = this.$route.query.name
-            this.goSearch(name)
-            return
-        }
 
-        const { key, url } = this.$route.params
-
+        const { key, url, index } = this.$route.params
         // 在首页点击更多的时候可以直接获取
         this.value = key ? key : ''
-        // 获取url参数
-        if (url.split('-').length === 2) {
-            this.url = url.split('-')[1]
-            this.path = '/design/' + url.split('-')[0]
-        } else {
-            this.url = url
-        }
-
-
-        if (this.pinyinArr.includes(this.url)) {
-            const info = this.getDetail(this.url)
-            this.handleShow(info)
-            window.history.pushState(null, null, url); // 改变url但是不跳转
-            let title = info.companyName + '|' + info.describe
-            document.title = title
-            return
-        }
-        // 获取关键词
-        this.getValue(this.url)
-        this.isNotfound()
-        this.reqJudge(this.typeTitle)
-
-    },
-    async asyncData ({ $axios }) {
-        const { tag } = await $axios.$post('/tag/get', { page: 0 })
-        const { categroy } = await $axios.$post('/categroy/get', { page: 0 })
-        const { contents } = await $axios.$post('/content/get', { page: 0 })
-        return { tag, categroy, contents }
+        console.log(this.$route)
+        console.log(index, url)
+        this.url = url
+        this.itemUrl = index ? index : ''
     },
     methods: {
         init () {
+            this.getData()
+            this.reqData()
             this.path = this.$route.path
             document.body.style.overflow = 'auto'
             // 获取Bus传值
@@ -136,21 +106,14 @@ export default {
             EventBus.$on('anchor', (url) => {
                 this.goAnchor(url)
             })
-
-            this.recommendData = rendom(this.contents)
-        },
-        isNotfound () {
-            // 判断url是否存在
-            if (!this.value && this.url !== 'search') {
-                this.$router.push('/notfound')
-            }
         },
         getDetail (path) {
             let detailInfo = this.contents.find(v => {
                 let str = ''
                 if (rtx.test(v.companyName)) {
                     let pinyinArr = pinyin(v.companyName, {
-                        style: pinyin.STYLE_NORMAL                    })
+                        style: pinyin.STYLE_NORMAL
+                    })
                     str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
                 } else {
                     str = v.companyName
@@ -163,23 +126,17 @@ export default {
             return detailInfo
         },
         // 获取value
-        getValue (url) {
-            let cateObj = this.categroy.find(v => {
-                return v.url === url
-            })
-            let tagObj = this.tag.find(v => {
+        getValue (url, tag) {
+            let tagObj = tag.find(v => {
                 if (v.url === url) {
                     return v
                 }
             })
+            this.value = tagObj.name
+        },
 
-            if (cateObj) {
-                this.typeTitle = '类别'
-                this.value = cateObj.name
-            } else {
-                this.typeTitle = '标签'
-                this.value = tagObj.name
-            }
+        async goSearch (name) {
+            this.$router.push({ path: 'search', query: { name } })
         },
         // 显示详情
         handleShow (info) {
@@ -194,27 +151,53 @@ export default {
             if (!obj.isLove && !obj.isView) {
                 return
             }
-            // 重新请求
-            if (!this.value) {
-                let name = this.$route.query.name
-                this.goSearch(name)
-            } else {
-                this.reqJudge(this.type);
-            }
+
+            this.reqData();
             this.getData()
         },
         // 获取数据
         async getData () {
-            const { contents } = await this.$axios.$post('/content/get', { page: 0 })
-        },
-        async reqJudge (type) {
-            if (type === '类别') {
-                const { contents } = await this.$axios.$post('/content/cate', { cate: { categroyVal: this.value } })
-                this.changeIndex(contents)
-            } else if (type === '标签') {
-                const { contents } = await this.$axios.$post('/content/tag', { tag: { tagVal: this.value } })
-                this.changeIndex(contents)
+            switch (this.reqPath) {
+                case 'tag':
+                    const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
+                    this.getValue(this.url, tag)
+                    break
+
+                case 'cate':
+                    const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
+                    this.getValue(this.url, categroy)
+                    break
             }
+            const { contents } = await this.$axios.$post('/content/get', { page: 0 })
+            this.contents = contents
+            // 在这做数据处理
+            this.recommendData = rendom(this.contents)
+            this.pinyin(this.contents)
+            this.judegUrl()
+            this.reqData()
+        },
+        judegUrl () {
+            if (this.pinyinArr.includes(this.itemUrl)) {
+                const info = this.getDetail(this.itemUrl)
+                this.handleShow(info)
+                window.history.pushState(null, null, `${this.url}/${this.itemUrl}`); // 改变url但是不跳转
+                let title = info.companyName + '|' + info.describe
+                document.title = title
+                return
+            }
+        },
+        async reqData () {
+            let reqObj = {}
+            switch (this.reqPath) {
+                case 'tag':
+                    reqObj = { tag: { tagVal: this.value } }
+                    break
+                case 'cate':
+                    reqObj = { cate: { categroyVal: this.value } }
+                    break
+            }
+            const { contents } = await this.$axios.$post(`/content/${this.reqPath}`, reqObj)
+            this.changeIndex(contents)
         },
 
 
@@ -224,7 +207,8 @@ export default {
                 let str = ''
                 if (rtx.test(v.companyName)) {
                     let arr = pinyin(v.companyName, {
-                        style: pinyin.STYLE_NORMAL                    })
+                        style: pinyin.STYLE_NORMAL
+                    })
                     str = arr.length > 2 ? arr[0] + arr[1] + arr[2] : arr[0] + arr[1]
                 } else {
                     str = v.companyName
@@ -235,12 +219,6 @@ export default {
         },
         goAnchor (url) {
             this.$router.push({ name: 'index', params: { url } })
-        },
-        // 搜索函数
-        async goSearch (name) {
-            this.typeTitle = name
-            const { contents } = await this.$axios.$post('/content/company', { name: name })
-            this.changeIndex(contents)
         },
         // 在本页面要全部显示，把showIndex字段变为true
         changeIndex (data) {

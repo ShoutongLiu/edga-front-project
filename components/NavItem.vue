@@ -67,15 +67,16 @@ export default {
             console.log(this.$route.path)
             let path = pathArr[1]
             let url = ''
+            // 判断中文
             if (rtx.test(this.item.companyName)) {
                 let pinyinArr = pinyin(this.item.companyName, {
                     style: pinyin.STYLE_NORMAL
                 })
                 let str = pinyinArr.length > 2 ? pinyinArr[0] + pinyinArr[1] + pinyinArr[2] : pinyinArr[0] + pinyinArr[1]
 
-                url = path ? this.$route.path + '-' + str : 'hangjia/' + str
+                url = path ? this.$route.path + '/' + str : '/' + str
             } else {
-                url = path ? this.$route.path + '-' + this.item.companyName.replace(/\s+/g, "") : 'hangjia/' + this.item.companyName.replace(/\s+/g, "")
+                url = path ? this.$route.path + '/' + this.item.companyName.replace(/\s+/g, "") : '/' + this.item.companyName.replace(/\s+/g, "")
             }
 
             // 设置title

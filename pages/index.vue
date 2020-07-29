@@ -159,7 +159,7 @@ export default {
             this.handleShow(info)
             let title = info.companyName + '|' + info.describe
             document.title = title
-            window.history.pushState(null, null, 'hangjia/' + path); // 改变url但是不跳转
+            window.history.pushState(null, null, '/' + path); // 改变url但是不跳转
         }
         if (url) {
             // 定时器等待dom渲染完成
@@ -230,8 +230,7 @@ export default {
         },
         // 更多跳转
         toMore (name, url) {
-            console.log(url);
-            this.$router.push({ name: 'design-url', params: { key: name, url: url } })
+            this.$router.push({ name: 'tag-url', params: { key: name, url: url } })
         },
         // 获取分类和标签数据
         handleGetData ({ tag, categroy }) {

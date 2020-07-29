@@ -29,10 +29,7 @@
                 </div>
             </div>
             <div class="more-recommend">
-                <recommend
-                    :data="recommendData"
-                    :query="name"
-                ></recommend>
+                <recommend :data="recommendData"></recommend>
             </div>
         </div>
         <dialog-show
@@ -87,19 +84,16 @@ export default {
         }
 
         console.log(this.$route)
-        this.url = this.getPinyinUrl()
+        this.url = this.$route.params.index
         if (this.pinyinArr.includes(this.url)) {
             const info = this.getDetail(this.url)
             this.handleShow(info)
-            window.history.pushState(null, null, `search-${this.url}?name=${this.name}`); // 改变url但是不跳转
+            window.history.pushState(null, null, `?name=${this.name}`); // 改变url但是不跳转
             let title = info.companyName + '|' + info.describe
-            this.path = this.$route.params.search.split('-')[0]
+            this.path = '/' + this.$route.name
             document.title = title
             return
         }
-        // 获取关键词
-
-        this.isNotfound()
 
     },
     async asyncData ({ $axios }) {
@@ -123,22 +117,6 @@ export default {
 
             this.recommendData = rendom(this.contents)
         },
-        getPinyinUrl () {
-            let url = ''
-            const { search } = this.$route.params
-            if (search.split('-').length === 2) {
-                url = search.split('-')[1]
-            } else {
-                url = search
-            }
-            return url
-        },
-        isNotfound () {
-            // 判断url是否存在
-            if (this.path !== '/search') {
-                this.$router.push('/notfound')
-            }
-        },
         getDetail (path) {
             let detailInfo = this.contents.find(v => {
                 let str = ''
@@ -161,7 +139,7 @@ export default {
         handleShow (info) {
             this.companyInfo = info
             this.isShow = true
-            this.query = this.$route.query.name
+            this.name = this.$route.query.name
             let str = ''
             if (rtx.test(info.companyName)) {
                 let pinyinArr = pinyin(info.companyName, {
@@ -171,7 +149,7 @@ export default {
             } else {
                 str = info.companyName
             }
-            window.history.pushState(null, null, this.$route.path + '-' + str + '?name=' + this.query); // 改变url但是不跳转
+            window.history.pushState(null, null, '?name=' + this.name); // 改变url但是不跳转
             document.body.style.overflow = 'hidden'
         },
         // 隐藏详情事件

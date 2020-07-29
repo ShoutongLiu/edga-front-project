@@ -14,8 +14,8 @@ export default {
     },
     mounted () {
         this.pinyin(this.contents)
-        const { index } = this.$route.params
-        this.url = index
+        const { hangjia } = this.$route.params
+        this.url = hangjia
         if (this.pinyinArr.includes(this.url)) {
             this.goHome(this.url)
         }
@@ -35,7 +35,8 @@ export default {
                 let str = ''
                 if (rtx.test(v.companyName)) {
                     let arr = pinyin(v.companyName, {
-                        style: pinyin.STYLE_NORMAL                    })
+                        style: pinyin.STYLE_NORMAL
+                    })
                     str = arr.length > 2 ? arr[0] + arr[1] + arr[2] : arr[0] + arr[1]
                 } else {
                     str = v.companyName

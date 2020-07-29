@@ -245,10 +245,10 @@ export default {
                 return
             } else if (val === 'fl') {
                 this.navList.data = this.categroy
-                this.navList.type = 'fl'
+                this.navList.type = 'categroy'
             } else if (val === 'bq') {
                 this.navList.data = this.tag
-                this.navList.type = 'bq'
+                this.navList.type = 'tag'
             } else if (val === 'zz') {
                 this.isStationShow = true
                 this.isPhoneShow = this.isPhoneShow === val ? "" : val
@@ -266,7 +266,8 @@ export default {
             this.isStationShow = false
         },
         toMore (v, type) {
-            this.$router.push({ name: 'design-url', params: { key: v.name, url: v.url } })
+            console.log(type)
+            this.$router.push({ name: `${type}-url`, params: { key: v.name, url: v.url } })
         },
         goCate (url) {
             this.$emit('anchor', url)
