@@ -55,7 +55,10 @@
                         <div class="location">
                             <span class="item-icon">
                                 <i class="iconfont icon-location"></i>
-                                <span>{{info.locationVal.join('、')}}</span>
+                                <span
+                                    v-for="(v, i) in info.locationVal"
+                                    :key="i"
+                                >{{v.name}}<i v-if="i !== info.locationVal.length -1 ">、</i></span>
                             </span>
                             <span class="item-icon">
                                 <i class="iconfont icon-eye1"></i>
@@ -156,29 +159,51 @@
                         class="renzheng"
                         v-if="info.slogan"
                     >
-                        <span class="title">认证：</span>
+                        <span style="color: #000;">认证：</span>
                         <span>{{info.slogan}}</span>
                     </div>
                     <div class="skill">
                         <div class="type">
                             <span class="title">类型：</span>
-                            <span>{{info.categroyVal}}</span>
+                            <span
+                                class="click-item"
+                                @click="handleToMore(info.categroyVal, 'categroy')"
+                            >{{info.categroyVal.name}}</span>
                         </div>
                         <div class="location">
+                            <span class="title">位置：</span>
                             <div>
-                                <span class="title">位置：</span>
-                                <span>{{info.locationVal.join('、')}}</span>
+                                <span
+                                    v-for="(l, i) in info.locationVal"
+                                    class="click-item"
+                                    @click="handleToMore(l, 'location')"
+                                    :key="l.url"
+                                >{{l.name}}<i v-if="i !== info.locationVal.length -1">、</i></span>
                             </div>
                         </div>
                         <div class="shanc">
                             <span class="title">擅长：</span>
-                            <span>{{info.skiile.join('、')}}</span>
+                            <div>
+                                <span
+                                    v-for="(k, i) in info.skiile"
+                                    class="click-item"
+                                    @click="handleToMore(k, 'skill')"
+                                    :key="k.url"
+                                >{{k.name}}<i v-if="i !== info.skiile.length -1">、</i></span>
+                            </div>
                         </div>
 
                     </div>
                     <div class="tag">
-                        <div class="">标签：</div>
-                        <span>{{info.tagVal.join('、')}}</span>
+                        <div class="title">标签：</div>
+                        <div>
+                            <span
+                                v-for="(t, i) in info.tagVal"
+                                class="click-item"
+                                @click="handleToMore(t, 'tag')"
+                                :key="t.url"
+                            >{{t.name}}<i v-if="i !== info.tagVal.length -1">、</i></span>
+                        </div>
                     </div>
                     <div class="concat">
                         <div class="phone">
@@ -445,6 +470,11 @@ export default {
             this.loveCount += 1
             // 更新提交时间
             this.loveTime = new Date().getTime() + clickLoveTime
+        },
+        // 点击类别，标签跳转
+        handleToMore (v, type) {
+            console.log(v);
+            this.$router.push({ name: `${type}-url`, params: { key: v.name, url: v.url } })
         },
         goBack () {
             timer = setTimeout(() => {

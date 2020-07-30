@@ -791,6 +791,9 @@ $blueColor: #4285f3;
 			span {
 				color: #515151;
 			}
+			.click-item {
+				line-height: 24px;
+			}
 			.skill {
 				padding: 30px 0 40px 0;
 				border-bottom: 1px solid #a0a0a0;
@@ -805,14 +808,16 @@ $blueColor: #4285f3;
 			.type,
 			.location,
 			.shanc {
+				padding-right: 20px;
 				display: flex;
 				.title {
+					line-height: 24px;
 					min-width: 42px;
 					color: #000;
 				}
 			}
 			.tag {
-				padding: 40px 40px 40px 0;
+				padding: 40px 25px 40px 0;
 				border-bottom: 1px solid #a0a0a0;
 				display: flex;
 				align-items: top;
@@ -820,10 +825,8 @@ $blueColor: #4285f3;
 					min-width: 42px;
 				}
 				.title {
+					line-height: 24px;
 					min-width: 42px;
-				}
-				span {
-					line-height: 20px;
 				}
 			}
 			.concat {

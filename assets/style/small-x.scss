@@ -692,7 +692,7 @@ $blueColor: #4285f3;
 					padding-right: 18px;
 					&:nth-child(2),
 					&:last-child {
-						margin-top: 4px;
+						margin-top: 3px;
 					}
 					&:first-child {
 						span {
@@ -794,6 +794,9 @@ $blueColor: #4285f3;
 			span {
 				color: #515151;
 			}
+			.click-item {
+				line-height: 24px;
+			}
 			.skill {
 				padding: 30px 0 40px 0;
 				border-bottom: 1px solid #a0a0a0;
@@ -811,12 +814,13 @@ $blueColor: #4285f3;
 			.shanc {
 				display: flex;
 				.title {
+					line-height: 24px;
 					min-width: 42px;
 					color: #000;
 				}
 			}
 			.tag {
-				padding: 40px 40px 40px 0;
+				padding: 40px 0px 40px 0;
 				border-bottom: 1px solid #a0a0a0;
 				display: flex;
 				align-items: top;
@@ -824,10 +828,8 @@ $blueColor: #4285f3;
 					min-width: 42px;
 				}
 				.title {
+					line-height: 24px;
 					min-width: 42px;
-				}
-				span {
-					line-height: 20px;
 				}
 			}
 			.concat {

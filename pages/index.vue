@@ -251,9 +251,11 @@ export default {
             this.headerCate.forEach(n => {
                 let data = []
                 this.contents.forEach(c => {
-                    if (c.tagVal.includes(n.name) && c.showIndex) {
-                        data.push(c)
-                    }
+                    c.tagVal.forEach(t => {
+                        if (t.name === n.name && c.showIndex) {
+                            data.push(c)
+                        }
+                    })
                 })
                 CateData.push({ title: n.name, data })
             })
@@ -307,9 +309,11 @@ export default {
         getScreenTag (tag) {
             let arr = []
             this.contents.forEach(v => {
-                if (v.tagVal.includes(tag)) {
-                    arr.push(v)
-                }
+                v.tagVal.forEach(t => {
+                    if (t.name === tag) {
+                        arr.push(v)
+                    }
+                })
             })
             this.screenTag = arr
         },

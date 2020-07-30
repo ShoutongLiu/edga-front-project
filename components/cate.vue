@@ -85,15 +85,12 @@ export default {
         const { key, url, index } = this.$route.params
         // 在首页点击更多的时候可以直接获取
         this.value = key ? key : ''
-        console.log(this.$route)
-        console.log(index, url)
         this.url = url
         this.itemUrl = index ? index : ''
     },
     methods: {
         init () {
             this.getData()
-            this.reqData()
             this.path = this.$route.path
             document.body.style.overflow = 'auto'
             // 获取Bus传值
@@ -162,10 +159,17 @@ export default {
                     const { tag } = await this.$axios.$post('/tag/get', { page: 0 })
                     this.getValue(this.url, tag)
                     break
-
                 case 'cate':
                     const { categroy } = await this.$axios.$post('/categroy/get', { page: 0 })
                     this.getValue(this.url, categroy)
+                    break
+                case 'skill':
+                    const { field } = await this.$axios.$post('/field/get', { page: 0 })
+                    this.getValue(this.url, field)
+                    break
+                case 'location':
+                    const { location } = await this.$axios.$post('/location/get', { page: 0 })
+                    this.getValue(this.url, location)
                     break
             }
             const { contents } = await this.$axios.$post('/content/get', { page: 0 })
@@ -190,11 +194,19 @@ export default {
             let reqObj = {}
             switch (this.reqPath) {
                 case 'tag':
-                    reqObj = { tag: { tagVal: this.value } }
+                    reqObj = { tag: { name: this.value } }
                     break
                 case 'cate':
-                    reqObj = { cate: { categroyVal: this.value } }
+                    reqObj = { cate: { name: this.value } }
                     break
+                case 'skill':
+                    reqObj = { skill: { name: this.value } }
+                    break
+                case 'location':
+                    reqObj = { location: { name: this.value } }
+                    break
+                default:
+                    reqObj = {}
             }
             const { contents } = await this.$axios.$post(`/content/${this.reqPath}`, reqObj)
             this.changeIndex(contents)

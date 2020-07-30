@@ -48,12 +48,12 @@
                             class="location"
                         >
                             <span class="type">
-                                {{v.categroyVal}}
+                                {{v.categroyVal.name}}
                             </span>
                             <span
                                 class="city"
                                 v-show="v._id === loveFirstId"
-                            >{{v.locationVal[0]}}<i class="iconfont icon-location"></i></span>
+                            >{{v.locationVal[0].name}}<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div
@@ -105,12 +105,12 @@
                             class="location"
                         >
                             <span class="type">
-                                {{v.categroyVal}}
+                                {{v.categroyVal.name}}
                             </span>
                             <span
                                 class="city"
                                 v-show="v._id === newFirstId"
-                            >{{v.locationVal[0]}}<i class="iconfont icon-location"></i></span>
+                            >{{v.locationVal[0].name}}<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div
