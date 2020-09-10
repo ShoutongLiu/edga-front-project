@@ -6,7 +6,10 @@
     >
         <div class="dialog-container">
             <!-- 轮播图 -->
-            <div class="banner">
+            <div
+                class="banner"
+                @click.stop="handleStop"
+            >
                 <div
                     class="swiper"
                     ref="mySwiper"
@@ -159,7 +162,7 @@
                         class="renzheng"
                         v-if="info.slogan"
                     >
-                        <span style="color: #000;">认证：</span>
+                        <span class="title">认证：</span>
                         <span>{{info.slogan}}</span>
                     </div>
                     <div class="skill">
