@@ -315,6 +315,7 @@
 <script>
 import recommend from './Recommend'
 import { EventBus } from '../utils/bus'
+import { getLocal, removeLocal } from '../utils/localStorge'
 let viewTime = 1000 * 30
 let clickLoveTime = 1000 * 60
 let timer = null
@@ -363,12 +364,11 @@ export default {
             isTouch: false,
             commitTime: 0,
             loveTime: 0,
-            recomDetail: {},
+            recomDetail: {}
         }
     },
     mounted () {
         this.handleBack()
-
         // 接收传来数据
         EventBus.$on('views', (res) => {
             this.handleIsLove(res.loveTime)
@@ -483,11 +483,18 @@ export default {
             timer = setTimeout(() => {
                 document.title = 'EGDA行家 | 环境图形设计行业专家信息搜索平台'
             }, 300);
+            // 根据本地存储判断是不是从入驻页面跳转过来
+            const title = getLocal('title')
+            if (title) {
+                this.$router.push('/join')
+            }
             // 判断是查询页面的，加上query
             this.query ? this.$router.push({ path: this.path, query: { name: this.query } }) : this.$router.push(this.path)
         }
     },
     destroyed () {
+        // 页面销毁清楚本地存储
+        removeLocal('title')
         clearTimeout(timer)
     }
 }

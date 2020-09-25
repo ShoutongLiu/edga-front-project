@@ -4,6 +4,7 @@
 
 <script>
 import pinyin from 'pinyin'
+import { EventBus } from '../utils/bus'
 let rtx = /^[\u4e00-\u9fa5]+$/
 export default {
     data () {

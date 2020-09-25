@@ -15,80 +15,83 @@ p,
 ul,
 li,
 i {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 input {
-	outline: none;
+  outline: none;
 }
 
 ul {
-	list-style: none;
+  list-style: none;
 }
 
 @media only screen and (max-width: 768px) {
-	.container {
-		margin: 0 20px;
-	}
+  .container {
+    margin: 0 20px;
+  }
 
-	.hide-768 {
-		display: none !important;
-	}
+  .hide-768 {
+    display: none !important;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-	.container {
-		width: 710px;
-		margin: 0 auto;
-	}
+  .container {
+    width: 710px;
+    margin: 0 auto;
+  }
 
-	.hide-768 {
-		display: none !important;
-	}
+  .hide-768 {
+    display: none !important;
+  }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1400px) {
-	.container {
-		width: 964px;
-		margin: 0 auto;
-	}
-	.hide-992 {
-		display: none !important;
-	}
+  .container {
+    width: 964px;
+    margin: 0 auto;
+  }
 
-	.hide-only-992 {
-		display: none !important;
-	}
+  .hide-992 {
+    display: none !important;
+  }
+
+  .hide-only-992 {
+    display: none !important;
+  }
 }
 
 @media only screen and (min-width: 1400px) {
-	.container {
-		width: 1396px;
-		margin: 0 auto;
-	}
-	.hide-992 {
-		display: none !important;
-	}
+  .container {
+    width: 1396px;
+    margin: 0 auto;
+  }
 
-	.hide-1400 {
-		display: none !important;
-	}
+  .hide-992 {
+    display: none !important;
+  }
+
+  .hide-1400 {
+    display: none !important;
+  }
 }
 
 html,
 body,
 #__layout,
 #__nuxt {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 html {
-	font-size: 10px;
-	font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft Yahei";
+  font-size: 10px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft Yahei";
 }

@@ -53,7 +53,7 @@
                             <span
                                 class="city"
                                 v-show="v._id === loveFirstId"
-                            >{{v.locationVal[0].name}}<i class="iconfont icon-location"></i></span>
+                            >{{v.locationVal.length > 0 ? v.locationVal[0].name : ''}}<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div
@@ -110,7 +110,7 @@
                             <span
                                 class="city"
                                 v-show="v._id === newFirstId"
-                            >{{v.locationVal[0].name}}<i class="iconfont icon-location"></i></span>
+                            >{{v.locationVal.length > 0 ? v.locationVal[0].name : ''}}<i class="iconfont icon-location"></i></span>
                         </div>
                     </div>
                     <div

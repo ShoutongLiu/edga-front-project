@@ -4,9 +4,10 @@
         <!-- 专业行家 -->
         <div class="major">
             <div class="center">
-                <h1 class="title">
-                    行家，专业平台助力行业专家
-                </h1>
+                <div class="title">
+                    <span>行家，</span>
+                    <span>专业平台助力行业专家</span>
+                </div>
                 <p>EGDA行家是环境图形设计行业商务推广展示平台，为甲方、需求方提供国内外最专业的设计公司、设计师、制造企业、产品及耗材等供应服务商信息搜索。EGDA行家以企业信息展示为主，通过专业化运营和高质量的生态流量共享，为行业内的企业、专家提供更多的品牌曝光机会，同时，减少推广成本、提升竞争力、实现业务增长率。</p>
                 <img
                     src="../static/imgs/lr@2x.png"
@@ -55,7 +56,10 @@
                             ></i>
                         </li>
                     </ul>
-                    <div class="check">查看实例</div>
+                    <div
+                        class="check"
+                        @click="chaeckDemo(v.title)"
+                    >查看实例</div>
                 </div>
             </div>
         </div>
@@ -93,6 +97,7 @@
 import EgdaHeader from '../components/Header'
 import { data, rulesData } from '../utils/peiceTable'
 import { EventBus } from '../utils/bus'
+import { setLocal } from '../utils/localStorge'
 export default {
     data () {
         return {
@@ -102,6 +107,7 @@ export default {
     },
     components: { EgdaHeader },
     mounted () {
+        document.title = 'EGDA行家 | 环境图形设计行业专家信息搜索平台'
         // 移动端锚点跳转
         EventBus.$on('anchor', (url) => {
             this.goAnchor(url)
@@ -110,6 +116,22 @@ export default {
     methods: {
         goAnchor (url) {
             this.$router.push({ name: 'index', params: { url } })
+        },
+        // 查看实例
+        chaeckDemo (title) {
+            // 设置本地存储
+            setLocal('title', title)
+            switch (title) {
+                case '普通':
+                    this.$router.push('/huantushe')
+                    break
+                case '认证':
+                    this.$router.push('/pingguoshe')
+                    break
+                case '推荐':
+                    this.$router.push('/Awwwards')
+                    break
+            }
         }
     }
 }

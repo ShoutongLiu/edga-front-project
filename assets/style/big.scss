@@ -968,23 +968,28 @@ $blueColor: #4285f3;
     width: 1024px;
     margin: 0 auto;
     text-align: center;
+    padding-top: 188px;
 
     p {
       text-align: left;
       color: #515151;
       font-size: 14px;
       line-height: 26px;
+      margin: 0;
     }
 
     .title {
       font-size: 42px;
       font-weight: normal;
-      padding: 188px 0 72px 0;
+      margin-bottom: 72px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
     }
   }
 
   .lr {
-    width: 1024px;
+    width: 100%;
     height: 394px;
     margin-top: 10px;
   }
@@ -1013,11 +1018,12 @@ $blueColor: #4285f3;
 
     .table {
       display: flex;
+      flex-direction: row;
       justify-content: center;
       margin-top: 40px;
 
       .table-item {
-        margin-right: 60px;
+        margin: 0px 60px 0px 0px;
 
         &:last-child {
           margin-right: 0;
@@ -1173,6 +1179,7 @@ $blueColor: #4285f3;
       margin: 0 auto;
       color: #515151;
       font-size: 14px;
+      padding: 0;
       line-height: 26px;
 
       .p1 {
