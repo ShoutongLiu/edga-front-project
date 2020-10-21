@@ -900,6 +900,10 @@ $blueColor: #4285f3;
     }
 
     .contcant {
+      .slogan {
+        line-height: 24px;
+      }
+
       width: 282px;
       color: #000;
       font-size: 1.4rem;
@@ -1271,6 +1275,7 @@ $blueColor: #4285f3;
     }
 
     .download {
+      display: block;
       width: 120px;
       height: 42px;
       background: #4284F3;

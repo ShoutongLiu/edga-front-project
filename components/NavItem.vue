@@ -20,7 +20,7 @@
                 <div :class="`item-name ${isTouch ? 'touch' : ''}`">{{item.companyName}}</div>
                 <div class="desc">{{item.describe}}</div>
                 <div class="location">
-                    <span>{{item.categroyVal.name}}</span>
+                    <span>{{item.categroyVal ? item.categroyVal.name : ''}}</span>
                     <span v-if="item.locationVal.length > 0">
                         {{item.locationVal[0].name}}
                         <i class="iconfont icon-location" />

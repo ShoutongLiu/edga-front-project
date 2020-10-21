@@ -48,7 +48,7 @@
                             class="location"
                         >
                             <span class="type">
-                                {{v.categroyVal.name}}
+                                {{v.categroyVal ? v.categroyVal.name : ''}}
                             </span>
                             <span
                                 class="city"
@@ -105,7 +105,7 @@
                             class="location"
                         >
                             <span class="type">
-                                {{v.categroyVal.name}}
+                                {{v.categroyVal ? v.categroyVal.name : ''}}
                             </span>
                             <span
                                 class="city"

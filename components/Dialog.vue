@@ -163,7 +163,7 @@
                         v-if="info.slogan"
                     >
                         <span class="title">认证：</span>
-                        <span>{{info.slogan}}</span>
+                        <span class="slogan">{{info.slogan}}</span>
                     </div>
                     <div class="skill">
                         <div class="type">
@@ -171,7 +171,7 @@
                             <span
                                 class="click-item"
                                 @click="handleToMore(info.categroyVal, 'categroy')"
-                            >{{info.categroyVal.name}}</span>
+                            >{{info.categroyVal ? info.categroyVal.name : ''}}</span>
                         </div>
                         <div class="location">
                             <span class="title">位置：</span>
